@@ -1,0 +1,27 @@
+{
+    "name": "europa_re",
+    "author": "Arber Mustafa",
+    "version": "1.0.0",
+    "description": "New Webpage of ERe",
+    "keyword": ["Europa Re", "Slim", "Twig", "Illuminate", "Zend"],
+    "license": "MIT",
+    "require": {
+        "slim/slim": "2.*",
+        "slim/views": "*",
+        "slim/logger": "0.1.*",
+        "twig/twig": "~1.0",
+        "illuminate/database": "4.1.30",
+        "patchwork/utf8": "1.1.*",
+        "zendframework/zend-cache": "2.5.1",
+        "zendframework/zend-authentication": "2.5.1",
+        "zendframework/zend-permissions-acl": "2.5.1",
+        "zendframework/zend-session": "2.5.1",
+        "vlucas/valitron": "^1.2",
+        "vlucas/phpdotenv": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/App"
+        }
+    }
+}

@@ -1,0 +1,5 @@
+{% extends "front.html" %}
+{% block content %}
+inside archive {{ content }}
+{% include "Utils/_pagination.html" with {'path': 'archive'} %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% spaceless %}
+    <div id="footer-navigation">
+        <ul>
+            <li><a href="/privacy-policy" title="Privacy Policy">Privacy Policy</a>&nbsp;·&nbsp;</li>
+            <li><a href="/legal-notice" title="Legal Notice">Legal Notice</a>&nbsp;·&nbsp;</li>
+            <li><a href="/sitemap" title="Sitemap">Sitemap</a></li>
+        </ul>
+        {#
+        <ul>
+            {% for key in getMenu('footer-menu') %}
+                {% if not loop.last %}
+                    <li><a href="{{ key.url }}" title="{{ key.title }}">{{ key.title }}</a>&nbsp;·&nbsp;</li>
+                {% else %}
+                    <li><a href="{{ key.url }}" title="{{ key.title }}">{{ key.title }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        #}
+    </div>
+{% endspaceless %}

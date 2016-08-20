@@ -1,0 +1,13 @@
+{% extends "back.html" %}
+{% block title %}| Admin{% endblock %}
+{% block content %}
+    <form id="login" name="login" method="post" action="{{ urlFor('intranet.login') }}">
+        <input id="email" name="email" type="text" value="{{ email }}">
+        <input id="password" name="password" type="password" value="">
+        <button type="submit">Login</button>
+    </form>
+
+    {% for error in errors %}
+        {{ error }}
+    {% endfor %}
+{% endblock %}

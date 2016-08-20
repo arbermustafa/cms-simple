@@ -1,0 +1,18 @@
+
+{% extends "front.html" %}
+{% block title %}| Search results{% endblock %}
+
+{% block content %}
+    <div id="page-header">
+        <h1 id="page-title">Found {{ total }} search results for &lsquo;{{ reqParams("s") }}&rsquo;</h1>
+    </div>
+    <ul id="search-results">
+        {% for result in results %}
+            <li>
+                <h2><a href="{{ urlFor('post', {slug: result.slug}) }}">{{ result.title }}</a></h2>
+                <p>{{ words(result.content, 50) }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+    {% include "Utils/_pagination.html" with {'path': 'search'} %}
+{% endblock %}
