@@ -1,13 +1,66 @@
-{% extends "back.html" %}
-{% block title %}| Admin{% endblock %}
-{% block content %}
-    <form id="login" name="login" method="post" action="{{ urlFor('intranet.login') }}">
-        <input id="email" name="email" type="text" value="{{ email }}">
-        <input id="password" name="password" type="password" value="">
-        <button type="submit">Login</button>
-    </form>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Europa Re | Intranet Login</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=8, IE=9, IE=10, IE=edge, chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    {% for error in errors %}
-        {{ error }}
-    {% endfor %}
-{% endblock %}
+        <!-- Begin CSS -->
+        <link type="text/css" rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="/assets/vendor/fontawesome/css/font-awesome.min.css">
+        <link type="text/css" rel="stylesheet" href="/assets/vendor/ionicons/css/ionicons.min.css">
+        <link type="text/css" rel="stylesheet" href="/assets/vendor/lte/lte.min.css">
+        <link type="text/css" rel="stylesheet" href="/assets/vendor/lte/skin-ere.min.css">
+        <!-- End CSS -->
+
+        <!-- Intranet CSS -->
+        <link type="text/css" rel="stylesheet" href="/assets/css/intranet.css">
+    </head>
+    <body class="hold-transition login-page">
+        <div class="login-box">
+            <div class="login-logo">
+                <a href="#">Admin<b>ERe</b></a>
+            </div>
+            <div class="login-box-body">
+                <div class="center">
+            		<img src="/assets/img/logo.png" class="img-responsive logo-login" alt="Europa Re Intranet" width="150">
+                </div>
+                <div class="space"></div>
+                <p class="login-box-msg">Sign in to start your session</p>
+                <form id="login" name="login" method="post" action="{{ urlFor("intranet.login") }}">
+                    <div class="form-group has-feedback">
+                        <input id="email" name="email" type="email" class="form-control" value="{{ email }}" placeholder="Email">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Password">
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-6">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat"><i class="fa fa-sign-in"></i>&nbsp;&nbsp;Sign In</button>
+                        </div>
+                    </div>
+                </form>
+                {% if errors %}
+                    <div class="space"></div>
+                    <div class="alert alert-danger">
+                        {% for error in errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <!--[if lt IE 9]>
+            <script src="/assets/vendor/html5shiv.min.js"></script>
+            <script src="/assets/vendor/respond.min.js"></script>
+        <![endif]-->
+        <!-- Begin JS -->
+        <script type="text/javascript" src="/assets/vendor/jquery-latest.min.js"></script>
+        <script type="text/javascript" src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/assets/vendor/fastclick.min.js"></script>
+        <!-- End JS -->
+    </body>
+</html>

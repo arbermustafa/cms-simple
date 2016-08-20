@@ -42,11 +42,16 @@ $app->get('/archive/:slug/:page', 'App\Controller\Content:archive')->name('archi
 // Backend routes
 $app->group('/intranet', function() use ($app)
 {
+    // User
     $app->map('/login', 'App\Controller\Admin\Auth:login')->via('GET', 'POST')->name('intranet.login');
+    $app->map('/profile', 'App\Controller\Admin\Auth:profile')->via('GET', 'POST')->name('intranet.profile');
     $app->get('/logout', 'App\Controller\Admin\Auth:logout')->name('intranet.logout');
 
     // Dashboard
     $app->get('/dashboard', 'App\Controller\Admin\Index:dashboard')->name('intranet.dashboard');
+
+    // Website settings
+    $app->map('/settings', 'App\Controller\Admin\Settings:index')->via('GET', 'POST')->name('intranet.settings');
 
     // Error
     $app->get('/unauthorized', 'App\Controller\Admin\Error:unauthorized')->name('intranet.unauthorized');

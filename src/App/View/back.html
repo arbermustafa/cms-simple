@@ -1,3 +1,112 @@
-backu
-{% block content %}
-{% endblock %}
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block header %}
+            <title>Europa Re | ADMIN {% block title %}{% endblock %}</title>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=8, IE=9, IE=10, IE=edge, chrome=1">
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+            <!-- Begin CSS -->
+            <link type="text/css" rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+            <link type="text/css" rel="stylesheet" href="/assets/vendor/fontawesome/css/font-awesome.min.css">
+            <link type="text/css" rel="stylesheet" href="/assets/vendor/ionicons/css/ionicons.min.css">
+            <link type="text/css" rel="stylesheet" href="/assets/vendor/lte/lte.min.css">
+            <link type="text/css" rel="stylesheet" href="/assets/vendor/lte/skin-ere.min.css">
+            <!-- End CSS -->
+        {% endblock %}
+        <!-- Intranet CSS -->
+        <link type="text/css" rel="stylesheet" href="/assets/css/intranet.css">
+    </head>
+    <body class="fixed hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <div class="main-header">
+                <a href="{{ urlFor("intranet.dashboard") }}" class="logo">
+                    <span class="logo-mini"><b>E</b>Re</span>
+                    <span class="logo-lg"><b>Admin</b>ERe</span>
+                </a>
+                <div class="navbar navbar-static-top" role="navigation">
+                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown user user-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <img src="/assets/img/avatar.png" class="user-image" alt="{{ identity.firstname }} {{ identity.lastname }}">
+                                    <span class="hidden-xs">{{ identity.firstname }} {{ identity.lastname }}</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="user-header">
+                                        <img src="/assets/img/avatar.png" class="img-circle" alt="{{ identity.firstname }} {{ identity.lastname }}">
+                                        <p>
+                                            {{ identity.firstname }} {{ identity.lastname }}
+                                            <small>Last login: {{ identity.last_login }}</small>
+                                        </p>
+                                    </li>
+                                    <li class="user-footer">
+                                        <div class="pull-left">
+                                            <a href="{{ urlFor("intranet.profile") }}" class="btn btn-default btn-flat"><i class="fa fa-user"></i> Profile</a>
+                                        </div>
+                                        <div class="pull-right">
+                                            <a href="{{ urlFor("intranet.logout") }}" class="btn btn-default btn-flat"><i class="fa fa-sign-out"></i> Sign out</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="main-sidebar">
+                <div class="sidebar">
+                    <ul class="sidebar-menu">
+                        <li class="header">CMS MANAGEMENT</li>
+                        <li><a href="{{ urlFor("intranet.dashboard") }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                        <li><a href="{{ urlFor("intranet.settings") }}"><i class="fa fa-cog"></i> <span>Website Settings</span></a></li>
+                        <li><a href="#"><i class="fa fa-file"></i> <span>Page</span></a></li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-files-o"></i><span>Posts</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Post Categories</a></li>
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Post</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#"><i class="fa fa-photo"></i> <span>Slider</span></a></li>
+                        <li><a href="#"><i class="fa fa-navicon"></i> <span>Menu</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content-wrapper">
+                <div class="content-header">
+                    <h1>Page Header<small>Optional description</small></h1>
+                </div>
+                <div class="content">
+                    {% block content %}{% endblock %}
+                </div>
+
+            </div>
+            <div class="main-footer">
+                <strong>Copyright &copy; {{ "now" | date("Y") }} EUROPA RE. REINSURANCE FACILITY Ltd.</strong> All rights reserved.
+            </div>
+        </div>
+        {% block js_footer %}
+            <!--[if lt IE 9]>
+                <script src="/assets/vendor/html5shiv.min.js"></script>
+                <script src="/assets/vendor/respond.min.js"></script>
+            <![endif]-->
+            <!-- Begin JS -->
+            <script type="text/javascript" src="/assets/vendor/jquery-latest.min.js"></script>
+            <script type="text/javascript" src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="/assets/vendor/fastclick.min.js"></script>
+            <script type="text/javascript" src="/assets/vendor/jquery-slimscroll.min.js"></script>
+            <!-- End JS -->
+        {% endblock %}
+        <script type="text/javascript" src="/assets/vendor/lte/lte.min.js"></script>
+    </body>
+</html>
