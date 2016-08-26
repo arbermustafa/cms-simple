@@ -62,10 +62,11 @@
                 <div class="sidebar">
                     <ul class="sidebar-menu">
                         <li class="header">CMS MANAGEMENT</li>
-                        <li><a href="{{ urlFor("intranet.dashboard") }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-                        <li><a href="{{ urlFor("intranet.settings") }}"><i class="fa fa-cog"></i> <span>Website Settings</span></a></li>
-                        <li><a href="#"><i class="fa fa-file"></i> <span>Page</span></a></li>
-                        <li class="treeview">
+                        <li class="{% block dashboard_active %}{% endblock %}"><a href="{{ urlFor("intranet.dashboard") }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                        <li class="{% block settings_active %}{% endblock %}"><a href="{{ urlFor("intranet.settings") }}"><i class="fa fa-cog"></i> <span>Website Settings</span></a></li>
+                        <li class="{% block users_active %}{% endblock %}"><a href="{{ urlFor("intranet.users.list", {page: 1}) }}"><i class="fa fa-users"></i> <span>Users</span></a></li>
+                        <li class="{% block page_active %}{% endblock %}"><a href="#"><i class="fa fa-file"></i> <span>Page</span></a></li>
+                        <li class="{% block posts_active %}{% endblock %} treeview">
                             <a href="#">
                                 <i class="fa fa-files-o"></i><span>Posts</span>
                                 <span class="pull-right-container">
@@ -77,14 +78,14 @@
                                 <li><a href="#"><i class="fa fa-circle-o"></i> Post</a></li>
                             </ul>
                         </li>
-                        <li><a href="#"><i class="fa fa-photo"></i> <span>Slider</span></a></li>
-                        <li><a href="#"><i class="fa fa-navicon"></i> <span>Menu</span></a></li>
+                        <li class="{% block slider_active %}{% endblock %}"><a href="#"><i class="fa fa-photo"></i> <span>Slider</span></a></li>
+                        <li class="{% block menu_active %}{% endblock %}"><a href="#"><i class="fa fa-navicon"></i> <span>Menu</span></a></li>
                     </ul>
                 </div>
             </div>
             <div class="content-wrapper">
                 <div class="content-header">
-                    <h1>Page Header<small>Optional description</small></h1>
+                    <h1>{% block page_title %}{% endblock %}</h1>
                 </div>
                 <div class="content">
                     {% block content %}{% endblock %}

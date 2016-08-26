@@ -53,6 +53,12 @@ $app->group('/intranet', function() use ($app)
     // Website settings
     $app->map('/settings', 'App\Controller\Admin\Settings:index')->via('GET', 'POST')->name('intranet.settings');
 
+    // Users
+    $app->get('/users/list/:page', 'App\Controller\Admin\Users:index')->name('intranet.users.list');
+    $app->post('/users', 'App\Controller\Admin\Users:add')->name('intranet.users.add');
+    $app->map('/users/edit/:id', 'App\Controller\Admin\Users:edit')->via('GET', 'POST')->name('intranet.users.edit');
+    $app->get('/users/:id', 'App\Controller\Admin\Users:delete')->name('intranet.users.delete');
+
     // Error
     $app->get('/unauthorized', 'App\Controller\Admin\Error:unauthorized')->name('intranet.unauthorized');
 });

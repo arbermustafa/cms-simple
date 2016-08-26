@@ -23,12 +23,15 @@ class Acl extends ZendAcl
         $this->addResource('intranet.logout');
         $this->addResource('intranet.unauthorized');
         $this->addResource('intranet.dashboard');
-        $this->addResource('intranet.user');
+        $this->addResource('intranet.users.list');
+        $this->addResource('intranet.users.add');
+        $this->addResource('intranet.users.edit');
+        $this->addResource('intranet.users.delete');
         $this->addResource('intranet.page');
         $this->addResource('intranet.category');
         $this->addResource('intranet.post');
         $this->addResource('intranet.menu');
-        $this->addResource('intranet.setting');
+        $this->addResource('intranet.settings');
 
         //Permissions ALL
         $this->deny(null, null, null);
