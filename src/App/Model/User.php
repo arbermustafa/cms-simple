@@ -63,6 +63,9 @@ class User extends Base
 
     public function getLastLoginAttribute($value)
     {
+        if ($value == null) {
+            return '';
+        }
         return date('d.m.Y H:i:s', strtotime($value));
     }
 }

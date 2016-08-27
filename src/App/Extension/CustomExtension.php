@@ -29,6 +29,7 @@ class CustomExtension extends \Twig_Extension
             new \Twig_SimpleFunction('reqParams', array($this, 'reqParams')),
             new \Twig_SimpleFunction('getSetting', array($this, 'getSetting')),
             new \Twig_SimpleFunction('getMenu', array($this, 'getMenu')),
+            new \Twig_SimpleFunction('getFlashMessage', array($this, 'getFlashMessage')),
             new \Twig_SimpleFunction('words', array($this, 'words'))
         );
     }
@@ -80,6 +81,17 @@ class CustomExtension extends \Twig_Extension
         }
 
         return $menu;
+    }
+
+    public function getFlashMessage($key = null)
+    {
+        $app = Slim::getInstance();
+        $session = $app->sessionContainer;
+
+        $result = $session->offsetGet($key);
+        $session->offsetUnset($key);
+
+        return $result;
     }
 
     public function words($str = '', $len = 100)

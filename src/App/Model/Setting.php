@@ -22,8 +22,8 @@ class Setting extends Base
         $this->attributes['key_name'] = trim(strtolower($value));
     }
 
-    public function setKeyValueAttribute($value)
+    /*public function setKeyValueAttribute($value)
     {
         $this->attributes['key_value'] = strtolower($value);
-    }
+    }*/
 }

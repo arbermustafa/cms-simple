@@ -33,15 +33,40 @@ class User extends Base
         return $result;
     }
 
+    public static function getUserCount()
+    {
+        $cache = self::_getCache();
+        $key = __CLASS__.'_'.__FUNCTION__;
+        $result = 0;
+
+        if (false == ($result = $cache->getItem($key))) {
+            $user = UserModel::where('status', 'ACTIVE')->count();
+
+            if ($user) {
+                $result = $user;
+
+                $cache->setItem($key, $result);
+                $cache->setTags($key, array(__CLASS__));
+            }
+        }
+
+        return $result;
+    }
+
     public static function getList($page = 1, $itemPerPage = 10)
     {
         $log = self::_getLog();
         $cache = self::_getCache();
         $key = __CLASS__.'_'.__FUNCTION__.'_'.$page.'_'.$itemPerPage;
-        $result = array();
+        $result = array(
+            'data'        => null,
+            'total'       => 0,
+            'lastPage'    => 0,
+            'currentPage' => 0
+        );
 
         if (false == ($result = $cache->getItem($key))) {
-            $users = UserModel::select('id', 'firstname', 'lastname', 'email', 'last_login')
+            $users = UserModel::select('id', 'firstname', 'lastname', 'email', 'role', 'status', 'last_login')
                 ->orderBy('firstname', 'asc')
                 ->orderBy('lastname', 'asc')
                 ->paginateToArray($page, $itemPerPage);
@@ -61,7 +86,7 @@ class User extends Base
     {
         $log = self::_getLog();
         $cache = self::_getCache();
-        $validator = self::validator($params);
+        $validator = self::validator($params, true);
 
         if ($validator->validate()) {
             try {
@@ -76,7 +101,7 @@ class User extends Base
                 return array('error' => 'User not created!');
             }
         } else {
-            return array('error' => $validator->errors());
+            return array('error' => self::_printValitronErrors($validator->errors()));
         }
     }
 
@@ -99,7 +124,7 @@ class User extends Base
                 return array('error' => 'User not modified!');
             }
         } else {
-            return array('error' => $validator->errors());
+            return array('error' => self::_printValitronErrors($validator->errors()));
         }
     }
 
@@ -121,15 +146,28 @@ class User extends Base
         }
     }
 
-    private static function validator($params)
+    private static function validator($params, $add = false)
     {
+        $required = array('firstname', 'lastname', 'email', 'role', 'status');
+
+        if ($add) {
+            array_push($required, 'password');
+        }
+
         $validator = new Validator($params);
-        $validator->rule('required', array('firstname', 'lastname', 'email', 'role', 'status'));
+        $validator->rule('required', $required)->message('{field} is required');
         $validator->rule('alpha', array('firstname', 'lastname'));
         $validator->rule('email', 'email');
         $validator->rule('regex', 'password', '/((?=.*\d)(?=.*[A-Za-z]).{8,})/');
         $validator->rule('in', 'role', array('ADMIN', 'AUTHOR'), true);
         $validator->rule('in', 'status', array('ACTIVE', 'INACTIVE'), true);
+        $validator->labels(array(
+            'firstname' => 'First Name',
+            'lastname'  => 'Last Name',
+            'email'     => 'Email',
+            'role'      => 'Role',
+            'status'    => 'Status'
+        ));
 
         return $validator;
     }

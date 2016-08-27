@@ -9,11 +9,21 @@
 namespace App\Controller\Admin;
 
 use \App\Controller\Base;
+use \App\Service\User;
+use \App\Service\Category;
+use \App\Service\Content;
 
 class Index extends Base
 {
     public static function dashboard()
     {
-        self::response('Admin/Index/dashboard.html', array());
+        $data = array(
+            'users'      => User::getUserCount(),
+            'pages'      => Content::getContentCountByType('page'),
+            'categories' => Category::getCategoryCount(),
+            'posts'      => Content::getContentCountByType('post')
+        );
+        
+        self::response('Admin/Index/dashboard.html', $data);
     }
 }

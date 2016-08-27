@@ -16,10 +16,11 @@ class Search extends Base
     {
         $params = self::getParams();
         $results = ContentService::searchFront($params['s'], (int) $page);
+
         self::response('Search/index.html', array(
-            'results' => $results['data'],
-            'total' => (int) $results['total'],
-            'lastPage' => (int) $results['lastPage'],
+            'results'     => $results['data'],
+            'total'       => (int) $results['total'],
+            'lastPage'    => (int) $results['lastPage'],
             'currentPage' => (int) $results['currentPage']
         ));
     }

@@ -29,6 +29,7 @@ use \Illuminate\Events\Dispatcher;
 use \Illuminate\Container\Container;
 use \Zend\Session\Config\SessionConfig;
 use \Zend\Session\SessionManager;
+use \Zend\Session\Container as SessionContainer;
 use \Zend\Cache\StorageFactory;
 use \Zend\Authentication\AuthenticationService;
 use \Zend\Authentication\Storage\Session as SessionStorage;
@@ -162,9 +163,19 @@ $app->container->singleton('session', function()
     ));
 
     $sessionManager = new SessionManager($sessionConfig);
+    SessionContainer::setDefaultManager($sessionManager);
 
     return $sessionManager;
 });
+
+// Session Container
+$app->container->singleton('sessionContainer', function() use ($app)
+{
+    $container = new SessionContainer(getenv('APP_NAME'));
+
+    return $container;
+});
+
 
 // Auth
 $app->container->singleton('auth', function() use ($app)

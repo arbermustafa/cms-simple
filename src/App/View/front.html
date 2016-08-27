@@ -7,8 +7,8 @@
             <meta http-equiv="X-UA-Compatible" content="IE=8, IE=9, IE=10, IE=edge, chrome=1">
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
             <meta name="copyright" content="Copyright {{ "now" | date("Y") }}">
-            <meta name="description" content="{{ getSetting("description") }}">
             <meta name="keywords" content="{{ getSetting("keywords") }}">
+            <meta name="description" content="{{ getSetting("description") }}">
             <meta name="author" content="Europa Re">
             <meta name="language" content="English">
             <meta name="googlebot" content="index, archive, follow, noodp">
@@ -97,6 +97,6 @@
         <!-- Site JS -->
         <script type="text/javascript" src="/assets/js/script.js"></script>
         <!-- Google Analytics Code -->
-        {{ getSetting("analytics") }}
+        {{ getSetting("analytics") | raw }}
     </body>
 </html>

@@ -1,7 +1,59 @@
 {% extends "back.html" %}
-{% block title %}Users{% endblock %}
-{% block page_title %}Users{% endblock %}
+{% block title %}Users List{% endblock %}
 {% block users_active %}active{% endblock %}
 {% block content %}
-    {{ dump(identity) }}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">CMS Users</h3>
+                    <div class="box-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <a class="btn btn-sm btn-success pull-right" href="{{ urlFor("intranet.users.add") }}"><i class="fa fa-plus"></i> Add User</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body table-responsive">
+                    {% include "Utils/_error_success.html" with {result: getFlashMessage("message")} %}
+                    {% if results is iterable %}
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="uppercase">ID</th>
+                                    <th class="uppercase">Name</th>
+                                    <th class="uppercase">Email</th>
+                                    <th class="uppercase">Role</th>
+                                    <th class="uppercase">Status</th>
+                                    <th class="uppercase">Last login</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in results %}
+                                    <tr>
+                                        <td>{{ user.id }}</td>
+                                        <td>{{ user.firstname }} {{ user.lastname }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.role }}</td>
+                                        <td>{{ user.status }}</td>
+                                        <td>{{ user.last_login }}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" href="{{ urlFor("intranet.users.edit", {id: user.id}) }}"><i class="fa fa-pencil"></i> Edit User</a>
+                                            <a class="btn btn-sm btn-danger delete" href="{{ urlFor("intranet.users.delete", {id: user.id}) }}"><i class="fa fa-close"></i> Delete</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% include "Utils/_pagination_admin.html" with {"path": "intranet.users.list"} %}
+                    {% else %}
+                        <div class="alert alert-info">
+                            <h4><i class="icon fa fa-info"></i> Notification</h4>
+                            <p>No information was found!</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

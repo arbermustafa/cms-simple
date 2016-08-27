@@ -91,6 +91,28 @@ class Content extends Base
         return $result;
     }
 
+    public static function getContentCountByType($type = 'page')
+    {
+        $cache = self::_getCache();
+        $key = __CLASS__.'_'.__FUNCTION__.'_'.$type;
+        $result = 0;
+
+        if (false == ($result = $cache->getItem($key))) {
+            $content = ContentModel::where('type', $type)
+                ->where('status', 'PUBLISHED')
+                ->count();
+
+            if ($content) {
+                $result = $content;
+
+                $cache->setItem($key, $result);
+                $cache->setTags($key, array(__CLASS__));
+            }
+        }
+
+        return $result;
+    }
+
     public static function getList($type = 'page', $page = 1, $itemPerPage = 10)
     {
         $log = self::_getLog();

@@ -1,8 +1,7 @@
 {% spaceless %}
     {% if lastPage > 1 %}
-        <div id="pagination">
-            <span>Page {{ currentPage }} of {{ lastPage }}</span>
-            <ul>
+        <div id="pagination" class="box-footer clearfix">
+            <ul class="pagination pagination-sm no-margin pull-right">
                 {% if currentPage > 1 %}
                     <li><a href="{{ [urlFor(path, {page: 1}), queryStringParams()] | join("?") }}">&laquo;</a></li>
                     <li><a href="{{ [urlFor(path, {page: currentPage - 1}), queryStringParams()] | join("?") }}">&lsaquo;</a></li>
@@ -13,7 +12,7 @@
                     <li><a href="#">&laquo;</a></li>
                     <li><a href="#">&lsaquo;</a></li>
                 {% endif %}
-                <li class="current">{{ currentPage }}</li>
+                <li class="active"><a href="#">{{ currentPage }}</a></li>
                 {% if currentPage < lastPage %}
                     {% for i in range(currentPage + 1, currentPage + nearbyPagesLimit) if (i <= lastPage) %}
                         <li><a href="{{ [urlFor(path, {page: i}), queryStringParams()] | join("?") }}">{{ i }}</a></li>

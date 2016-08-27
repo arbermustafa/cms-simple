@@ -85,7 +85,7 @@
             </div>
             <div class="content-wrapper">
                 <div class="content-header">
-                    <h1>{% block page_title %}{% endblock %}</h1>
+                    <h1>{{ block("title") }}</h1>
                 </div>
                 <div class="content">
                     {% block content %}{% endblock %}
@@ -96,6 +96,7 @@
                 <strong>Copyright &copy; {{ "now" | date("Y") }} EUROPA RE. REINSURANCE FACILITY Ltd.</strong> All rights reserved.
             </div>
         </div>
+        {% include "Utils/_confirm_dialog.html" %}
         {% block js_footer %}
             <!--[if lt IE 9]>
                 <script src="/assets/vendor/html5shiv.min.js"></script>
@@ -107,6 +108,8 @@
             <script type="text/javascript" src="/assets/vendor/fastclick.min.js"></script>
             <script type="text/javascript" src="/assets/vendor/jquery-slimscroll.min.js"></script>
             <!-- End JS -->
+            <!-- Admin Site JS -->
+            <script type="text/javascript" src="/assets/js/intranet.js"></script>
         {% endblock %}
         <script type="text/javascript" src="/assets/vendor/lte/lte.min.js"></script>
     </body>

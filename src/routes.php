@@ -55,7 +55,7 @@ $app->group('/intranet', function() use ($app)
 
     // Users
     $app->get('/users/list/:page', 'App\Controller\Admin\Users:index')->name('intranet.users.list');
-    $app->post('/users', 'App\Controller\Admin\Users:add')->name('intranet.users.add');
+    $app->map('/users', 'App\Controller\Admin\Users:add')->via('GET', 'POST')->name('intranet.users.add');
     $app->map('/users/edit/:id', 'App\Controller\Admin\Users:edit')->via('GET', 'POST')->name('intranet.users.edit');
     $app->get('/users/:id', 'App\Controller\Admin\Users:delete')->name('intranet.users.delete');
 

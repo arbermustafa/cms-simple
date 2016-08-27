@@ -15,22 +15,7 @@ class Test extends Base
 {
     public static function index()
     {
-        $app = self::_getApp();
-        $auth = $app->auth;
-        $auth->getStorage()->write(array(
-            'id' => 1,
-            'firstname' => 'Arber',
-            'lastname' => 'Mustafa',
-            'email' => 'amustafa@medialb.net',
-            'role' => 'ADMIN',
-            'last_login' => '18.08.2016 10:11:12'
-        ));
-        //$result = \App\Service\Authentication::auth(array(
-        //    'email' => 'amustafa@medialb.net',
-        //    'password' => 'arber009'
-        //));
-
-        $result = $auth->getIdentity();
+        $result = \App\Service\User::getUserCount();
 
         echo '<pre>';
         echo var_dump($result);

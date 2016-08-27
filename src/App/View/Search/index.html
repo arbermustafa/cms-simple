@@ -9,10 +9,10 @@
     <ul id="search-results">
         {% for result in results %}
             <li>
-                <h2><a href="{{ urlFor('post', {slug: result.slug}) }}">{{ result.title }}</a></h2>
+                <h2><a href="{{ urlFor("post", {slug: result.slug}) }}">{{ result.title }}</a></h2>
                 <p>{{ words(result.content, 50) }}</p>
             </li>
         {% endfor %}
     </ul>
-    {% include "Utils/_pagination.html" with {'path': 'search'} %}
+    {% include "Utils/_pagination.html" with {"path": "search"} %}
 {% endblock %}

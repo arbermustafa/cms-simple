@@ -1,7 +1,52 @@
 {% extends "back.html" %}
 {% block title %}Website Settings{% endblock %}
-{% block page_title %}Website Settings{% endblock %}
 {% block settings_active %}active{% endblock %}
 {% block content %}
-    {{ dump(identity) }}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Change website general settings</h3>
+                </div>
+                <form name="form-setings" class="form-horizontal" id="form-setings" method="post" action="{{ urlFor("intranet.settings") }}">
+                    <div class="box-body">
+                        {% include "Utils/_error_success.html" with {result: result} %}
+                        <div class="form-group">
+                            <label for="fb_key" class="col-sm-2 control-label">Facebook page</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="fb" class="form-control" id="fb_key" value="{{ getSetting("fb") }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="in_key" class="col-sm-2 control-label">Linkedin page</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="in" class="form-control" id="in_key" value="{{ getSetting("in") }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="keywords_key" class="col-sm-2 control-label">Meta Keywords</label>
+                            <div class="col-sm-10">
+                                <textarea name="keywords" class="form-control" id="keywords_key" rows="4">{{ getSetting("keywords") }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description_key" class="col-sm-2 control-label">Meta Description</label>
+                            <div class="col-sm-10">
+                                <textarea name="description" class="form-control" id="description_key" rows="4">{{ getSetting("description") }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="analytics_key" class="col-sm-2 control-label">Google Analytics JS Code</label>
+                            <div class="col-sm-10">
+                                <textarea name="analytics" class="form-control" id="analytics_key" rows="5">{{ getSetting("analytics") }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}

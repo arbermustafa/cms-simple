@@ -27,6 +27,13 @@ class Category extends Content
         return $category;
     }
 
+    public static function getCategoryCount()
+    {
+        $categoryCount = parent::getContentCountByType('category');
+
+        return $categoryCount;
+    }
+
     public static function getCategories()
     {
         $cache = self::_getCache();

@@ -35,4 +35,22 @@ class Base
     {
         return self::_getApp()->cache;
     }
+
+    /**
+     * Print Valitron error messages
+     */
+     public static function _printValitronErrors($errors = array())
+     {
+         $error = '';
+
+         foreach ($errors as $message) {
+             if (is_array($message)) {
+                 $error .= implode($message, '<br>') . '<br>';
+             } else {
+                 $error .= $message;
+             }
+         }
+
+         return $error;
+     }
 }
