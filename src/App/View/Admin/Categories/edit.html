@@ -1,0 +1,58 @@
+{% extends "back.html" %}
+{% block title %}Category Edit{% endblock %}
+{% block posts_active %}active{% endblock %}
+{% block post_categories_active %}active{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Edit category &ldquo;{{ category.title }}&rdquo;</h3>
+                </div>
+                <form name="form-category" id="form-category" method="post" action="{{ urlFor("intranet.categories.edit", {id: category.id}) }}">
+                    <input type="hidden" name="id" value="{{ category.id }}">
+                    <div class="box-body">
+                        {% include "Utils/_error_success.html" with {result: message} %}
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input type="text" name="title" class="form-control" id="title" value="{{ category.title }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label for="parent">Parent Category</label>
+                                    <select name="parent" class="form-control" id="parent">
+                                        <option value="" {% if category.parent is null %}selected{% endif %}>-- None --</option>
+                                        {% if parent_list is iterable and parent_list|length > 0 %}
+                                            {% import "Utils/_recursive_category_select.html" as recursive %}
+                                            {% for parent in parent_list %}
+                                                {{ recursive.recursiveCategory(parent, 0, category.parent, category.id) }}
+                                            {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select name="status" class="form-control" id="status">
+                                        <option value="PUBLISHED" {% if category.status == "PUBLISHED" %}selected{% endif %}>PUBLISHED</option>
+                                        <option value="DRAFT" {% if category.status == "DRAFT" %}selected{% endif %}>DRAFT</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save category</button>
+                        <a class="btn btn-default" href="{{ urlFor("intranet.categories.list") }}"><i class="fa fa-level-up"></i> Go to categories</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

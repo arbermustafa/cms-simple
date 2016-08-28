@@ -59,6 +59,18 @@ $app->group('/intranet', function() use ($app)
     $app->map('/users/edit/:id', 'App\Controller\Admin\Users:edit')->via('GET', 'POST')->name('intranet.users.edit');
     $app->get('/users/:id', 'App\Controller\Admin\Users:delete')->name('intranet.users.delete');
 
+    // Posts categories
+    $app->get('/categories/list', 'App\Controller\Admin\Categories:index')->name('intranet.categories.list');
+    $app->map('/categories', 'App\Controller\Admin\Categories:add')->via('GET', 'POST')->name('intranet.categories.add');
+    $app->map('/categories/edit/:id', 'App\Controller\Admin\Categories:edit')->via('GET', 'POST')->name('intranet.categories.edit');
+    $app->get('/categories/:id', 'App\Controller\Admin\Categories:delete')->name('intranet.categories.delete');
+
+    // Slider
+    $app->get('/slides/list/:page', 'App\Controller\Admin\Slides:index')->name('intranet.slides.list');
+    $app->map('/slides', 'App\Controller\Admin\Slides:add')->via('GET', 'POST')->name('intranet.slides.add');
+    $app->map('/slides/edit/:id', 'App\Controller\Admin\Slides:edit')->via('GET', 'POST')->name('intranet.slides.edit');
+    $app->get('/slides/:id', 'App\Controller\Admin\Slides:delete')->name('intranet.slides.delete');
+
     // Error
     $app->get('/unauthorized', 'App\Controller\Admin\Error:unauthorized')->name('intranet.unauthorized');
 });

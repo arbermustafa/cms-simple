@@ -36,15 +36,28 @@ class Slide extends Content
         return $result;
     }
 
+    public static function getSlide($id)
+    {
+        $slide = parent::getContent($id);
+
+        return $slide;
+    }
+
     public static function getList($page = 1, $itemPerPage = 10)
     {
         $log = self::_getLog();
         $cache = self::_getCache();
         $key = __CLASS__.'_'.__FUNCTION__.'_'.$page.'_'.$itemPerPage;
-        $result = array();
+        $result = array(
+            'data'        => null,
+            'total'       => 0,
+            'lastPage'    => 0,
+            'currentPage' => 0
+        );
 
         if (false == ($result = $cache->getItem($key))) {
             $slides = ContentModel::select('id', 'title', 'featured_photo', 'status')
+                ->where('type', 'slide')
                 ->orderBy('id', 'asc')
                 ->paginateToArray($page, $itemPerPage);
 
@@ -80,7 +93,7 @@ class Slide extends Content
                 return array('error' => 'Slide not created!');
             }
         } else {
-            return array('error' => $validator->errors());
+            return array('error' => self::_printValitronErrors($validator->errors()));
         }
     }
 
@@ -103,7 +116,7 @@ class Slide extends Content
                 return array('error' => 'Slide not modified!');
             }
         } else {
-            return array('error' => $validator->errors());
+            return array('error' => self::_printValitronErrors($validator->errors()));
         }
     }
 

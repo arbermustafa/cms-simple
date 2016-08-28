@@ -37,6 +37,30 @@ class Base
     }
 
     /**
+     * AUTH instance
+     */
+    public static function _getAuth()
+    {
+        return self::_getApp()->auth;
+    }
+
+    /**
+     * Get current user identity
+     * @return Zend\Authentication\Result
+     */
+    public static function getIdentity()
+    {
+        $auth = self::_getAuth();
+        $identity = null;
+
+        if($auth->hasIdentity()) {
+            $identity = $auth->getIdentity();
+        }
+
+        return $identity;
+    }
+
+    /**
      * Print Valitron error messages
      */
      public static function _printValitronErrors($errors = array())

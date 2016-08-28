@@ -150,8 +150,8 @@ $app->container->singleton('cache', function()
     return $cache;
 });
 
-// Session
-$app->container->singleton('session', function()
+// Session Manager
+$app->container->singleton('sessionManager', function()
 {
     $sessionConfig = new SessionConfig();
     $sessionConfig->setOptions(array(
@@ -169,7 +169,7 @@ $app->container->singleton('session', function()
 });
 
 // Session Container
-$app->container->singleton('sessionContainer', function() use ($app)
+$app->container->singleton('session', function() use ($app)
 {
     $container = new SessionContainer(getenv('APP_NAME'));
 
@@ -181,7 +181,7 @@ $app->container->singleton('sessionContainer', function() use ($app)
 $app->container->singleton('auth', function() use ($app)
 {
     $authService = new AuthenticationService();
-    $storage = new SessionStorage(null, null, $app->session);
+    $storage = new SessionStorage(null, null, $app->sessionManager);
     $authService->setStorage($storage);
 
     return $authService;

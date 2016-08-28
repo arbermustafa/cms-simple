@@ -11,6 +11,7 @@ namespace App\Model;
 use \App\Eloquent\Model\Base;
 use \Illuminate\Database\Capsule\Manager as DB;
 use \Illuminate\Support\Str;
+use \App\Service\Base as BaseService;
 
 class Content extends Base
 {
@@ -116,8 +117,9 @@ class Content extends Base
 
         static::saving(function($content)
         {
-            $userId = 1; //Get user id from authentication
-            return $content->setUserIdAttribute($userId);
+            $identity = BaseService::getIdentity();
+
+            return $content->setUserIdAttribute($identity['id']);
         });
     }
 }

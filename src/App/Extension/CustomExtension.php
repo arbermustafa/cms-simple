@@ -86,7 +86,7 @@ class CustomExtension extends \Twig_Extension
     public function getFlashMessage($key = null)
     {
         $app = Slim::getInstance();
-        $session = $app->sessionContainer;
+        $session = $app->session;
 
         $result = $session->offsetGet($key);
         $session->offsetUnset($key);

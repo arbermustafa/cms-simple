@@ -34,17 +34,21 @@ class Category extends Content
         return $categoryCount;
     }
 
-    public static function getCategories()
+    public static function getCategories($status = null)
     {
         $cache = self::_getCache();
-        $key = __CLASS__.'_'.__FUNCTION__;
+        $key = __CLASS__.'_'.__FUNCTION__.'_'.md5($status);
         $result = array();
 
         if (false == ($result = $cache->getItem($key))) {
             $categories = ContentModel::with('childrenRecursive')
-                ->where('type', 'category')
-                ->where('status', 'PUBLISHED')
-                ->whereNull('parent')
+                ->where('type', 'category');
+
+            if (null !== $status && '' !== $status) {
+                $categories = $categories->where('status', $status);
+            }
+
+            $categories = $categories->whereNull('parent')
                 ->get();
 
             if ($categories) {
@@ -64,8 +68,11 @@ class Category extends Content
         $cache = self::_getCache();
         $validator = self::validator($params);
 
+        $params['parent'] = ($params['parent'] === '') ? null : (int) $params['parent'];
+
         if ($validator->validate()) {
             $params['type'] = 'category';
+            $params['slug'] = '';
 
             try {
                 ContentModel::create($params);
@@ -79,7 +86,7 @@ class Category extends Content
                 return array('error' => 'Category not created!');
             }
         } else {
-            return array('error' => $validator->errors());
+            return array('error' => self::_printValitronErrors($validator->errors()));
         }
     }
 
@@ -89,7 +96,11 @@ class Category extends Content
         $cache = self::_getCache();
         $validator = self::validator($params);
 
+        $params['parent'] = ($params['parent'] === '') ? null : (int) $params['parent'];
+
         if ($validator->validate()) {
+            $params['slug'] = '';
+
             try {
                 ContentModel::find((int) $params['id'])->fill($params)->save();
 
@@ -102,7 +113,7 @@ class Category extends Content
                 return array('error' => 'Category not modified!');
             }
         } else {
-            return array('error' => $validator->errors());
+            return array('error' => self::_printValitronErrors($validator->errors()));
         }
     }
 
@@ -132,9 +143,14 @@ class Category extends Content
     private static function validator($params)
     {
         $validator = new Validator($params);
-        $validator->rule('required', array('title'));
+        $validator->rule('required', array('title', 'status'))->message('{field} is required');
+        $validator->rule('in', 'status', array('PUBLISHED', 'DRAFT'), true);
         $validator->rule('optional', 'parent');
-        $validator->rule('integer', 'parent');
+        $validator->labels(array(
+            'title'  => 'Title',
+            'parent' => 'Parent Category',
+            'status' => 'Status'
+        ));
 
         return $validator;
     }

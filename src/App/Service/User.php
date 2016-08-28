@@ -111,6 +111,10 @@ class User extends Base
         $cache = self::_getCache();
         $validator = self::validator($params);
 
+        if (null === $params['password'] || '' === $params['password']) {
+            unset($params['password']);
+        }
+
         if ($validator->validate()) {
             try {
                 UserModel::find((int) $params['id'])->fill($params)->save();

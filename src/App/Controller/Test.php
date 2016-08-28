@@ -15,6 +15,7 @@ class Test extends Base
 {
     public static function index()
     {
+        echo md5(null);
         $result = \App\Service\User::getUserCount();
 
         echo '<pre>';

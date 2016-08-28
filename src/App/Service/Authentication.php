@@ -11,10 +11,11 @@ namespace App\Service;
 use \App\Model\User;
 use \Valitron\Validator;
 
-class Authentication
+class Authentication extends Base
 {
     public static function auth(array $params)
     {
+        $log = self::_getLog();
         $validator = self::validator($params);
 
         if ($validator->validate()) {

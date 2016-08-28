@@ -9,15 +9,15 @@
 namespace App\Controller\Admin;
 
 use \App\Controller\Base;
-use \App\Service\User;
+use \App\Service\Slide;
 
-class Users extends Base
+class Slides extends Base
 {
     public static function index($page)
     {
-        $results = User::getList((int) $page);
+        $results = Slide::getList((int) $page);
 
-        self::response('Admin/Users/list.html', array(
+        self::response('Admin/Slides/list.html', array(
             'results' => $results['data'],
             'total' => (int) $results['total'],
             'lastPage' => (int) $results['lastPage'],
@@ -41,7 +41,7 @@ class Users extends Base
             $result['user'] = $request->post();
         }
 
-        self::response('Admin/Users/add.html', $result);
+        self::response('Admin/Slides/add.html', $result);
     }
 
     public static function edit($id)
@@ -49,7 +49,7 @@ class Users extends Base
         $app = self::_getApp();
         $request = $app->request();
         $result = array(
-            'user'    => User::getUser((int) $id),
+            'slide'    => Slide::getUser((int) $id),
             'message' => null
         );
 
@@ -60,17 +60,17 @@ class Users extends Base
             $result['user'] = $request->post();
         }
 
-        self::response('Admin/Users/edit.html', $result);
+        self::response('Admin/Slides/edit.html', $result);
     }
 
     public static function delete($id)
     {
         $app = self::_getApp();
         $session = $app->session;
-        $result = User::delete((int) $id);
+        $result = Slide::delete((int) $id);
 
         $session->offsetSet('message', $result);
 
-        return $app->redirectTo('intranet.users.list', array('page' => 1));
+        return $app->redirectTo('intranet.slides.list', array('page' => 1));
     }
 }
