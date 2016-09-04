@@ -65,7 +65,7 @@ $app->group('/intranet', function() use ($app)
     $app->map('/categories/edit/:id', 'App\Controller\Admin\Categories:edit')->via('GET', 'POST')->name('intranet.categories.edit');
     $app->get('/categories/:id', 'App\Controller\Admin\Categories:delete')->name('intranet.categories.delete');
 
-    // Slider
+    // Slides
     $app->get('/slides/list/:page', 'App\Controller\Admin\Slides:index')->name('intranet.slides.list');
     $app->map('/slides', 'App\Controller\Admin\Slides:add')->via('GET', 'POST')->name('intranet.slides.add');
     $app->map('/slides/edit/:id', 'App\Controller\Admin\Slides:edit')->via('GET', 'POST')->name('intranet.slides.edit');

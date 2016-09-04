@@ -1,72 +1,81 @@
 {% extends "back.html" %}
-{% block title %}User Add{% endblock %}
-{% block users_active %}active{% endblock %}
+{% block header %}
+    {{ parent() }}
+    <!-- Begin Fileinput CSS -->
+    <link type="text/css" rel="stylesheet" href="/assets/vendor/fileinput/fileinput.css">
+    <!-- End Fileinput CSS -->
+{% endblock %}
+{% block title %}Slide Add{% endblock %}
+{% block slides_active %}active{% endblock %}
 {% block content %}
     <div class="row">
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Add new user</h3>
+                    <h3 class="box-title">Add new slide</h3>
                 </div>
-                <form name="form-user" id="form-user" method="post" action="{{ urlFor("intranet.users.add") }}">
+                <form name="form-slide" id="form-slide" method="post" enctype="multipart/form-data" action="{{ urlFor("intranet.slides.add") }}">
                     <div class="box-body">
                         {% include "Utils/_error_success.html" with {result: message} %}
                         <div class="row">
-                            <div class="col-xs-6">
+                            <div class="col-xs-4">
                                 <div class="form-group">
-                                    <label for="firstname">First Name</label>
-                                    <input type="text" name="firstname" class="form-control" id="firstname" value="{{ user.firstname }}">
+                                    <label for="title">Title <span class="required">*</span></label>
+                                    <input type="text" name="title" class="form-control" id="title" value="{{ slide.title }}">
                                 </div>
                             </div>
-                            <div class="col-xs-6">
+                            <div class="col-xs-5">
                                 <div class="form-group">
-                                    <label for="lastname">Last Name</label>
-                                    <input type="text" name="lastname" class="form-control" id="lastname" value="{{ user.lastname }}">
+                                    <label for="content">Description</label>
+                                    <textarea name="content" class="form-control" id="content" rows="5">{{ slide.content }}</textarea>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-6">
+                            <div class="col-xs-3">
                                 <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email" value="{{ user.email }}">
-                                </div>
-                            </div>
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password" value="">
-                                    <p class="help-block">Password must be 8+ alpha/numeric characters long and it must contain at least a number!</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <label for="role">Role</label>
-                                    <select name="role" class="form-control" id="role">
-                                        <option value="ADMIN" {% if user.role == "ADMIN" %}selected{% endif %}>ADMIN</option>
-                                        <option value="AUTHOR" {% if user.role == "AUTHOR" %}selected{% endif %}>AUTHOR</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <label for="status">Status</label>
+                                    <label for="status">Status <span class="required">*</span></label>
                                     <select name="status" class="form-control" id="status">
-                                        <option value="ACTIVE" {% if user.status == "ACTIVE" %}selected{% endif %}>ACTIVE</option>
-                                        <option value="INACTIVE" {% if user.status == "INACTIVE" %}selected{% endif %}>INACTIVE</option>
+                                        <option value="PUBLISHED" {% if slide.status == "PUBLISHED" %}selected{% endif %}>PUBLISHED</option>
+                                        <option value="DRAFT" {% if slide.status == "DRAFT" %}selected{% endif %}>DRAFT</option>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="featured_photo">Slide <span class="required">*</span></label>
+                                    <br>
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail" style="width:940px; height:350px;">
+                                            <img alt="" src="http://www.placehold.it/940x350/EFEFEF/AAAAAA&text=no+image">
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail" style="width:940px; height:350px;"></div>
+                                        <div>
+                                            <span class="btn btn-default btn-file">
+                                                <span class="fileinput-new">Select image</span>
+                                                <span class="fileinput-exists">Change</span>
+                                                <input type="file" name="featured_photo" id="featured_photo">
+                                            </span>
+                                            <a href="javascript:;" class="btn btn-danger fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                        </div>
+                                    </div>
+                                    <p class="help-block">The photo/image must be in the JP(E)G or PNG format and it will be cropped in 940px X 350px</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary"><i class="icon fa fa-floppy-o"></i> Save user</button>
-                        <a class="btn btn-default" href="{{ urlFor("intranet.users.list", {page: 1}) }}"><i class="icon fa fa-level-up"></i> Go to users</a>
+                        <button type="submit" class="btn btn-primary"><i class="icon fa fa-floppy-o"></i> Save slide</button>
+                        <a class="btn btn-default" href="{{ urlFor("intranet.slides.list", {page: 1}) }}"><i class="icon fa fa-level-up"></i> Go to slides</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+{% endblock %}
+{% block js_footer %}
+    {{ parent() }}
+    <!-- Begin Fileinput JS -->
+    <script type="text/javascript" src="/assets/vendor/fileinput/fileinput.js"></script>
+    <!-- End Fileinput JS -->
 {% endblock %}

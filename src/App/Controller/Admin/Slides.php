@@ -18,9 +18,9 @@ class Slides extends Base
         $results = Slide::getList((int) $page);
 
         self::response('Admin/Slides/list.html', array(
-            'results' => $results['data'],
-            'total' => (int) $results['total'],
-            'lastPage' => (int) $results['lastPage'],
+            'results'     => $results['data'],
+            'total'       => (int) $results['total'],
+            'lastPage'    => (int) $results['lastPage'],
             'currentPage' => (int) $results['currentPage']
         ));
     }
@@ -30,15 +30,18 @@ class Slides extends Base
         $app = self::_getApp();
         $request = $app->request();
         $result = array(
-            'user'    => '',
+            'slide'    => '',
             'message' => null
         );
 
         if ($request->isPost()) {
-            $user = User::add($request->post());
+            var_dump($_FILES['featured_photo']);
 
-            $result['message'] = $user;
-            $result['user'] = $request->post();
+            exit;
+            $slide = Slide::add($request->post());
+
+            $result['message'] = $slide;
+            $result['slide'] = $request->post();
         }
 
         self::response('Admin/Slides/add.html', $result);

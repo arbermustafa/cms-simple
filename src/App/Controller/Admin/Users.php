@@ -18,9 +18,9 @@ class Users extends Base
         $results = User::getList((int) $page);
 
         self::response('Admin/Users/list.html', array(
-            'results' => $results['data'],
-            'total' => (int) $results['total'],
-            'lastPage' => (int) $results['lastPage'],
+            'results'     => $results['data'],
+            'total'       => (int) $results['total'],
+            'lastPage'    => (int) $results['lastPage'],
             'currentPage' => (int) $results['currentPage']
         ));
     }

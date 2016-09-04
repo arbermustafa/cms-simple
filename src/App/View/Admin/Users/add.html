@@ -14,13 +14,13 @@
                         <div class="row">
                             <div class="col-xs-6">
                                 <div class="form-group">
-                                    <label for="firstname">First Name</label>
+                                    <label for="firstname">First Name <span class="required">*</span></label>
                                     <input type="text" name="firstname" class="form-control" id="firstname" value="{{ user.firstname }}">
                                 </div>
                             </div>
                             <div class="col-xs-6">
                                 <div class="form-group">
-                                    <label for="lastname">Last Name</label>
+                                    <label for="lastname">Last Name <span class="required">*</span></label>
                                     <input type="text" name="lastname" class="form-control" id="lastname" value="{{ user.lastname }}">
                                 </div>
                             </div>
@@ -28,13 +28,13 @@
                         <div class="row">
                             <div class="col-xs-6">
                                 <div class="form-group">
-                                    <label for="email">Email</label>
+                                    <label for="email">Email <span class="required">*</span></label>
                                     <input type="email" name="email" class="form-control" id="email" value="{{ user.email }}">
                                 </div>
                             </div>
                             <div class="col-xs-6">
                                 <div class="form-group">
-                                    <label for="password">Password</label>
+                                    <label for="password">Password <span class="required">*</span></label>
                                     <input type="password" name="password" class="form-control" id="password" value="">
                                     <p class="help-block">Password must be 8+ alpha/numeric characters long and it must contain at least a number!</p>
                                 </div>
@@ -43,7 +43,7 @@
                         <div class="row">
                             <div class="col-xs-6">
                                 <div class="form-group">
-                                    <label for="role">Role</label>
+                                    <label for="role">Role <span class="required">*</span></label>
                                     <select name="role" class="form-control" id="role">
                                         <option value="ADMIN" {% if user.role == "ADMIN" %}selected{% endif %}>ADMIN</option>
                                         <option value="AUTHOR" {% if user.role == "AUTHOR" %}selected{% endif %}>AUTHOR</option>
@@ -52,7 +52,7 @@
                             </div>
                             <div class="col-xs-6">
                                 <div class="form-group">
-                                    <label for="status">Status</label>
+                                    <label for="status">Status <span class="required">*</span></label>
                                     <select name="status" class="form-control" id="status">
                                         <option value="ACTIVE" {% if user.status == "ACTIVE" %}selected{% endif %}>ACTIVE</option>
                                         <option value="INACTIVE" {% if user.status == "INACTIVE" %}selected{% endif %}>INACTIVE</option>

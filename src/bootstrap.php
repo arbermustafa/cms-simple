@@ -9,15 +9,6 @@
 // Autoload
 require_once(dirname(__FILE__) . '/../vendor/autoload.php');
 
-// APP Environment
-define('APP_ENV', (getenv('APP_ENV') ? getenv('APP_ENV') : 'production'));
-
-// Error handling
-if (APP_ENV === 'development') {
-    error_reporting(E_ALL);
-    ini_set('display_errors' , 1);
-}
-
 // USE STATEMENTS
 use \Dotenv\Dotenv;
 use \Slim\Slim;

@@ -16,7 +16,7 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
-                                    <label for="title">Title</label>
+                                    <label for="title">Title <span class="required">*</span></label>
                                     <input type="text" name="title" class="form-control" id="title" value="{{ category.title }}">
                                 </div>
                             </div>
@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="col-xs-6">
                                 <div class="form-group">
-                                    <label for="parent">Parent Category</label>
+                                    <label for="parent">Parent Category <span class="required">*</span></label>
                                     <select name="parent" class="form-control" id="parent">
                                         <option value="" {% if category.parent is null %}selected{% endif %}>-- None --</option>
                                         {% if parent_list is iterable and parent_list|length > 0 %}
@@ -38,7 +38,7 @@
                             </div>
                             <div class="col-xs-6">
                                 <div class="form-group">
-                                    <label for="status">Status</label>
+                                    <label for="status">Status <span class="required">*</span></label>
                                     <select name="status" class="form-control" id="status">
                                         <option value="PUBLISHED" {% if category.status == "PUBLISHED" %}selected{% endif %}>PUBLISHED</option>
                                         <option value="DRAFT" {% if category.status == "DRAFT" %}selected{% endif %}>DRAFT</option>
