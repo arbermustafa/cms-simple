@@ -9,6 +9,7 @@
 .logo-login {margin: 0 auto !important;}
 .login-box-body, .register-box-body {border: 6px solid #394557;}
 .align-center, .center {text-align: center !important;}
- .uppercase {text-transform: uppercase;}
- .table-bordered > tbody > tr >td {vertical-align: middle;}
- .required {color: #FF0000;}
+.uppercase {text-transform: uppercase;}
+.table-bordered > tbody > tr >td {vertical-align: middle;}
+.required {color: #FF0000;}
+#slide-area-select img {max-width: 100%;}

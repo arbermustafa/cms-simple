@@ -22,7 +22,10 @@ class Category extends Content
 
     public static function getCategory($id)
     {
-        $category = parent::getContent($id);
+        $key = __CLASS__.'_'.__FUNCTION__.'_'.$id;
+        $tag = __CLASS__;
+
+        $category = parent::getContent($id, $key, $tag);
 
         return $category;
     }
@@ -86,7 +89,7 @@ class Category extends Content
                 return array('error' => 'Category not created!');
             }
         } else {
-            return array('error' => self::_printValitronErrors($validator->errors()));
+            return array('error' => self::_printErrors($validator->errors()));
         }
     }
 
@@ -113,7 +116,7 @@ class Category extends Content
                 return array('error' => 'Category not modified!');
             }
         } else {
-            return array('error' => self::_printValitronErrors($validator->errors()));
+            return array('error' => self::_printErrors($validator->errors()));
         }
     }
 

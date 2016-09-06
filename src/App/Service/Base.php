@@ -61,9 +61,9 @@ class Base
     }
 
     /**
-     * Print Valitron error messages
+     * Print error messages
      */
-     public static function _printValitronErrors($errors = array())
+     public static function _printErrors($errors = array())
      {
          $error = '';
 
@@ -71,7 +71,7 @@ class Base
              if (is_array($message)) {
                  $error .= implode($message, '<br>') . '<br>';
              } else {
-                 $error .= $message;
+                 $error .= $message . '<br>';
              }
          }
 

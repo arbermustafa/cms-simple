@@ -71,10 +71,11 @@ class Content extends Base
         return $result;
     }
 
-    public static function getContent($id)
+    public static function getContent($id, $cacheKey = null, $cacheTag = null)
     {
         $cache = self::_getCache();
-        $key = __CLASS__.'_'.__FUNCTION__.'_'.$id;
+        $key = ($cacheKey) ?: __CLASS__.'_'.__FUNCTION__.'_'.$id;
+        $tag = ($cacheTag) ?: __CLASS__;
         $result = array();
 
         if (false == ($result = $cache->getItem($key))) {
@@ -84,7 +85,7 @@ class Content extends Base
                 $result = $content->toArray();
 
                 $cache->setItem($key, $result);
-                $cache->setTags($key, array(__CLASS__));
+                $cache->setTags($key, array($tag));
             }
         }
 

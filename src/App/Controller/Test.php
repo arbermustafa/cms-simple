@@ -21,5 +21,9 @@ class Test extends Base
         echo '<pre>';
         echo var_dump($result);
         echo '</pre>';
+
+        echo uniqid('img-'.date('YmdHis').'-');
+
+        \App\Utility\Helper::cropImage('/img-20160905140417-57cd5f41de981.jpg', array('width' => 940, 'height' => 350));
     }
 }

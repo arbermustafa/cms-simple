@@ -101,7 +101,7 @@ class User extends Base
                 return array('error' => 'User not created!');
             }
         } else {
-            return array('error' => self::_printValitronErrors($validator->errors()));
+            return array('error' => self::_printErrors($validator->errors()));
         }
     }
 
@@ -128,7 +128,7 @@ class User extends Base
                 return array('error' => 'User not modified!');
             }
         } else {
-            return array('error' => self::_printValitronErrors($validator->errors()));
+            return array('error' => self::_printErrors($validator->errors()));
         }
     }
 

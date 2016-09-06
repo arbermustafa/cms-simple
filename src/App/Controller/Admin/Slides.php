@@ -30,14 +30,11 @@ class Slides extends Base
         $app = self::_getApp();
         $request = $app->request();
         $result = array(
-            'slide'    => '',
+            'slide'   => '',
             'message' => null
         );
 
         if ($request->isPost()) {
-            var_dump($_FILES['featured_photo']);
-
-            exit;
             $slide = Slide::add($request->post());
 
             $result['message'] = $slide;
@@ -52,15 +49,19 @@ class Slides extends Base
         $app = self::_getApp();
         $request = $app->request();
         $result = array(
-            'slide'    => Slide::getUser((int) $id),
+            'slide'   => Slide::getSlide((int) $id),
             'message' => null
         );
 
         if ($request->isPost()) {
-            $user = User::edit($request->post());
+            $data = $request->post();
+            $data['old-file'] = (isset($data['old-file'])) ? $data['old-file'] : null;
+            $data['existing-image'] = (isset($data['existing-image'])) ? (int) $data['existing-image'] : 0;
 
-            $result['message'] = $user;
-            $result['user'] = $request->post();
+            $slide = Slide::edit($data);
+
+            $result['message'] = $slide;
+            $result['slide'] = Slide::getSlide((int) $id);
         }
 
         self::response('Admin/Slides/edit.html', $result);

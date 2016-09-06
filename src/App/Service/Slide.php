@@ -9,7 +9,13 @@
 namespace App\Service;
 
 use \App\Model\Content as ContentModel;
+use \Upload\Storage\FileSystem;
+use \Upload\File;
+use \Upload\Validation\Mimetype;
+use \Upload\Validation\Size;
+use \App\Validation\Upload\ImageSize;
 use \Valitron\Validator;
+use \App\Utility\Helper;
 
 class Slide extends Content
 {
@@ -38,7 +44,10 @@ class Slide extends Content
 
     public static function getSlide($id)
     {
-        $slide = parent::getContent($id);
+        $key = __CLASS__.'_'.__FUNCTION__.'_'.$id;
+        $tag = __CLASS__;
+
+        $slide = parent::getContent($id, $key, $tag);
 
         return $slide;
     }
@@ -76,36 +85,88 @@ class Slide extends Content
     {
         $log = self::_getLog();
         $cache = self::_getCache();
+        $result['error'] = '';
+
+        $slideUploaded = self::handleUpload();
+
+        if (isset($slideUploaded['featured_photo'])) {
+            $params['featured_photo'] = $slideUploaded['featured_photo'];
+        } else {
+            $result['error'] .= self::_printErrors($slideUploaded['error']);
+        }
+
         $validator = self::validator($params);
 
         if ($validator->validate()) {
             $params['type'] = 'slide';
 
             try {
-                ContentModel::create($params);
+
+                Helper::cropImage($params['featured_photo'], array(
+                    'w' => $params['w'],
+                    'h' => $params['h'],
+                    'x' => $params['x'],
+                    'y' => $params['y']
+                ));
+
+                $slide = ContentModel::create($params);
 
                 $cache->clearByTags(array(__CLASS__));
 
                 return array('success' => 'Slide created');
             } catch (\Exception $e) {
                 $log->error($e);
+                Helper::deleteFile($params['featured_photo']);
 
                 return array('error' => 'Slide not created!');
             }
         } else {
-            return array('error' => self::_printValitronErrors($validator->errors()));
+            if (isset($params['featured_photo'])) {
+                Helper::deleteFile($params['featured_photo']);
+            }
+
+            $result['error'] .= self::_printErrors($validator->errors());
         }
+
+        return $result;
     }
 
     public static function edit(array $params)
     {
         $log = self::_getLog();
         $cache = self::_getCache();
+        $result['error'] = '';
+
+        if ($params['existing-image'] === 0) {
+            $slideUploaded = self::handleUpload();
+
+            if (isset($slideUploaded['featured_photo'])) {
+                $params['featured_photo'] = $slideUploaded['featured_photo'];
+            } else {
+                $result['error'] .= self::_printErrors($slideUploaded['error']);
+            }
+        } else {
+            $params['featured_photo'] = $params['old-file'];
+        }
+
         $validator = self::validator($params);
 
         if ($validator->validate()) {
             try {
+                if ($params['existing-image'] === 0) {
+                    Helper::cropImage($params['featured_photo'], array(
+                        'w' => $params['w'],
+                        'h' => $params['h'],
+                        'x' => $params['x'],
+                        'y' => $params['y']
+                    ));
+                }
+
                 ContentModel::find((int) $params['id'])->fill($params)->save();
+
+                if ($params['existing-image'] === 0) {
+                    Helper::deleteFile($params['old-file']);
+                }
 
                 $cache->clearByTags(array(__CLASS__));
 
@@ -116,8 +177,14 @@ class Slide extends Content
                 return array('error' => 'Slide not modified!');
             }
         } else {
-            return array('error' => self::_printValitronErrors($validator->errors()));
+            if (isset($params['featured_photo']) && $params['existing-image'] === 0) {
+                Helper::deleteFile($params['featured_photo']);
+            }
+
+            $result['error'] .= self::_printErrors($validator->errors());
         }
+
+        return $result;
     }
 
     public static function delete($id)
@@ -126,7 +193,11 @@ class Slide extends Content
         $cache = self::_getCache();
 
         try {
-            ContentModel::findOrFail((int) $id)->delete();
+            $slide = ContentModel::findOrFail((int) $id);
+
+            Helper::deleteFile($slide->featured_photo);
+
+            $slide->delete();
 
             $cache->clearByTags(array(__CLASS__));
 
@@ -138,11 +209,45 @@ class Slide extends Content
         }
     }
 
+    private static function handleUpload()
+    {
+        $storage = new FileSystem(APP_UPLOAD_PATH);
+        $file = new File('featured_photo', $storage);
+        $file->setName(uniqid('img-' . date('YmdHis') . '-'));
+
+        $file->addValidations(array(
+            new Mimetype(array('image/png', 'image/jpg', 'image/jpeg')),
+            new Size('5M'),
+            new ImageSize(array(
+                'minWidth'  => 940,
+                'maxWidth'  => null,
+                'minHeight' => 350,
+                'maxHeight' => null
+            ))
+        ));
+
+        try {
+            $file->upload();
+
+            return array('featured_photo' => $file->getNameWithExtension());
+        } catch (\Exception $e) {
+            return array('error' => $file->getErrors());
+        }
+    }
+
 
     private static function validator($params)
     {
         $validator = new Validator($params);
-        $validator->rule('required', array('title', 'featured_photo'));
+        $validator->rule('required', array('title', 'featured_photo', 'status'))->message('{field} is required');
+        $validator->rule('in', 'status', array('PUBLISHED', 'DRAFT'), true);
+        $validator->rule('optional', 'content');
+        $validator->labels(array(
+            'title'          => 'Title',
+            'content'        => 'Content',
+            'featured_photo' => 'Slide',
+            'status'         => 'Status'
+        ));
 
         return $validator;
     }

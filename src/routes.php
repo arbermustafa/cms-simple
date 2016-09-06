@@ -33,12 +33,6 @@ $app->error(function(\Exception $e) use ($app)
     $app->render('Error/500.html', array(), 500);
 });
 
-// Frontend routes
-// Single page/post
-$app->get('/:slug', 'App\Controller\Content:post')->name('post');
-// Archive
-$app->get('/archive/:slug/:page', 'App\Controller\Content:archive')->name('archive');
-
 // Backend routes
 $app->group('/intranet', function() use ($app)
 {
@@ -74,3 +68,9 @@ $app->group('/intranet', function() use ($app)
     // Error
     $app->get('/unauthorized', 'App\Controller\Admin\Error:unauthorized')->name('intranet.unauthorized');
 });
+
+// Frontend routes
+// Single page/post
+$app->get('/:slug', 'App\Controller\Content:post')->name('post');
+// Archive
+$app->get('/archive/:slug/:page', 'App\Controller\Content:archive')->name('archive');
