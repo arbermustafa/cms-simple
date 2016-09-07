@@ -13,3 +13,4 @@
 .table-bordered > tbody > tr >td {vertical-align: middle;}
 .required {color: #FF0000;}
 #slide-area-select img {max-width: 100%;}
+.hidden-content {display: none;}

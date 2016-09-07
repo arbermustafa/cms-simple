@@ -56,25 +56,7 @@ class Menu extends Content
                 return array('error' => 'Menu not modified!');
             }
         } else {
-            return array('error' => $validator->errors());
-        }
-    }
-
-    public static function delete($id)
-    {
-        $log = self::_getLog();
-        $cache = self::_getCache();
-
-        try {
-            ContentModel::findOrFail((int) $id)->delete();
-
-            $cache->clearByTags(array(__CLASS__));
-
-            return array('success' => 'Menu deleted');
-        } catch (\Exception $e) {
-            $log->error($e);
-
-            return array('error' => 'Menu not deleted!');
+            return array('error' => self::_printErrors($validator->errors()));
         }
     }
 

@@ -66,7 +66,7 @@ $app->group('/intranet', function() use ($app)
     $app->get('/slides/:id', 'App\Controller\Admin\Slides:delete')->name('intranet.slides.delete');
 
     // Menu
-    $app->map('/menu', 'App\Controller\Admin\Menu:index')->via('GET', 'POST')->name('intranet.menu');
+    $app->map('/menu', 'App\Controller\Admin\Menus:index')->via('GET', 'POST')->name('intranet.menus');
 
     // Error
     $app->get('/unauthorized', 'App\Controller\Admin\Error:unauthorized')->name('intranet.unauthorized');

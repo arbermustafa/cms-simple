@@ -24,6 +24,7 @@ class Acl extends ZendAcl
         $this->addResource('intranet.profile');
         $this->addResource('intranet.unauthorized');
         $this->addResource('intranet.dashboard');
+        $this->addResource('intranet.settings');
         $this->addResource('intranet.users.list');
         $this->addResource('intranet.users.add');
         $this->addResource('intranet.users.edit');
@@ -36,10 +37,9 @@ class Acl extends ZendAcl
         $this->addResource('intranet.slides.add');
         $this->addResource('intranet.slides.edit');
         $this->addResource('intranet.slides.delete');
+        $this->addResource('intranet.menus');
         $this->addResource('intranet.page');
         $this->addResource('intranet.post');
-        $this->addResource('intranet.menu');
-        $this->addResource('intranet.settings');
 
         //Permissions ALL
         $this->deny(null, null, null);
@@ -53,7 +53,6 @@ class Acl extends ZendAcl
         //Permissions AUTHOR
         $this->allow('AUTHOR', 'intranet.profile', null);
         $this->allow('AUTHOR', 'intranet.dashboard', null);
-        $this->allow('AUTHOR', 'intranet.page', null);
         $this->allow('AUTHOR', 'intranet.categories.list', null);
         $this->allow('AUTHOR', 'intranet.categories.add', null);
         $this->allow('AUTHOR', 'intranet.categories.edit', null);
@@ -62,6 +61,8 @@ class Acl extends ZendAcl
         $this->allow('AUTHOR', 'intranet.slides.add', null);
         $this->allow('AUTHOR', 'intranet.slides.edit', null);
         $this->allow('AUTHOR', 'intranet.slides.delete', null);
-        $this->allow('AUTHOR', 'intranet.menu', null);
+        $this->allow('AUTHOR', 'intranet.menus', null);
+        $this->allow('AUTHOR', 'intranet.page', null);
+        $this->allow('AUTHOR', 'intranet.post', null);
     }
 }

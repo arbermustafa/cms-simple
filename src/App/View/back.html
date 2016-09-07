@@ -23,7 +23,7 @@
             <div class="main-header">
                 <a href="{{ urlFor("intranet.dashboard") }}" class="logo">
                     <span class="logo-mini"><b>E</b>Re</span>
-                    <span class="logo-lg"><b>Admin</b>ERe</span>
+                    <span class="logo-lg"><b>Cms</b>ERe</span>
                 </a>
                 <div class="navbar navbar-static-top" role="navigation">
                     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -65,9 +65,16 @@
                         {% if isAllowed("intranet.dashboard") %}
                             <li class="{% block dashboard_active %}{% endblock %}"><a href="{{ urlFor("intranet.dashboard") }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
                         {% endif %}
-                        <li class="{% block settings_active %}{% endblock %}"><a href="{{ urlFor("intranet.settings") }}"><i class="fa fa-cog"></i> <span>Website Settings</span></a></li>
-                        <li class="{% block users_active %}{% endblock %}"><a href="{{ urlFor("intranet.users.list", {page: 1}) }}"><i class="fa fa-users"></i> <span>Users</span></a></li>
-                        <li class="{% block page_active %}{% endblock %}"><a href="#"><i class="fa fa-file"></i> <span>Page</span></a></li>
+                        {% if isAllowed("intranet.settings") %}
+                            <li class="{% block settings_active %}{% endblock %}"><a href="{{ urlFor("intranet.settings") }}"><i class="fa fa-cog"></i> <span>Website Settings</span></a></li>
+                        {% endif %}
+                        {% if isAllowed("intranet.users.list") %}
+                            <li class="{% block users_active %}{% endblock %}"><a href="{{ urlFor("intranet.users.list", {page: 1}) }}"><i class="fa fa-users"></i> <span>Users</span></a></li>
+                        {% endif %}
+                        {% if isAllowed("intranet.dashboard") %}
+                            <li class="{% block page_active %}{% endblock %}"><a href="#"><i class="fa fa-file"></i> <span>Page</span></a></li>
+                        {% endif %}
+                        {% if isAllowed("intranet.categories.list") %}
                         <li class="{% block posts_active %}{% endblock %} treeview">
                             <a href="#">
                                 <i class="fa fa-files-o"></i><span>Posts</span>
@@ -80,8 +87,13 @@
                                 <li class="{% block post_post_active %}{% endblock %}"><a href="#"><i class="fa fa-file-o"></i> Post</a></li>
                             </ul>
                         </li>
-                        <li class="{% block slides_active %}{% endblock %}"><a href="{{ urlFor("intranet.slides.list", {page: 1}) }}"><i class="fa fa-photo"></i> <span>Slides</span></a></li>
-                        <li class="{% block menu_active %}{% endblock %}"><a href="#"><i class="fa fa-navicon"></i> <span>Menu</span></a></li>
+                        {% endif %}
+                        {% if isAllowed("intranet.slides.list") %}
+                            <li class="{% block slides_active %}{% endblock %}"><a href="{{ urlFor("intranet.slides.list", {page: 1}) }}"><i class="fa fa-photo"></i> <span>Slides</span></a></li>
+                        {% endif %}
+                        {% if isAllowed("intranet.menus") %}
+                            <li class="{% block menus_active %}{% endblock %}"><a href="{{ urlFor("intranet.menus") }}"><i class="fa fa-navicon"></i> <span>Menu</span></a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

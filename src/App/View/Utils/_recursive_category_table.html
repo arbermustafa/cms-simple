@@ -1,7 +1,7 @@
 {% macro recursiveCategory(category, loopDashes) %}
     <tr>
         <td>{{ category.id }}</td>
-        <td>{% for i in 1..loopDashes if loopDashes > 0 %}-{% endfor %}&nbsp;{{ category.title }}</td>
+        <td>{{ str_repeat("-", loopDashes) }}&nbsp;{{ category.title }}</td>
         <td>{{ category.status }}</td>
         <td>
             <a class="btn btn-sm btn-primary" href="{{ urlFor("intranet.categories.edit", {id: category.id}) }}"><i class="icon fa fa-pencil"></i> Edit</a>

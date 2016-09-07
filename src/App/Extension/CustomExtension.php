@@ -31,7 +31,8 @@ class CustomExtension extends \Twig_Extension
             new \Twig_SimpleFunction('getMenu', array($this, 'getMenu')),
             new \Twig_SimpleFunction('getFlashMessage', array($this, 'getFlashMessage')),
             new \Twig_SimpleFunction('words', array($this, 'words')),
-            new \Twig_SimpleFunction('isAllowed', array($this, 'isAllowed'))
+            new \Twig_SimpleFunction('isAllowed', array($this, 'isAllowed')),
+            new \Twig_SimpleFunction('str_repeat', array($this, 'str_repeat'))
         );
     }
 
@@ -109,5 +110,10 @@ class CustomExtension extends \Twig_Extension
         $identity = $auth->getIdentity();
 
         return $acl->isAllowed($identity['role'], $resource, $permission);
+    }
+
+    public function str_repeat($str = '', $multiplier = 0)
+    {
+        return str_repeat($str, $multiplier);
     }
 }

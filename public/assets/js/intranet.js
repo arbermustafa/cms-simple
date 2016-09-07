@@ -66,10 +66,37 @@
             });
         };
 
+        var initMenu = function()
+        {
+            var $menu = jQuery("#nestable"),
+                $output = jQuery("#content");
+
+            var updateContent = function(e)
+            {
+                var $list = e.length ? e : jQuery(e.target);
+                if (window.JSON) {
+                    $output.text(window.JSON.stringify($list.nestable("serialize")));
+                } else {
+                    $output.text("{}");
+                }
+            };
+
+            if ($menu.length) {
+                var $maxDepth = parseInt($menu.attr("title"));
+
+                $menu.nestable({
+                    maxDepth: $maxDepth,
+                }).on("change", updateContent);
+
+                updateContent($menu.data("output", $output));
+            }
+        };
+
         return {
             init: function() {
                 initConfirmDialog();
                 initImgCropper();
+                initMenu();
             }
         };
     }();

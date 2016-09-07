@@ -1,5 +1,16 @@
 {% extends "back.html" %}
-{% block title %}| Admin{% endblock %}
+{% block title %}Unauthorized{% endblock %}
 {% block content %}
-    unauthorized
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-danger">
+                <div class="box-body">
+                    <div class="alert alert-danger">
+                        <h4><i class="icon fa fa-ban"></i>Notification</h4>
+                        <p>You are unauthorized to access this section!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

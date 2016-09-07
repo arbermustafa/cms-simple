@@ -1,5 +1,5 @@
 {% macro recursiveCategory(category, loopDashes, selected, disableId) %}
-    <option value="{{ category.id }}" {% if category.id == selected %}selected{% elseif category.id == disableId %}disabled{% endif %}>{% for i in 1..loopDashes if loopDashes > 0 %}-{% endfor %}&nbsp;{{ category.title }}</option>
+    <option value="{{ category.id }}" {% if category.id == selected %}selected{% elseif category.id == disableId %}disabled{% endif %}>{{ str_repeat("-", loopDashes) }}&nbsp;{{ category.title }}</option>
     {% if category.children_recursive and category.children_recursive|length > 0 %}
         {% set loopDashes = loopDashes + 1 %}
         {% import _self as recursive %}

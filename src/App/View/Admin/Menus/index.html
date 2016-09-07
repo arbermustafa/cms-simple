@@ -1,0 +1,128 @@
+{% extends "back.html" %}
+{% block header %}
+    {{ parent() }}
+    <!-- Begin CSS -->
+    <link type="text/css" rel="stylesheet" href="/assets/vendor/jquery-nestable/jquery-nestable.min.css">
+    <!-- End CSS -->
+{% endblock %}
+{% block title %}Website Menus{% endblock %}
+{% block menus_active %}active{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-solid">
+                <form name="form-menus-select" id="form-menus-select" method="get" action="{{ urlFor("intranet.menus") }}">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="input-group input-group-md">
+                                    <select name="name" class="form-control" id="name">
+                                        <option value="header-menu" {% if name == "header-menu" %}selected{% endif %}>Header Menu</option>
+                                        <option value="main-menu" {% if name == "main-menu" %}selected{% endif %}>Main Menu</option>
+                                        <option value="footer-menu" {% if name == "footer-menu" %}selected{% endif %}>Footer Menu</option>
+                                    </select>
+                                    <span class="input-group-btn">
+                                      <button type="submit" class="btn btn-default btn-flat">Select menu to edit</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Change selected menu</h3>
+                </div>
+                <form name="form-menus-edit" id="form-menus-edit" method="post" action="{{ [urlFor("intranet.menus"), queryStringParams()] | join("?") }}">
+                    <input type="hidden" name="title" id="title" value="{{ name }}">
+                    <textarea name="content" id="content" class="hidden-content">{{ menu }}</textarea>
+                    <div class="box-body">
+                        {% include "Utils/_error_success.html" with {result: message} %}
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="box-group" id="accordion">
+                                    <div class="panel box">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapsePages">Pages</a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapsePages" class="panel-collapse collapse in">
+                                            <div class="box-body">
+                                              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                                              wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                                              eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                                              assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                                              nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                                              farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                                              labore sustainable VHS.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel box">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseCategories">Categories</a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseCategories" class="panel-collapse collapse">
+                                            <div class="box-body">
+                                              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                                              wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                                              eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                                              assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                                              nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                                              farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                                              labore sustainable VHS.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel box">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseLinks">Custom Links</a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseLinks" class="panel-collapse collapse">
+                                            <div class="box-body">
+                                              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                                              wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                                              eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                                              assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                                              nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                                              farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                                              labore sustainable VHS.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-xs-offset-2">
+                                <div class="dd" title="{% if name == "main-menu" %}4{% else %}1{% endif %}" id="nestable">
+                                    {% if menu is iterable and menu|length > 0 %}
+                                        {% import "Utils/_recursive_menu_nestable.html" as recursive %}
+                                        {{ recursive.recursiveMenu(menu) }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js_footer %}
+    {{ parent() }}
+    <!-- Begin JS -->
+    <script type="text/javascript" src="/assets/vendor/jquery-nestable/jquery-nestable.min.js"></script>
+    <!-- End JS -->
+{% endblock %}
