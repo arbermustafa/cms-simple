@@ -30,7 +30,8 @@ class CustomExtension extends \Twig_Extension
             new \Twig_SimpleFunction('getSetting', array($this, 'getSetting')),
             new \Twig_SimpleFunction('getMenu', array($this, 'getMenu')),
             new \Twig_SimpleFunction('getFlashMessage', array($this, 'getFlashMessage')),
-            new \Twig_SimpleFunction('words', array($this, 'words'))
+            new \Twig_SimpleFunction('words', array($this, 'words')),
+            new \Twig_SimpleFunction('isAllowed', array($this, 'isAllowed'))
         );
     }
 
@@ -97,5 +98,16 @@ class CustomExtension extends \Twig_Extension
     public function words($str = '', $len = 100)
     {
         return Str::words($str, $len);
+    }
+
+    public function isAllowed($resource, $permission = null)
+    {
+        $app = Slim::getInstance();
+        $auth = $app->auth;
+        $acl = $app->acl;
+
+        $identity = $auth->getIdentity();
+
+        return $acl->isAllowed($identity['role'], $resource, $permission);
     }
 }

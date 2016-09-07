@@ -36,13 +36,13 @@ $app->error(function(\Exception $e) use ($app)
 // Backend routes
 $app->group('/intranet', function() use ($app)
 {
+    // Dashboard
+    $app->get('/', 'App\Controller\Admin\Index:dashboard')->name('intranet.dashboard');
+
     // User
     $app->map('/login', 'App\Controller\Admin\Auth:login')->via('GET', 'POST')->name('intranet.login');
     $app->map('/profile', 'App\Controller\Admin\Auth:profile')->via('GET', 'POST')->name('intranet.profile');
     $app->get('/logout', 'App\Controller\Admin\Auth:logout')->name('intranet.logout');
-
-    // Dashboard
-    $app->get('/dashboard', 'App\Controller\Admin\Index:dashboard')->name('intranet.dashboard');
 
     // Website settings
     $app->map('/settings', 'App\Controller\Admin\Settings:index')->via('GET', 'POST')->name('intranet.settings');
@@ -64,6 +64,9 @@ $app->group('/intranet', function() use ($app)
     $app->map('/slides', 'App\Controller\Admin\Slides:add')->via('GET', 'POST')->name('intranet.slides.add');
     $app->map('/slides/edit/:id', 'App\Controller\Admin\Slides:edit')->via('GET', 'POST')->name('intranet.slides.edit');
     $app->get('/slides/:id', 'App\Controller\Admin\Slides:delete')->name('intranet.slides.delete');
+
+    // Menu
+    $app->map('/menu', 'App\Controller\Admin\Menu:index')->via('GET', 'POST')->name('intranet.menu');
 
     // Error
     $app->get('/unauthorized', 'App\Controller\Admin\Error:unauthorized')->name('intranet.unauthorized');

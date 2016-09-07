@@ -62,7 +62,9 @@
                 <div class="sidebar">
                     <ul class="sidebar-menu">
                         <li class="header">CMS MANAGEMENT</li>
-                        <li class="{% block dashboard_active %}{% endblock %}"><a href="{{ urlFor("intranet.dashboard") }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                        {% if isAllowed("intranet.dashboard") %}
+                            <li class="{% block dashboard_active %}{% endblock %}"><a href="{{ urlFor("intranet.dashboard") }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                        {% endif %}
                         <li class="{% block settings_active %}{% endblock %}"><a href="{{ urlFor("intranet.settings") }}"><i class="fa fa-cog"></i> <span>Website Settings</span></a></li>
                         <li class="{% block users_active %}{% endblock %}"><a href="{{ urlFor("intranet.users.list", {page: 1}) }}"><i class="fa fa-users"></i> <span>Users</span></a></li>
                         <li class="{% block page_active %}{% endblock %}"><a href="#"><i class="fa fa-file"></i> <span>Page</span></a></li>

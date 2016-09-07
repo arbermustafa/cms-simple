@@ -62,7 +62,6 @@ class Acl extends ZendAcl
         $this->allow('AUTHOR', 'intranet.slides.add', null);
         $this->allow('AUTHOR', 'intranet.slides.edit', null);
         $this->allow('AUTHOR', 'intranet.slides.delete', null);
-        $this->allow('AUTHOR', 'intranet.post', null);
         $this->allow('AUTHOR', 'intranet.menu', null);
     }
 }
