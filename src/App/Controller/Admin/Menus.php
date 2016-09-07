@@ -10,6 +10,8 @@ namespace App\Controller\Admin;
 
 use \App\Controller\Base;
 use \App\Service\Menu;
+use \App\Service\Category;
+use \App\Service\Page;
 
 class Menus extends Base
 {
@@ -25,9 +27,11 @@ class Menus extends Base
         }
 
         $result = array(
-            'name'    => $name,
-            'menu'    => Menu::getMenuByName($name),
-            'message' => null
+            'name'       => $name,
+            'categories' => Category::getCategories('PUBLISHED'),
+            'pages'      => Page::getPages('PUBLISHED'),
+            'menu'       => Menu::getMenuByName($name),
+            'message'    => null
         );
 
         if ($request->isPost()) {

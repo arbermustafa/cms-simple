@@ -69,7 +69,11 @@
         var initMenu = function()
         {
             var $menu = jQuery("#nestable"),
-                $output = jQuery("#content");
+                $outer = jQuery("#nestable > ol"),
+                $output = jQuery("#content"),
+                $addP = jQuery("#add-p"),
+                $addC = jQuery("#add-c"),
+                $addCL = jQuery("#add-cl");
 
             var updateContent = function(e)
             {
@@ -80,6 +84,65 @@
                     $output.text("{}");
                 }
             };
+
+            var addItem = function(item)
+            {
+                var $element = '<li class="dd-item dd3-item" data-url="' + item.url + '" data-title="' + item.title + '">' +
+                    '<div class="dd-handle dd3-handle"><i class="fa fa-arrows-alt"></i></div>' +
+                    '<div class="dd3-content">' + item.title + '</div>' +
+                    '<button type="button" class="dd3-delete btn btn-default btn-block" data-action="remove"><i class="fa fa-close"></i></button>' +
+                    '</li>';
+
+                $outer.append($element);
+
+                updateContent($menu.data("output", $output));
+            };
+
+            $addP.click(function()
+            {
+                jQuery("input.c-pages:checked").each(function()
+                {
+                    var $value = $(this).val().split("|");
+                    var $title = $value[0],
+                        $url = $value[1];
+                    var $elem = {
+                        title: $title,
+                        url: $url
+                    }
+
+                    addItem($elem);
+                    $(this).attr("checked", false);
+                });
+            });
+
+            $addC.click(function()
+            {
+                jQuery("input.c-categories:checked").each(function()
+                {
+                    var $value = $(this).val().split("|");
+                    var $title = $value[0],
+                        $url = $value[1];
+                    var $elem = {
+                        title: $title,
+                        url: $url
+                    }
+
+                    addItem($elem);
+                    $(this).attr("checked", false);
+                });
+            });
+
+            $addCL.click(function()
+            {
+                var $title = jQuery("#cl-title"),
+                    $url = jQuery("#cl-url");
+                var $elem = {
+                    title: $title.val(),
+                    url: $url.val()
+                }
+
+                addItem($elem);
+            });
 
             if ($menu.length) {
                 var $maxDepth = parseInt($menu.attr("title"));

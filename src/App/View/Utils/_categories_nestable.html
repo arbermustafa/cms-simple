@@ -1,0 +1,14 @@
+{% macro printCategory(item, loopSpaces) %}
+    <div class="checkbox">
+        <label>
+            {{ str_repeat("&nbsp;&nbsp;", loopSpaces) | raw }}<input type="checkbox" class="c-categories" value="{{ [item.title, item.slug] | join("|") }}"> {{ item.title }}
+        </label>
+    </div>
+    {% if item.children_recursive and item.children_recursive|length > 0 %}
+        {% set loopSpaces = loopSpaces + 1 %}
+        {% import _self as recursive %}
+        {% for child in item.children_recursive %}
+            {{ recursive.printCategory(child, loopSpaces) }}
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
