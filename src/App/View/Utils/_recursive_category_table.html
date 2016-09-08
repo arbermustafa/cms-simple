@@ -1,18 +1,18 @@
-{% macro recursiveCategory(category, loopDashes) %}
-    <tr>
-        <td>{{ category.id }}</td>
-        <td>{{ str_repeat("-", loopDashes) }}&nbsp;{{ category.title }}</td>
-        <td>{{ category.status }}</td>
-        <td>
-            <a class="btn btn-sm btn-primary" href="{{ urlFor("intranet.categories.edit", {id: category.id}) }}"><i class="icon fa fa-pencil"></i> Edit</a>
-            <a class="btn btn-sm btn-danger delete" href="{{ urlFor("intranet.categories.delete", {id: category.id}) }}"><i class="icon fa fa-close"></i> Delete</a>
-        </td>
-    </tr>
-    {% if category.children_recursive and category.children_recursive|length > 0 %}
-        {% set loopDashes = loopDashes + 1 %}
-        {% import _self as recursive %}
-        {% for child in category.children_recursive %}
-            {{ recursive.recursiveCategory(child, loopDashes) }}
-        {% endfor %}
-    {% endif %}
+{% macro recursiveCategory(categories, loopDashes) %}
+    {% for category in categories %}
+        <tr>
+            <td>{{ category.id }}</td>
+            <td>{{ str_repeat("-", loopDashes) }}&nbsp;{{ category.title }}</td>
+            <td>{{ category.status }}</td>
+            <td>
+                <a class="btn btn-sm btn-primary" href="{{ urlFor("intranet.categories.edit", {id: category.id}) }}"><i class="icon fa fa-pencil"></i> Edit</a>
+                <a class="btn btn-sm btn-danger delete" href="{{ urlFor("intranet.categories.delete", {id: category.id}) }}"><i class="icon fa fa-close"></i> Delete</a>
+            </td>
+        </tr>
+        {% if category.children_recursive and category.children_recursive|length > 0 %}
+            {% set loopDashes = loopDashes + 1 %}
+            {% import _self as recursive %}
+            {{ recursive.recursiveCategory(category.children_recursive, loopDashes) }}
+        {% endif %}
+    {% endfor %}
 {% endmacro %}

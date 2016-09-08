@@ -1,14 +1,14 @@
-{% macro recursiveCategory(category, loopDashes, selected, disableId) %}
-    <option value="{{ category.id }}" {% if category.id == selected %}selected{% elseif category.id == disableId %}disabled{% endif %}>{{ str_repeat("-", loopDashes) }}&nbsp;{{ category.title }}</option>
-    {% if category.children_recursive and category.children_recursive|length > 0 %}
-        {% set loopDashes = loopDashes + 1 %}
-        {% import _self as recursive %}
-        {% for child in category.children_recursive %}
-            {% if disableId and disableId == child.parent %}
-                {{ recursive.recursiveCategory(child, loopDashes, selected, child.id) }}
+{% macro recursiveCategory(categories, loopDashes, selected, disableId) %}
+    {% for category in categories %}
+        <option value="{{ category.id }}" {% if category.id == selected %}selected{% elseif category.id == disableId %}disabled{% endif %}>{{ str_repeat("-", loopDashes) }}&nbsp;{{ category.title }}</option>
+        {% if category.children_recursive and category.children_recursive|length > 0 %}
+            {% set loopDashes = loopDashes + 1 %}
+            {% import _self as recursive %}
+            {% if disableId and disableId == category.children_recursive.parent %}
+                {{ recursive.recursiveCategory(category.children_recursive, loopDashes, selected, child.id) }}
             {% else %}
-                {{ recursive.recursiveCategory(child, loopDashes, selected, disableId) }}
+                {{ recursive.recursiveCategory(category.children_recursive, loopDashes, selected, disableId) }}
             {% endif %}
-        {% endfor %}
-    {% endif %}
+        {% endif %}
+    {% endfor %}
 {% endmacro %}

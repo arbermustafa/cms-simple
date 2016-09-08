@@ -2,7 +2,7 @@
     {% for item in pages %}
         <div class="checkbox">
             <label>
-                <input type="checkbox" class="c-pages" value="{{ [item.title, item.slug] | join("|") }}"> {{ item.title }}
+                <input type="checkbox" class="c-pages" value="{{ [item.id, item.title] | join("|") }}"> {{ item.title }}
             </label>
         </div>
     {% endfor %}

@@ -28,9 +28,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for category in categories %}
-                                    {{ recursive.recursiveCategory(category, 0) }}
-                                {% endfor %}
+                                {{ recursive.recursiveCategory(categories, 0) }}
                             </tbody>
                         </table>
                     {% else %}

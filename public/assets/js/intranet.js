@@ -85,15 +85,29 @@
                 }
             };
 
-            var addItem = function(item)
+            var addItem = function(item, cl = false)
             {
-                var $element = '<li class="dd-item dd3-item" data-url="' + item.url + '" data-title="' + item.title + '">' +
+                var $data = '';
+                if (cl) {
+                    $data += 'data-url="' + item.url + '" data-title="' + item.title + '"';
+                } else {
+                    $data += 'data-id="' + item.id + '"';
+                }
+
+                var $element = '<li class="dd-item dd3-item" ' + $data + '>' +
                     '<div class="dd-handle dd3-handle"><i class="fa fa-arrows-alt"></i></div>' +
                     '<div class="dd3-content">' + item.title + '</div>' +
-                    '<button type="button" class="dd3-delete btn btn-default btn-block" data-action="remove"><i class="fa fa-close"></i></button>' +
+                    '<button type="button" class="dd3-delete btn btn-default btn-block" data-action="remove">' +
+                    '<i class="fa fa-close"></i></button>' +
                     '</li>';
 
-                $outer.append($element);
+                if ($outer.length) {
+                    $outer.append($element);
+                } else {
+                    $menu.empty();
+                    $outer = $menu.append("<ol class=\"dd-list\"></ol>").find("ol");
+                    $outer.append($element);
+                }
 
                 updateContent($menu.data("output", $output));
             };
@@ -103,11 +117,11 @@
                 jQuery("input.c-pages:checked").each(function()
                 {
                     var $value = $(this).val().split("|");
-                    var $title = $value[0],
-                        $url = $value[1];
+                    var $id = parseInt($value[0]),
+                        $title = $value[1];
                     var $elem = {
                         title: $title,
-                        url: $url
+                        id: $id
                     }
 
                     addItem($elem);
@@ -120,12 +134,12 @@
                 jQuery("input.c-categories:checked").each(function()
                 {
                     var $value = $(this).val().split("|");
-                    var $title = $value[0],
-                        $url = $value[1];
+                    var $id = parseInt($value[0]),
+                        $title = $value[1];
                     var $elem = {
                         title: $title,
-                        url: $url
-                    }
+                        id: $id
+                    };
 
                     addItem($elem);
                     $(this).attr("checked", false);
@@ -141,7 +155,7 @@
                     url: $url.val()
                 }
 
-                addItem($elem);
+                addItem($elem, true);
             });
 
             if ($menu.length) {

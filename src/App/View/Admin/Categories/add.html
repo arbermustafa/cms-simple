@@ -28,9 +28,7 @@
                                         <option value="" {% if category.parent is null %}selected{% endif %}>-- None --</option>
                                         {% if parent_list is iterable and parent_list|length > 0 %}
                                             {% import "Utils/_recursive_category_select.html" as recursive %}
-                                            {% for parent in parent_list %}
-                                                {{ recursive.recursiveCategory(parent, 0, category.parent, null) }}
-                                            {% endfor %}
+                                            {{ recursive.recursiveCategory(parent_list, 0, category.parent, null) }}
                                         {% endif %}
                                     </select>
                                 </div>

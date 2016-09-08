@@ -16,7 +16,7 @@ class Test extends Base
     public static function index()
     {
         echo md5(null);
-        $result = \App\Service\User::getUserCount();
+        $result = \App\Service\Menu::getMenuItem(8);
 
         echo '<pre>';
         echo var_dump($result);
@@ -24,6 +24,6 @@ class Test extends Base
 
         echo uniqid('img-'.date('YmdHis').'-');
 
-        \App\Utility\Helper::cropImage('/img-20160905140417-57cd5f41de981.jpg', array('width' => 940, 'height' => 350));
+        //\App\Utility\Helper::cropImage('/img-20160905140417-57cd5f41de981.jpg', array('width' => 940, 'height' => 350));
     }
 }

@@ -37,6 +37,31 @@ class Menu extends Content
         return $result;
     }
 
+    public static function getMenuItem($id)
+    {
+        $cache = self::_getCache();
+        $key = __CLASS__.'_'.__FUNCTION__.'_'.$id;
+        $tag = __CLASS__;
+        $result = array();
+
+        if (false == ($result = $cache->getItem($key))) {
+            $content = ContentModel::find((int) $id);
+
+            $content = ContentModel::select('type', 'title', 'slug')
+                ->where('id', (int) $id)
+                ->first();
+
+            if ($content) {
+                $result = $content->toArray();
+
+                $cache->setItem($key, $result);
+                $cache->setTags($key, array($tag));
+            }
+        }
+
+        return $result;
+    }
+
     public static function edit(array $params)
     {
         $log = self::_getLog();

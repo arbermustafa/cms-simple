@@ -29,6 +29,7 @@ class CustomExtension extends \Twig_Extension
             new \Twig_SimpleFunction('reqParams', array($this, 'reqParams')),
             new \Twig_SimpleFunction('getSetting', array($this, 'getSetting')),
             new \Twig_SimpleFunction('getMenu', array($this, 'getMenu')),
+            new \Twig_SimpleFunction('renderNestableMenu', array($this, 'renderNestableMenu')),
             new \Twig_SimpleFunction('getFlashMessage', array($this, 'getFlashMessage')),
             new \Twig_SimpleFunction('words', array($this, 'words')),
             new \Twig_SimpleFunction('isAllowed', array($this, 'isAllowed')),
@@ -77,12 +78,17 @@ class CustomExtension extends \Twig_Extension
 
         if ('main-menu' === $menu) {
             $params = $this->routeParams();
-            $currentUrl['slug'] = (!empty($params['slug'])) ? $params['slug'] : '';
+            $currentUrl['slug'] = (!empty($params['slug'])) ? $params['slug'] : $_SERVER['REQUEST_URI'];
 
             $menu = Helper::renderMenu($menuFromDB, $currentUrl['slug']);
         }
 
         return $menu;
+    }
+
+    public function renderNestableMenu($menu = array())
+    {
+        return Helper::renderNestableMenu($menu);
     }
 
     public function getFlashMessage($key = null)
