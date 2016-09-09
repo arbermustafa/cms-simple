@@ -15,6 +15,25 @@
                 .replace(/%20/g, '+')
         };
 
+        var notEmpty = function(object)
+        {
+            var $flag = true;
+
+            for (var property in object) {
+
+                if(object.hasOwnProperty(property)
+                    && (Boolean(object[property]) === false
+                    || object[property] === ""
+                    || object[property] === "undefined"
+                    || object[property] === null)) {
+
+                    $flag = false;
+                }
+            };
+
+            return $flag;
+        };
+
         var initConfirmDialog = function()
         {
             jQuery("a.delete").click(function(event)
@@ -98,6 +117,10 @@
 
             var addItem = function(item, cl = false)
             {
+                if (!notEmpty(item)) {
+                    return;
+                }
+
                 var $data = '';
                 if (cl) {
                     $data += 'data-url="' + item.url + '" data-title="' + item.title + '"';
@@ -184,7 +207,7 @@
         {
             var $content = jQuery("#content");
 
-            if ($content.length) {
+            if ($content.length && typeof CKEDITOR !== "undefined") {
                 CKEDITOR.replace("content", {
                     autoUpdateElement: true,
                     height: "450px",

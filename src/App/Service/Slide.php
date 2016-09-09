@@ -212,7 +212,7 @@ class Slide extends Content
         }
     }
 
-    private static function handleUpload()
+    public static function handleUpload()
     {
         $storage = new FileSystem(APP_UPLOAD_PATH);
         $file = new File('featured_photo', $storage);
