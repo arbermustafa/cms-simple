@@ -45,8 +45,6 @@ class Menu extends Content
         $result = array();
 
         if (false == ($result = $cache->getItem($key))) {
-            $content = ContentModel::find((int) $id);
-
             $content = ContentModel::select('type', 'title', 'slug')
                 ->where('id', (int) $id)
                 ->first();
@@ -83,6 +81,12 @@ class Menu extends Content
         } else {
             return array('error' => self::_printErrors($validator->errors()));
         }
+    }
+    public static function clearCache()
+    {
+        $cache = self::_getCache();
+
+        $cache->clearByTags(array(__CLASS__));
     }
 
     private static function validator($params)

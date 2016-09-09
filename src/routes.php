@@ -53,11 +53,23 @@ $app->group('/intranet', function() use ($app)
     $app->map('/users/edit/:id', 'App\Controller\Admin\Users:edit')->via('GET', 'POST')->name('intranet.users.edit');
     $app->get('/users/:id', 'App\Controller\Admin\Users:delete')->name('intranet.users.delete');
 
+    // Pages
+    $app->get('/pages/list/:page', 'App\Controller\Admin\Pages:index')->name('intranet.pages.list');
+    $app->map('/pages', 'App\Controller\Admin\Pages:add')->via('GET', 'POST')->name('intranet.pages.add');
+    $app->map('/pages/edit/:id', 'App\Controller\Admin\Pages:edit')->via('GET', 'POST')->name('intranet.pages.edit');
+    $app->get('/pages/:id', 'App\Controller\Admin\Pages:delete')->name('intranet.pages.delete');
+
     // Posts categories
     $app->get('/categories/list', 'App\Controller\Admin\Categories:index')->name('intranet.categories.list');
     $app->map('/categories', 'App\Controller\Admin\Categories:add')->via('GET', 'POST')->name('intranet.categories.add');
     $app->map('/categories/edit/:id', 'App\Controller\Admin\Categories:edit')->via('GET', 'POST')->name('intranet.categories.edit');
     $app->get('/categories/:id', 'App\Controller\Admin\Categories:delete')->name('intranet.categories.delete');
+
+    // Posts
+    $app->get('/posts/list/:page', 'App\Controller\Admin\Posts:index')->name('intranet.posts.list');
+    $app->map('/posts', 'App\Controller\Admin\Posts:add')->via('GET', 'POST')->name('intranet.posts.add');
+    $app->map('/posts/edit/:id', 'App\Controller\Admin\Posts:edit')->via('GET', 'POST')->name('intranet.posts.edit');
+    $app->get('/posts/:id', 'App\Controller\Admin\Posts:delete')->name('intranet.posts.delete');
 
     // Slides
     $app->get('/slides/list/:page', 'App\Controller\Admin\Slides:index')->name('intranet.slides.list');

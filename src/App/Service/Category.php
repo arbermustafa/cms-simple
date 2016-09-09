@@ -109,6 +109,8 @@ class Category extends Content
 
                 $cache->clearByTags(array(__CLASS__));
 
+                Menu::clearCache();
+
                 return array('success' => 'Category modified');
             } catch (\Exception $e) {
                 $log->error($e);
@@ -134,6 +136,8 @@ class Category extends Content
 
             $cache->clearByTags(array(__CLASS__));
 
+            Menu::clearCache();
+
             return array('success' => 'Category deleted');
         } catch (\Exception $e) {
             $log->error($e);
@@ -141,7 +145,6 @@ class Category extends Content
             return array('error' => 'Category not deleted!');
         }
     }
-
 
     private static function validator($params)
     {

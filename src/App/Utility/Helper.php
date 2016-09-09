@@ -23,11 +23,13 @@ class Helper
                 if (isset($item['id']) && (int) $item['id'] !== 0) {
                     $itemFromDB = Menu::getMenuItem($item['id']);
 
-                    if ($itemFromDB) {
-                        $class = ($itemFromDB['slug'] === $currentUrl) ? 'active' : '';
-                        $item['url'] = ($itemFromDB['type'] == 'category') ? '/archive/'. $itemFromDB['slug'] .'/1' : $itemFromDB['slug'];
-                        $item['title'] = $itemFromDB['title'];
+                    if (!$itemFromDB) {
+                        continue;
                     }
+
+                    $class = ($itemFromDB['slug'] === $currentUrl) ? 'active' : '';
+                    $item['url'] = ($itemFromDB['type'] == 'category') ? '/archive/'. $itemFromDB['slug'] .'/1' : $itemFromDB['slug'];
+                    $item['title'] = $itemFromDB['title'];
                 } else {
                     $class = ($item['url'] === $currentUrl) ? 'active' : '';
                 }
@@ -37,6 +39,7 @@ class Helper
                 if (!empty($item['children'])) {
                     $html .= self::renderMenu($item['children'], $currentUrl);
                 }
+
                 $html .= '</li>';
             }
         }
@@ -57,10 +60,12 @@ class Helper
                 if (isset($item['id']) && (int) $item['id'] !== 0) {
                     $itemFromDB = Menu::getMenuItem($item['id']);
 
-                    if ($itemFromDB) {
-                        $item['title'] = $itemFromDB['title'];
-                        $data .= 'data-id="'. $item['id'] .'"';
+                    if (!$itemFromDB) {
+                        continue;
                     }
+
+                    $item['title'] = $itemFromDB['title'];
+                    $data .= 'data-id="'. $item['id'] .'"';
                 } else {
                     $data .= 'data-url="'. $item['url'] .'" data-title="'. $item['title'] .'"';
                 }
@@ -74,6 +79,7 @@ class Helper
                 if (!empty($item['children'])) {
                     $html .= self::renderNestableMenu($item['children']);
                 }
+
                 $html .= '</li>';
             }
         }
@@ -81,6 +87,15 @@ class Helper
         $html .= '</ol>';
 
         return $html;
+    }
+
+    public static function hasUploads()
+    {
+        if (empty($_FILES)) {
+            return false;
+        }
+
+        return true;
     }
 
     public static function cropImage($filename, array $options)
@@ -97,8 +112,8 @@ class Helper
 
     public static function resizeImage($filename, array $options)
     {
-        $width = $options['width'];
-        $height = $options['height'];
+        $width = $options['w'];
+        $height = $options['h'];
 
         $image = Image::make(APP_UPLOAD_PATH . DIRECTORY_SEPARATOR . $filename);
 

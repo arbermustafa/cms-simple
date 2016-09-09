@@ -43,6 +43,11 @@ class Content extends Base
         $this->attributes['status'] = $value;
     }
 
+    public function setDateAttribute($value)
+    {
+        $this->attributes['date'] = date('Y-m-d', strtotime($value));
+    }
+
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = substr(strip_tags(trim($value)), 0, 255);
@@ -50,7 +55,7 @@ class Content extends Base
 
     public function setContentAttribute($value)
     {
-        $this->attributes['content'] = strip_tags(trim($value), '<br><b><i><u><blockquote>');
+        $this->attributes['content'] = strip_tags(trim($value), '<br><b><i><u><blockquote><a><img><strong><em><span><p><ol><ul><li>');
     }
 
     public function setSlugAttribute($value)
@@ -73,7 +78,7 @@ class Content extends Base
 
     public function getDateAttribute($value)
     {
-        return date('d.m.Y H:i:s', strtotime($value));
+        return date('d.m.Y', strtotime($value));
     }
 
     public function getSlugAttribute($value)
@@ -109,6 +114,16 @@ class Content extends Base
     public function childrenRecursive()
     {
        return $this->children()->with('childrenRecursive');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany('\App\Model\Content', 'post_category', 'content_id', 'category_id');
+    }
+
+    public function posts()
+    {
+        return $this->belongsToMany('\App\Model\Content', 'post_category', 'category_id', 'content_id');
     }
 
     protected static function boot()

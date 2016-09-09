@@ -54,11 +54,7 @@ class Slides extends Base
         );
 
         if ($request->isPost()) {
-            $data = $request->post();
-            $data['old-file'] = (isset($data['old-file'])) ? $data['old-file'] : null;
-            $data['existing-image'] = (isset($data['existing-image'])) ? (int) $data['existing-image'] : 0;
-
-            $slide = Slide::edit($data);
+            $slide = Slide::edit($request->post());
 
             $result['message'] = $slide;
             $result['slide'] = Slide::getSlide((int) $id);

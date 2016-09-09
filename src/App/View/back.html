@@ -7,6 +7,21 @@
             <meta http-equiv="X-UA-Compatible" content="IE=8, IE=9, IE=10, IE=edge, chrome=1">
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
+            <!-- Begin FAVICON -->
+            <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">
+            <link rel="icon" type="image/png" href="/assets/img/favicon/favicon-32x32.png" sizes="32x32">
+            <link rel="icon" type="image/png" href="/assets/img/favicon/favicon-194x194.png" sizes="194x194">
+            <link rel="icon" type="image/png" href="/assets/img/favicon/android-chrome-192x192.png" sizes="192x192">
+            <link rel="icon" type="image/png" href="/assets/img/favicon/favicon-16x16.png" sizes="16x16">
+            <link rel="manifest" href="/assets/img/favicon/manifest.json">
+            <link rel="mask-icon" href="/assets/img/favicon/safari-pinned-tab.svg" color="#ffffff">
+            <link rel="shortcut icon" href="/assets/img/favicon/favicon.ico">
+            <meta name="msapplication-TileColor" content="#ffffff">
+            <meta name="msapplication-TileImage" content="/assets/img/favicon/mstile-150x150.png">
+            <meta name="msapplication-config" content="/assets/img/favicon/browserconfig.xml">
+            <meta name="theme-color" content="#ffffff">
+            <!-- End FAVICON -->
+
             <!-- Begin CSS -->
             <link type="text/css" rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
             <link type="text/css" rel="stylesheet" href="/assets/vendor/fontawesome/css/font-awesome.min.css">
@@ -71,28 +86,32 @@
                         {% if isAllowed("intranet.users.list") %}
                             <li class="{% block users_active %}{% endblock %}"><a href="{{ urlFor("intranet.users.list", {page: 1}) }}"><i class="fa fa-users"></i> <span>Users</span></a></li>
                         {% endif %}
-                        {% if isAllowed("intranet.dashboard") %}
-                            <li class="{% block page_active %}{% endblock %}"><a href="#"><i class="fa fa-file"></i> <span>Page</span></a></li>
+                        {% if isAllowed("intranet.pages.list") %}
+                            <li class="{% block page_active %}{% endblock %}"><a href="{{ urlFor("intranet.pages.list", {page: 1}) }}"><i class="fa fa-file"></i> <span>Pages</span></a></li>
                         {% endif %}
-                        {% if isAllowed("intranet.categories.list") %}
-                        <li class="{% block posts_active %}{% endblock %} treeview">
-                            <a href="#">
-                                <i class="fa fa-files-o"></i><span>Posts</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li class="{% block post_categories_active %}{% endblock %}"><a href="{{ urlFor("intranet.categories.list") }}"><i class="fa fa-tag"></i> Post Categories</a></li>
-                                <li class="{% block post_post_active %}{% endblock %}"><a href="#"><i class="fa fa-file-o"></i> Post</a></li>
-                            </ul>
-                        </li>
+                        {% if isAllowed("intranet.categories.list") or isAllowed("intranet.posts.list") %}
+                            <li class="{% block posts_active %}{% endblock %} treeview">
+                                <a href="#">
+                                    <i class="fa fa-files-o"></i><span>Posts</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    {% if isAllowed("intranet.categories.list") %}
+                                        <li class="{% block post_categories_active %}{% endblock %}"><a href="{{ urlFor("intranet.categories.list") }}"><i class="fa fa-tag"></i> Post Categories</a></li>
+                                    {% endif %}
+                                    {% if isAllowed("intranet.posts.list") %}
+                                        <li class="{% block post_post_active %}{% endblock %}"><a href="{{ urlFor("intranet.posts.list", {page: 1}) }}"><i class="fa fa-file-o"></i> Post</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
                         {% endif %}
                         {% if isAllowed("intranet.slides.list") %}
                             <li class="{% block slides_active %}{% endblock %}"><a href="{{ urlFor("intranet.slides.list", {page: 1}) }}"><i class="fa fa-photo"></i> <span>Slides</span></a></li>
                         {% endif %}
                         {% if isAllowed("intranet.menus") %}
-                            <li class="{% block menus_active %}{% endblock %}"><a href="{{ urlFor("intranet.menus") }}"><i class="fa fa-navicon"></i> <span>Menu</span></a></li>
+                            <li class="{% block menus_active %}{% endblock %}"><a href="{{ urlFor("intranet.menus") }}"><i class="fa fa-navicon"></i> <span>Menus editor</span></a></li>
                         {% endif %}
                     </ul>
                 </div>

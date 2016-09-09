@@ -16,10 +16,14 @@ class Test extends Base
     public static function index()
     {
         echo md5(null);
-        $result = \App\Service\Menu::getMenuItem(8);
+        $result = Content::create(
+        array(
+            'title' => 'some title 2',
+            'slug' => ''
+        ))->categories()->sync(array(60, 39));
 
         echo '<pre>';
-        echo var_dump($result);
+        echo var_dump($result->toArray());
         echo '</pre>';
 
         echo uniqid('img-'.date('YmdHis').'-');

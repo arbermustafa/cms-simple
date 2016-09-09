@@ -29,17 +29,23 @@ class Acl extends ZendAcl
         $this->addResource('intranet.users.add');
         $this->addResource('intranet.users.edit');
         $this->addResource('intranet.users.delete');
+        $this->addResource('intranet.pages.list');
+        $this->addResource('intranet.pages.add');
+        $this->addResource('intranet.pages.edit');
+        $this->addResource('intranet.pages.delete');
         $this->addResource('intranet.categories.list');
         $this->addResource('intranet.categories.add');
         $this->addResource('intranet.categories.edit');
         $this->addResource('intranet.categories.delete');
+        $this->addResource('intranet.posts.list');
+        $this->addResource('intranet.posts.add');
+        $this->addResource('intranet.posts.edit');
+        $this->addResource('intranet.posts.delete');
         $this->addResource('intranet.slides.list');
         $this->addResource('intranet.slides.add');
         $this->addResource('intranet.slides.edit');
         $this->addResource('intranet.slides.delete');
         $this->addResource('intranet.menus');
-        $this->addResource('intranet.page');
-        $this->addResource('intranet.post');
 
         //Permissions ALL
         $this->deny(null, null, null);
@@ -53,16 +59,22 @@ class Acl extends ZendAcl
         //Permissions AUTHOR
         $this->allow('AUTHOR', 'intranet.profile', null);
         $this->allow('AUTHOR', 'intranet.dashboard', null);
+        $this->allow('AUTHOR', 'intranet.pages.list', null);
+        $this->allow('AUTHOR', 'intranet.pages.add', null);
+        $this->allow('AUTHOR', 'intranet.pages.edit', null);
+        $this->allow('AUTHOR', 'intranet.pages.delete', null);
         $this->allow('AUTHOR', 'intranet.categories.list', null);
         $this->allow('AUTHOR', 'intranet.categories.add', null);
         $this->allow('AUTHOR', 'intranet.categories.edit', null);
         $this->allow('AUTHOR', 'intranet.categories.delete', null);
+        $this->allow('AUTHOR', 'intranet.posts.list', null);
+        $this->allow('AUTHOR', 'intranet.posts.add', null);
+        $this->allow('AUTHOR', 'intranet.posts.edit', null);
+        $this->allow('AUTHOR', 'intranet.posts.delete', null);
         $this->allow('AUTHOR', 'intranet.slides.list', null);
         $this->allow('AUTHOR', 'intranet.slides.add', null);
         $this->allow('AUTHOR', 'intranet.slides.edit', null);
         $this->allow('AUTHOR', 'intranet.slides.delete', null);
         $this->allow('AUTHOR', 'intranet.menus', null);
-        $this->allow('AUTHOR', 'intranet.page', null);
-        $this->allow('AUTHOR', 'intranet.post', null);
     }
 }

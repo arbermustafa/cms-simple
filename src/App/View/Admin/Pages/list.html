@@ -1,0 +1,55 @@
+{% extends "back.html" %}
+{% block title %}Pages List{% endblock %}
+{% block pages_active %}active{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">CMS Pages</h3>
+                    <div class="box-tools">
+                        <div class="input-group input-group-sm">
+                            <a class="btn btn-sm btn-success pull-right" href="{{ urlFor("intranet.pages.add") }}"><i class="icon fa fa-plus"></i> Add Page</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body table-responsive">
+                    {% include "Utils/_error_success.html" with {result: getFlashMessage("message")} %}
+                    {% if results is iterable and results|length > 0 %}
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="uppercase">ID</th>
+                                    <th class="uppercase">Title</th>
+                                    <th class="uppercase">Status</th>
+                                    <th class="uppercase">Created at</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for page in results %}
+                                    <tr>
+                                        <td>{{ page.id }}</td>
+                                        <td>{{ page.title }}</td>
+                                        <td>{{ page.status }}</td>
+                                        <td>{{ page.created_at }}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" href="{{ urlFor("intranet.pages.edit", {id: page.id}) }}"><i class="icon fa fa-pencil"></i> Edit</a>
+                                            <a class="btn btn-sm btn-danger delete" href="{{ urlFor("intranet.pages.delete", {id: page.id}) }}"><i class="icon fa fa-close"></i> Delete</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% include "Utils/_pagination_admin.html" with {"path": "intranet.pages.list"} %}
+                    {% else %}
+                        <div class="alert alert-info">
+                            <h4><i class="icon fa fa-info"></i> Notification</h4>
+                            <p>No information was found!</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

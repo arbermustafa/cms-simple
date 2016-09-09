@@ -39,59 +39,9 @@ class Page extends Content
         return $result;
     }
 
-    public static function add(array $params)
+    public static function getList($page = 1, $itemPerPage = 10)
     {
-        $log = self::_getLog();
-        $cache = self::_getCache();
-        $validator = self::validator($params);
-
-        $params['parent'] = ($params['parent'] === '') ? null : (int) $params['parent'];
-
-        if ($validator->validate()) {
-            $params['type'] = 'category';
-            $params['slug'] = '';
-
-            try {
-                ContentModel::create($params);
-
-                $cache->clearByTags(array(__CLASS__));
-
-                return array('success' => 'Category created');
-            } catch (\Exception $e) {
-                $log->error($e);
-
-                return array('error' => 'Category not created!');
-            }
-        } else {
-            return array('error' => self::_printErrors($validator->errors()));
-        }
-    }
-
-    public static function edit(array $params)
-    {
-        $log = self::_getLog();
-        $cache = self::_getCache();
-        $validator = self::validator($params);
-
-        $params['parent'] = ($params['parent'] === '') ? null : (int) $params['parent'];
-
-        if ($validator->validate()) {
-            $params['slug'] = '';
-
-            try {
-                ContentModel::find((int) $params['id'])->fill($params)->save();
-
-                $cache->clearByTags(array(__CLASS__));
-
-                return array('success' => 'Category modified');
-            } catch (\Exception $e) {
-                $log->error($e);
-
-                return array('error' => 'Category not modified!');
-            }
-        } else {
-            return array('error' => self::_printErrors($validator->errors()));
-        }
+        return parent::getList('page', __CLASS__, $page, $itemPerPage);
     }
 
     public static function delete($id)
@@ -100,22 +50,23 @@ class Page extends Content
         $cache = self::_getCache();
 
         try {
-            $deleted = ContentModel::findOrFail((int) $id)->delete();
+            $page = ContentModel::findOrFail((int) $id);
 
-            if ($deleted) {
-                ContentModel::where('parent', (int) $id)->update(array('parent' => NULL));
+            if ($page->featured_photo) {
+                Helper::deleteFile($page->featured_photo);
             }
+
+            $page->delete();
 
             $cache->clearByTags(array(__CLASS__));
 
-            return array('success' => 'Category deleted');
+            return array('success' => 'Page deleted');
         } catch (\Exception $e) {
             $log->error($e);
 
-            return array('error' => 'Category not deleted!');
+            return array('error' => 'Page not deleted!');
         }
     }
-
 
     private static function validator($params)
     {

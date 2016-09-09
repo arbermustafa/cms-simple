@@ -109,7 +109,7 @@ class Slide extends Content
                     'y' => $params['y']
                 ));
 
-                $slide = ContentModel::create($params);
+                ContentModel::create($params);
 
                 $cache->clearByTags(array(__CLASS__));
 
@@ -136,6 +136,9 @@ class Slide extends Content
         $log = self::_getLog();
         $cache = self::_getCache();
         $result['error'] = '';
+
+        $params['old-file'] = (isset($params['old-file'])) ? $params['old-file'] : null;
+        $params['existing-image'] = (isset($params['existing-image'])) ? (int) $params['existing-image'] : 0;
 
         if ($params['existing-image'] === 0) {
             $slideUploaded = self::handleUpload();

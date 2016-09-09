@@ -12,7 +12,6 @@ use \App\Controller\Base;
 use \App\Service\Menu;
 use \App\Service\Category;
 use \App\Service\Page;
-use \App\Utility\Helper;
 
 class Menus extends Base
 {

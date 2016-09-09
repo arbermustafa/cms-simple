@@ -9,6 +9,11 @@
 namespace App\Service;
 
 use \App\Model\Content as ContentModel;
+use \Upload\Storage\FileSystem;
+use \Upload\File;
+use \Upload\Validation\Mimetype;
+use \Upload\Validation\Size;
+use \App\Validation\Upload\ImageSize;
 use \Valitron\Validator;
 
 class Content extends Base
@@ -114,11 +119,12 @@ class Content extends Base
         return $result;
     }
 
-    public static function getList($type = 'page', $page = 1, $itemPerPage = 10)
+    public static function getList($type, $cacheTag, $page, $itemPerPage)
     {
         $log = self::_getLog();
         $cache = self::_getCache();
         $key = __CLASS__.'_'.__FUNCTION__.'_'.$type.'_'.$page.'_'.$itemPerPage;
+        $tag = ($cacheTag) ?: __CLASS__;
         $result = array();
 
         if (false == ($result = $cache->getItem($key))) {
@@ -131,87 +137,36 @@ class Content extends Base
                 $result = $contents;
 
                 $cache->setItem($key, $result);
-                $cache->setTags($key, array(__CLASS__));
+                $cache->setTags($key, array($tag));
             }
         }
 
         return $result;
     }
 
-    public static function add(array $params)
+    public static function handleUpload()
     {
-        $log = self::_getLog();
-        $cache = self::_getCache();
-        $validator = self::validator($params);
+        $storage = new FileSystem(APP_UPLOAD_PATH);
+        $file = new File('featured_photo', $storage);
+        $file->setName(uniqid('img-' . date('YmdHis') . '-'));
 
-        if ($validator->validate()) {
-            try {
-                UserModel::create($params);
-
-                $cache->clearByTags(array(__CLASS__));
-
-                return array('success' => 'User created');
-            } catch (\Exception $e) {
-                $log->error($e);
-
-                return array('error' => 'User not created!');
-            }
-        } else {
-            return array('error' => $validator->errors());
-        }
-    }
-
-    public static function edit(array $params)
-    {
-        $log = self::_getLog();
-        $cache = self::_getCache();
-        $validator = self::validator($params);
-
-        if ($validator->validate()) {
-            try {
-                UserModel::find((int) $params['id'])->fill($params)->save();
-
-                $cache->clearByTags(array(__CLASS__));
-
-                return array('success' => 'User modified');
-            } catch (\Exception $e) {
-                $log->error($e);
-
-                return array('error' => 'User not modified!');
-            }
-        } else {
-            return array('error' => $validator->errors());
-        }
-    }
-
-    public static function delete($id)
-    {
-        $log = self::_getLog();
-        $cache = self::_getCache();
+        $file->addValidations(array(
+            new Mimetype(array('image/png', 'image/jpg', 'image/jpeg')),
+            new Size('5M'),
+            new ImageSize(array(
+                'minWidth'  => 800,
+                'maxWidth'  => null,
+                'minHeight' => null,
+                'maxHeight' => null
+            ))
+        ));
 
         try {
-            ContentModel::findOrFail((int) $id)->delete();
+            $file->upload();
 
-            $cache->clearByTags(array(__CLASS__));
-
-            return array('success' => 'Content deleted');
+            return array('featured_photo' => $file->getNameWithExtension());
         } catch (\Exception $e) {
-            $log->error($e);
-
-            return array('error' => 'Content not deleted!');
+            return array('error' => $file->getErrors());
         }
-    }
-
-    private static function validator($params)
-    {
-        $validator = new Validator($params);
-        /*$validator->rule('required', array('firstname', 'lastname', 'email', 'role', 'status'));
-        $validator->rule('alpha', array('firstname', 'lastname'));
-        $validator->rule('email', 'email');
-        $validator->rule('regex', 'password', '/((?=.*\d)(?=.*[A-Za-z]).{8,})/');
-        $validator->rule('in', 'role', array('ADMIN', 'AUTHOR'), true);
-        $validator->rule('in', 'status', array('ACTIVE', 'INACTIVE'), true);*/
-
-        return $validator;
     }
 }

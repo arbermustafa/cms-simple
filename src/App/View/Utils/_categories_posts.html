@@ -1,0 +1,14 @@
+{% macro printCategory(categories, loopSpaces, selectedCategories) %}
+    {% for item in categories %}
+        <div class="checkbox">
+            <label>
+                {{ str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", loopSpaces) | raw }}<input name="category[]" type="checkbox" class="c-categories" value="{{ item.id }}" {% if item.id in selectedCategories %}checked{% endif %}> {{ item.title }}
+            </label>
+        </div>
+        {% if item.children_recursive and item.children_recursive|length > 0 %}
+            {% set loopSpaces = loopSpaces + 1 %}
+            {% import _self as recursive %}
+            {{ recursive.printCategory(item.children_recursive, loopSpaces, selectedCategories) }}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}

@@ -4,6 +4,17 @@
 
     var EReAdmin = function()
     {
+        var urlencode = function(str)
+        {
+            return encodeURIComponent(str)
+                .replace(/!/g, '%21')
+                .replace(/'/g, '%27')
+                .replace(/\(/g, '%28')
+                .replace(/\)/g, '%29')
+                .replace(/\*/g, '%2A')
+                .replace(/%20/g, '+')
+        };
+
         var initConfirmDialog = function()
         {
             jQuery("a.delete").click(function(event)
@@ -169,11 +180,41 @@
             }
         };
 
+        var initCKEditor = function()
+        {
+            var $content = jQuery("#content");
+
+            if ($content.length) {
+                CKEDITOR.replace("content", {
+                    autoUpdateElement: true,
+                    height: "450px",
+                    resize_enabled: false,
+                    toolbarCanCollapse: false,
+                    coreStyles_strike: {element: "span", attributes: {"style": "text-decoration:line-through"}},
+                    coreStyles_underline: {element: 'span', attributes: {"style": "text-decoration:underline"}},
+                    forcePasteAsPlainText: true,
+                    enterMode: CKEDITOR.ENTER_BR,
+                    pasteFromWordPromptCleanup: true,
+                    pasteFromWordRemoveFontStyles: true,
+                    pasteFromWordRemoveStyles: false,
+                    toolbar: [
+                        ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat','-','Source','Maximize','Preview','Print'],
+				    	'/',
+				    	['Bold','Italic','Underline','Strike','-','NumberedList','BulletedList','-','Outdent','Indent','-','Format', 'FontSize', 'TextColor','BGColor'],
+				    	'/',
+				    	['Link','Unlink','-','Image','-','Table','HorizontalRule','SpecialChar']
+			    	],
+                    filebrowserBrowseUrl: '/assets/vendor/ckeditor/filemanager/browser/default/browser.html?Connector=' + urlencode('/index.php?_rte_file_manager=1')
+                });
+            }
+        };
+
         return {
             init: function() {
                 initConfirmDialog();
                 initImgCropper();
                 initMenu();
+                initCKEditor();
             }
         };
     }();
