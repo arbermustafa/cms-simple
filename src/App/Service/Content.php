@@ -84,7 +84,8 @@ class Content extends Base
         $result = array();
 
         if (false == ($result = $cache->getItem($key))) {
-            $content = ContentModel::find((int) $id);
+            $content = ContentModel::with('categories')
+                ->find((int) $id);
 
             if ($content) {
                 $result = $content->toArray();

@@ -1,14 +1,11 @@
 {% spaceless %}
     <div id="menu-top">
-        <a href="/" title="Home">Home</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/sitemap" title="Sitemap">Sitemap</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/imprint" title="Imprint">Imprint</a>
+        {% for key in getMenu("header-menu") %}
+            {% if not loop.last %}
+                <a href="{{ key.url }}" title="{{ key.title }}">{{ key.title }}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            {% else %}
+                <a href="{{ key.url }}" title="{{ key.title }}">{{ key.title }}</a>
+            {% endif %}
+        {% endfor %}
     </div>
-    {#
-    {% for key in getMenu('header-menu') %}
-        {% if not loop.last %}
-            <a href="{{ key.url }}" title="{{ key.title }}">{{ key.title }}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-        {% else %}
-            <a href="{{ key.url }}" title="{{ key.title }}">{{ key.title }}</a>
-        {% endif %}
-    {% endfor %}
-    #}
 {% endspaceless %}

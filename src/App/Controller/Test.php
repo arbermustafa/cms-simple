@@ -11,16 +11,14 @@ namespace App\Controller;
 use \App\Model\Content;
 use \Illuminate\Database\Capsule\Manager as DB;
 
+
+use \Zend\Filter\StaticFilter;
+
 class Test extends Base
 {
     public static function index()
     {
-        echo md5(null);
-        $result = Content::create(
-        array(
-            'title' => 'some title 2',
-            'slug' => ''
-        ))->categories()->sync(array(60, 39));
+        $result = StaticFilter::execute('somee-title', 'alnum', array('allowWhiteSpace' =));
 
         echo '<pre>';
         echo var_dump($result->toArray());

@@ -85,14 +85,14 @@ class Slide extends Content
     {
         $log = self::_getLog();
         $cache = self::_getCache();
-        $result['error'] = '';
+        $result['message']['error'] = '';
 
         $slideUploaded = self::handleUpload();
 
         if (isset($slideUploaded['featured_photo'])) {
             $params['featured_photo'] = $slideUploaded['featured_photo'];
         } else {
-            $result['error'] .= self::_printErrors($slideUploaded['error']);
+            $result['message']['error'] .= self::_printErrors($slideUploaded['error']);
         }
 
         $validator = self::validator($params);
@@ -109,23 +109,23 @@ class Slide extends Content
                     'y' => $params['y']
                 ));
 
-                ContentModel::create($params);
+                $slide = ContentModel::create($params);
 
                 $cache->clearByTags(array(__CLASS__));
 
-                return array('success' => 'Slide created');
+                return array('message' => array('success' => 'Slide created'), 'id' => $slide->id);
             } catch (\Exception $e) {
                 $log->error($e);
                 Helper::deleteFile($params['featured_photo']);
 
-                return array('error' => 'Slide not created!');
+                return array('message' => array('error' => 'Slide not created!'));
             }
         } else {
             if (isset($params['featured_photo'])) {
                 Helper::deleteFile($params['featured_photo']);
             }
 
-            $result['error'] .= self::_printErrors($validator->errors());
+            $result['message']['error'] .= self::_printErrors($validator->errors());
         }
 
         return $result;
@@ -135,7 +135,7 @@ class Slide extends Content
     {
         $log = self::_getLog();
         $cache = self::_getCache();
-        $result['error'] = '';
+        $result['message']['error'] = '';
 
         $params['old-file'] = (isset($params['old-file'])) ? $params['old-file'] : null;
         $params['existing-image'] = (isset($params['existing-image'])) ? (int) $params['existing-image'] : 0;
@@ -146,7 +146,7 @@ class Slide extends Content
             if (isset($slideUploaded['featured_photo'])) {
                 $params['featured_photo'] = $slideUploaded['featured_photo'];
             } else {
-                $result['error'] .= self::_printErrors($slideUploaded['error']);
+                $result['message']['error'] .= self::_printErrors($slideUploaded['error']);
             }
         } else {
             $params['featured_photo'] = $params['old-file'];
@@ -173,18 +173,18 @@ class Slide extends Content
 
                 $cache->clearByTags(array(__CLASS__));
 
-                return array('success' => 'Slide modified');
+                return array('message' => array('success' => 'Slide modified'));
             } catch (\Exception $e) {
                 $log->error($e);
 
-                return array('error' => 'Slide not modified!');
+                return array('message' => array('error' => 'Slide not modified!'));
             }
         } else {
             if (isset($params['featured_photo']) && $params['existing-image'] === 0) {
                 Helper::deleteFile($params['featured_photo']);
             }
 
-            $result['error'] .= self::_printErrors($validator->errors());
+            $result['message']['error'] .= self::_printErrors($validator->errors());
         }
 
         return $result;

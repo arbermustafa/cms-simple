@@ -12,42 +12,26 @@ use \Slim\Slim;
 
 class Base
 {
-    /**
-     * Slim instance
-     */
     protected static function _getApp()
     {
         return Slim::getInstance();
     }
 
-    /**
-     * Log instance
-     */
     public static function _getLog()
     {
         return self::_getApp()->log;
     }
 
-    /**
-     * Cache instance
-     */
     public static function _getCache()
     {
         return self::_getApp()->cache;
     }
 
-    /**
-     * AUTH instance
-     */
     public static function _getAuth()
     {
         return self::_getApp()->auth;
     }
 
-    /**
-     * Get current user identity
-     * @return Zend\Authentication\Result
-     */
     public static function getIdentity()
     {
         $auth = self::_getAuth();
@@ -60,21 +44,29 @@ class Base
         return $identity;
     }
 
-    /**
-     * Print error messages
-     */
-     public static function _printErrors($errors = array())
-     {
-         $error = '';
+    public static function _printErrors($errors = array())
+    {
+        $error = '';
 
-         foreach ($errors as $message) {
-             if (is_array($message)) {
-                 $error .= implode($message, '<br>') . '<br>';
-             } else {
-                 $error .= $message . '<br>';
+        foreach ($errors as $message) {
+            if (is_array($message)) {
+                $error .= implode($message, '<br>') . '<br>';
+            } else {
+                $error .= $message . '<br>';
+            }
+        }
+
+        return $error;
+    }
+
+     public static function setNullParams(array $request)
+     {
+         foreach ($request as $key => $value) {
+             if ($value == null || $value == '') {
+                 $request[$key] = null;
              }
          }
 
-         return $error;
+         return $request;
      }
 }

@@ -87,7 +87,7 @@
                             <li class="{% block users_active %}{% endblock %}"><a href="{{ urlFor("intranet.users.list", {page: 1}) }}"><i class="fa fa-users"></i> <span>Users</span></a></li>
                         {% endif %}
                         {% if isAllowed("intranet.pages.list") %}
-                            <li class="{% block page_active %}{% endblock %}"><a href="{{ urlFor("intranet.pages.list", {page: 1}) }}"><i class="fa fa-file"></i> <span>Pages</span></a></li>
+                            <li class="{% block pages_active %}{% endblock %}"><a href="{{ urlFor("intranet.pages.list", {page: 1}) }}"><i class="fa fa-file"></i> <span>Pages</span></a></li>
                         {% endif %}
                         {% if isAllowed("intranet.categories.list") or isAllowed("intranet.posts.list") %}
                             <li class="{% block posts_active %}{% endblock %} treeview">

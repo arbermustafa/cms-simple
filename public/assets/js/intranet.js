@@ -54,46 +54,48 @@
 
         var initImgCropper = function()
         {
-            jQuery(".fileinput").on("change.bs.fileinput", function(event)
-            {
-                var $image = jQuery("#slide-area-select > img");
+            if (jQuery().cropper) {
+                jQuery(".fileinput").on("change.bs.fileinput", function(event)
+                {
+                    var $image = jQuery("#slide-area-select > img");
 
-                if ($image.length) {
-                    var $initCrop = {
-                        left: 0,
-                        top: 0,
-                        width: 940,
-                        height: 350
-                    };
+                    if ($image.length > 0) {
+                        var $initCrop = {
+                            left: 0,
+                            top: 0,
+                            width: 940,
+                            height: 350
+                        };
 
-                    var $cropper = $image.cropper({
-                        viewMode: 1,
-                        dragMode: "move",
-                        rotatable: false,
-                        restore: false,
-                        cropBoxResizable: false,
-                        crop: function(coords)
-                        {
-                            $("#x").val(Math.round(coords.x));
-                            $("#y").val(Math.round(coords.y));
-                            $("#w").val(Math.round(coords.width));
-                            $("#h").val(Math.round(coords.height));
+                        var $cropper = $image.cropper({
+                            viewMode: 1,
+                            dragMode: "move",
+                            rotatable: false,
+                            restore: false,
+                            cropBoxResizable: false,
+                            crop: function(coords)
+                            {
+                                $("#x").val(Math.round(coords.x));
+                                $("#y").val(Math.round(coords.y));
+                                $("#w").val(Math.round(coords.width));
+                                $("#h").val(Math.round(coords.height));
+                            }
+                        });
+
+                        var $imgData = $cropper.cropper("getImageData");
+                        var $canvasData = $cropper.cropper("getCanvasData");
+
+                        var $cropBox = {
+                            left: ($imgData.width / $imgData.naturalWidth) * $initCrop.left + $canvasData.left,
+                            top: ($imgData.width / $imgData.naturalWidth) * $initCrop.top + $canvasData.top,
+                            width: $initCrop.width * $imgData.width / $imgData.naturalWidth,
+                            height: $initCrop.height * $imgData.height / $imgData.naturalHeight
                         }
-                    });
 
-                    var $imgData = $cropper.cropper("getImageData");
-                    var $canvasData = $cropper.cropper("getCanvasData");
-
-                    var $cropBox = {
-                        left: ($imgData.width / $imgData.naturalWidth) * $initCrop.left + $canvasData.left,
-                        top: ($imgData.width / $imgData.naturalWidth) * $initCrop.top + $canvasData.top,
-                        width: $initCrop.width * $imgData.width / $imgData.naturalWidth,
-                        height: $initCrop.height * $imgData.height / $imgData.naturalHeight
+                        $cropper.cropper("setCropBoxData", $cropBox);
                     }
-
-                    $cropper.cropper("setCropBoxData", $cropBox);
-                }
-            });
+                });
+            }
         };
 
         var initMenu = function()
@@ -135,7 +137,7 @@
                     '<i class="fa fa-close"></i></button>' +
                     '</li>';
 
-                if ($outer.length) {
+                if (jQuery("#nestable > ol").length > 0) {
                     $outer.append($element);
                 } else {
                     $menu.empty();
@@ -192,7 +194,7 @@
                 addItem($elem, true);
             });
 
-            if ($menu.length) {
+            if ($menu.length > 0) {
                 var $maxDepth = parseInt($menu.attr("title"));
 
                 $menu.nestable({
@@ -207,7 +209,7 @@
         {
             var $content = jQuery("#content");
 
-            if ($content.length && typeof CKEDITOR !== "undefined") {
+            if ($content.length > 0 && typeof CKEDITOR !== "undefined") {
                 CKEDITOR.replace("content", {
                     autoUpdateElement: true,
                     height: "450px",

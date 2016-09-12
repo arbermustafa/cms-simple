@@ -29,6 +29,7 @@ class Slides extends Base
     {
         $app = self::_getApp();
         $request = $app->request();
+        $session = $app->session;
         $result = array(
             'slide'   => '',
             'message' => null
@@ -37,7 +38,13 @@ class Slides extends Base
         if ($request->isPost()) {
             $slide = Slide::add($request->post());
 
-            $result['message'] = $slide;
+            if (isset($slide['id']) && (int) $slide['id'] !== 0) {
+                $session->offsetSet('message', $slide['message']);
+
+                return $app->redirectTo('intranet.slides.edit', array('id' => $slide['id']));
+            }
+
+            $result['message'] = $slide['message'];
             $result['slide'] = $request->post();
         }
 
@@ -48,15 +55,16 @@ class Slides extends Base
     {
         $app = self::_getApp();
         $request = $app->request();
+        $session = $app->session;
         $result = array(
             'slide'   => Slide::getSlide((int) $id),
-            'message' => null
+            'message' => $session->offsetGet('message')
         );
 
         if ($request->isPost()) {
             $slide = Slide::edit($request->post());
 
-            $result['message'] = $slide;
+            $result['message'] = $slide['message'];
             $result['slide'] = Slide::getSlide((int) $id);
         }
 

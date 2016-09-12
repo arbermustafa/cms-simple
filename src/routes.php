@@ -11,9 +11,7 @@
 $app->get('/', 'App\Controller\Index:index')->name('index');
 
 // Static routes
-$app->get('/sitemap', 'App\Controller\Index:sitemap')->name('sitemap');
 $app->get('/sitemap.xml', 'App\Controller\Index:sitemapGoogle')->name('sitemap.xml');
-$app->get('/imprint', 'App\Controller\Index:imprint')->name('imprint');
 $app->get('/rss', 'App\Controller\Index:rss')->name('rss');
 $app->get('/search/:page', 'App\Controller\Search:index')->name('search');
 

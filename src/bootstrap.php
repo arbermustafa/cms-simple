@@ -167,7 +167,6 @@ $app->container->singleton('session', function() use ($app)
     return $container;
 });
 
-
 // Auth
 $app->container->singleton('auth', function() use ($app)
 {

@@ -30,6 +30,7 @@ class Posts extends Base
     {
         $app = self::_getApp();
         $request = $app->request();
+        $session = $app->session;
         $result = array(
             'post'       => '',
             'categories' => Category::getCategories('PUBLISHED'),
@@ -39,7 +40,13 @@ class Posts extends Base
         if ($request->isPost()) {
             $post = Post::add($request->post());
 
-            $result['message'] = $post;
+            if (isset($post['id']) && (int) $post['id'] !== 0) {
+                $session->offsetSet('message', $post['message']);
+
+                return $app->redirectTo('intranet.posts.edit', array('id' => $post['id']));
+            }
+
+            $result['message'] = $post['message'];
             $result['post'] = $request->post();
         }
 
@@ -50,19 +57,21 @@ class Posts extends Base
     {
         $app = self::_getApp();
         $request = $app->request();
+        $session = $app->session;
         $result = array(
-            'user'    => User::getUser((int) $id),
-            'message' => null
+            'post'       => Post::getPost((int) $id),
+            'categories' => Category::getCategories('PUBLISHED'),
+            'message'    => $session->offsetGet('message')
         );
 
         if ($request->isPost()) {
-            $user = User::edit($request->post());
+            $post = Post::edit($request->post());
 
-            $result['message'] = $user;
-            $result['user'] = $request->post();
+            $result['message'] = $post['message'];
+            $result['post'] = Post::getPost((int) $id);
         }
 
-        self::response('Admin/Users/edit.html', $result);
+        self::response('Admin/Posts/edit.html', $result);
     }
 
     public static function delete($id)

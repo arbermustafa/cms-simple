@@ -11,12 +11,13 @@ namespace App\Model;
 use \App\Eloquent\Model\Base;
 use \Illuminate\Database\Capsule\Manager as DB;
 use \Illuminate\Support\Str;
+use \Zend\Filter\StaticFilter;
 use \App\Service\Base as BaseService;
 
 class Content extends Base
 {
     protected $table = 'content';
-    protected $fillable = array('user_id', 'type', 'status', 'parent', 'date', 'title', 'content', 'featured_photo', 'slug');
+    protected $fillable = array('user_id', 'type', 'status', 'template', 'parent', 'date', 'title', 'content', 'featured_photo', 'slug');
     protected $guarded = array('id');
 
     public function user()
@@ -43,6 +44,11 @@ class Content extends Base
         $this->attributes['status'] = $value;
     }
 
+    public function setTemplateAttribute($value)
+    {
+        $this->attributes['template'] = strtolower($value);
+    }
+
     public function setDateAttribute($value)
     {
         $this->attributes['date'] = date('Y-m-d', strtotime($value));
@@ -55,7 +61,7 @@ class Content extends Base
 
     public function setContentAttribute($value)
     {
-        $this->attributes['content'] = strip_tags(trim($value), '<br><b><i><u><blockquote><a><img><strong><em><span><p><ol><ul><li>');
+        $this->attributes['content'] = trim($value);
     }
 
     public function setSlugAttribute($value)

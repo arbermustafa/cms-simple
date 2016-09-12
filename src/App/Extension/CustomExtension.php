@@ -80,10 +80,10 @@ class CustomExtension extends \Twig_Extension
             $params = $this->routeParams();
             $currentUrl['slug'] = (!empty($params['slug'])) ? $params['slug'] : $_SERVER['REQUEST_URI'];
 
-            $menu = Helper::renderMenu($menuFromDB, $currentUrl['slug']);
+            return Helper::renderMenu($menuFromDB, $currentUrl['slug']);
         }
 
-        return $menu;
+        return Helper::menuAsArray($menuFromDB);
     }
 
     public function renderNestableMenu($menu = array())

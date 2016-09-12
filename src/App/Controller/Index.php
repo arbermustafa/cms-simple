@@ -15,16 +15,6 @@ class Index extends Base
         self::response('Index/index.html', array());
     }
 
-    public static function sitemap()
-    {
-        self::response('Index/sitemap.html', array());
-    }
-
-    public static function imprint()
-    {
-        self::response('Index/imprint.html', array());
-    }
-
     public static function sitemapGoogle()
     {
         self::response('Index/sitemap-google.html', array(), 'text/xml');

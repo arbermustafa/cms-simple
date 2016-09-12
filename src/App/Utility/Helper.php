@@ -49,6 +49,29 @@ class Helper
         return $html;
     }
 
+    public static function menuAsArray(array $menu)
+    {
+        $menuArray = array();
+
+        if ($menu) {
+            foreach ($menu as $item) {
+                if (isset($item['id']) && (int) $item['id'] !== 0) {
+                    $itemFromDB = Menu::getMenuItem($item['id']);
+
+                    if (!$itemFromDB) {
+                        continue;
+                    }
+                    $item['url'] = ($itemFromDB['type'] == 'category') ? '/archive/'. $itemFromDB['slug'] .'/1' : $itemFromDB['slug'];
+                    $item['title'] = $itemFromDB['title'];
+                }
+
+                $menuArray[] = array('title' => $item['title'], 'url' => $item['url']);
+            }
+        }
+
+        return $menuArray;
+    }
+
     public static function renderNestableMenu($menu = array())
     {
         $html = '<ol class="dd-list">';
@@ -89,13 +112,13 @@ class Helper
         return $html;
     }
 
-    public static function hasUploads()
+    public static function hasUploads($inputField = 'featured_photo')
     {
-        if (empty($_FILES)) {
-            return false;
+        if (isset($_FILES[$inputField]) && $_FILES[$inputField]['size'] > 0) {
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     public static function cropImage($filename, array $options)
@@ -112,8 +135,8 @@ class Helper
 
     public static function resizeImage($filename, array $options)
     {
-        $width = $options['w'];
-        $height = $options['h'];
+        $width = (isset($options['w'])) ? (int) $options['w'] : null;
+        $height = (isset($options['h'])) ? (int) $options['h'] : null;
 
         $image = Image::make(APP_UPLOAD_PATH . DIRECTORY_SEPARATOR . $filename);
 

@@ -256,6 +256,8 @@ function SanitizeFolderName( $sNewFolderName )
 	// Remove . \ / | : ? * " < >
 	$sNewFolderName = preg_replace( '/\\.|\\\\|\\/|\\||\\:|\\?|\\*|"|<|>|[[:cntrl:]]/', '_', $sNewFolderName ) ;
 
+	$sNewFolderName = preg_replace('/[^A-Za-z0-9_\-\.]/', '', str_replace(' ', '-', $sNewFolderName));
+
 	return $sNewFolderName ;
 }
 

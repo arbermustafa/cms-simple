@@ -6,7 +6,7 @@
     <link type="text/css" rel="stylesheet" href="/assets/vendor/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <!-- End CSS -->
 {% endblock %}
-{% block title %}Post Add{% endblock %}
+{% block title %}Post Edit{% endblock %}
 {% block posts_active %}active{% endblock %}
 {% block post_post_active %}active{% endblock %}
 {% block content %}
@@ -14,9 +14,11 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Add new post</h3>
+                    <h3 class="box-title">Edit post with title &ldquo;{{ post.title }}&rdquo;</h3>
                 </div>
-                <form name="form-post" id="form-post" method="post" enctype="multipart/form-data" action="{{ urlFor("intranet.posts.add") }}">
+                <form name="form-post" id="form-post" method="post" enctype="multipart/form-data" action="{{ urlFor("intranet.posts.edit", {id: post.id}) }}">
+                    <input type="hidden" name="id" value="{{ post.id }}">
+                    <input type="hidden" name="old-file" value="{{ post.featured_photo }}">
                     <div class="box-body">
                         {% include "Utils/_error_success.html" with {result: message} %}
                         <div class="row">
@@ -42,11 +44,16 @@
                                         <div class="form-group">
                                             <label for="featured_photo">Featured photo</label>
                                             <br>
-                                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div class="fileinput fileinput-{% if post.featured_photo %}exists{% else %}new{% endif %}" data-provides="fileinput">
                                                 <div class="fileinput-new thumbnail" style="max-width:700px; max-height:525px;">
                                                     <img alt="" src="http://www.placehold.it/700x525/EFEFEF/AAAAAA&text=no+image">
                                                 </div>
-                                                <div id="slide-area-select" class="fileinput-preview fileinput-exists thumbnail" style="max-width:700px; max-height:525px;"></div>
+                                                <div id="slide-area-select" class="fileinput-preview fileinput-exists thumbnail" style="max-width:700px; max-height:525px;">
+                                                    {% if post.featured_photo %}
+                                                        <img alt="" src="/uploads/{{ post.featured_photo }}">
+                                                        <input type="hidden" name="existing-image" value="1">
+                                                    {% endif %}
+                                                </div>
                                                 <div>
                                                     <span class="btn btn-default btn-file">
                                                         <span class="fileinput-new">Select image</span>

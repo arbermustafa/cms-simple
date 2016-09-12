@@ -29,48 +29,56 @@ class Pages extends Base
     {
         $app = self::_getApp();
         $request = $app->request();
+        $session = $app->session;
         $result = array(
-            'user'    => '',
+            'page'    => '',
             'message' => null
         );
 
         if ($request->isPost()) {
-            $user = User::add($request->post());
+            $page = Page::add($request->post());
 
-            $result['message'] = $user;
-            $result['user'] = $request->post();
+            if (isset($page['id']) && (int) $page['id'] !== 0) {
+                $session->offsetSet('message', $page['message']);
+
+                return $app->redirectTo('intranet.pages.edit', array('id' => $page['id']));
+            }
+
+            $result['message'] = $page['message'];
+            $result['page'] = $request->post();
         }
 
-        self::response('Admin/Users/add.html', $result);
+        self::response('Admin/Pages/add.html', $result);
     }
 
     public static function edit($id)
     {
         $app = self::_getApp();
         $request = $app->request();
+        $session = $app->session;
         $result = array(
-            'user'    => User::getUser((int) $id),
-            'message' => null
+            'page'    => Page::getPage((int) $id),
+            'message' => $session->offsetGet('message')
         );
 
         if ($request->isPost()) {
-            $user = User::edit($request->post());
+            $page = Page::edit($request->post());
 
-            $result['message'] = $user;
-            $result['user'] = $request->post();
+            $result['message'] = $page['message'];
+            $result['page'] = Page::getPage((int) $id);
         }
 
-        self::response('Admin/Users/edit.html', $result);
+        self::response('Admin/Pages/edit.html', $result);
     }
 
     public static function delete($id)
     {
         $app = self::_getApp();
         $session = $app->session;
-        $result = User::delete((int) $id);
+        $result = Page::delete((int) $id);
 
         $session->offsetSet('message', $result);
 
-        return $app->redirectTo('intranet.users.list', array('page' => 1));
+        return $app->redirectTo('intranet.pages.list', array('page' => 1));
     }
 }
