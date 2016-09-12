@@ -1,4 +1,45 @@
 {% extends "front.html" %}
+{% block header %}
+    {{ parent() }}
+    <!-- Begin CSS -->
+    {% if featured_photo %}
+        <link type="text/css" rel="stylesheet" href="/assets/vendor/jquery-fancybox/jquery-fancybox.min.css">
+    {% endif %}
+    <!-- End CSS -->
+{% endblock %}
+{% block title %}| {{ title }}{% endblock %}
 {% block content %}
-inside post {{ content }}
+    <div id="main" class="post-single three-fourths">
+        <div class="post clearfix">
+            {% if featured_photo %}
+                <div class="post-single-image">
+                    <a class="fancybox" href="/uploads/{{ featured_photo }}" title="{{ title }}"><span class="overlay zoom"></span><img src="/uploads/{{ featured_photo }}" alt="{{ title }}"></a>
+                </div>
+            {% endif %}
+            {% if date %}
+                <div class="post-date">
+                    <span>{{ date|date("M jS, Y") }}</span>
+                </div>
+            {% endif %}
+            <div class="post-body">
+                <h2 class="post-title">{{ title }}</h2>
+                <div class="post-content">{{ content | raw }}</div>
+            </div>
+		</div>
+
+    </div>
+    <div id="sidebar" class="one-fourth column-last">
+        <div class="widget">
+					<h3>Text Widget</h3>
+					<p>Phasellus ultricies sollicitudin eros, nec vehicula mauris volutpat in. Nulla non arcu nunc, id semper eros. Class aptent taciti sociosqu ad litora torquent per.</p>
+				</div>
+    </div>
+{% endblock %}
+{% block js_footer %}
+    {{ parent() }}
+    <!-- Begin JS -->
+    {% if featured_photo %}
+        <script type="text/javascript" src="/assets/vendor/jquery-fancybox/jquery-fancybox.min.js"></script>
+    {% endif %}
+    <!-- End JS -->
 {% endblock %}

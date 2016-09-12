@@ -19,7 +19,13 @@ class Content extends Base
 
     public static function post($slug)
     {
+        $app = self::_getApp();
         $content = ContentService::getContentBySlug($slug);
-        self::response('Content/post.html', array($content));
+
+        if (!$content) {
+            return $app->notFound();
+        }
+
+        self::response('Content/post.html', $content);
     }
 }

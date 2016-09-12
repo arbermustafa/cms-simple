@@ -28,8 +28,8 @@
 
         var initToTop = function()
         {
-            if ($().UItoTop) {
-                $().UItoTop({
+            if (jQuery().UItoTop) {
+                jQuery().UItoTop({
                     scrollSpeed: 500
                 });
             }
@@ -37,7 +37,7 @@
 
         var initMenu = function()
         {
-            $("#main-menu").menumaker({
+            jQuery("#main-menu").menumaker({
                 breakpoint: 959,
                 format: "multitoggle"
             });
@@ -45,27 +45,27 @@
 
         var initLiActive = function()
         {
-            $("#main-menu li").each(function()
+            jQuery("#main-menu li").each(function()
             {
-                if ($(this).hasClass("active")) {
-                    $(this).parents("li").addClass("active");
+                if (jQuery(this).hasClass("active")) {
+                    jQuery(this).parents("li").addClass("active");
                 }
             });
         };
 
         var initLayout = function()
         {
-            var main = $("#content");
-            var height;
+            var $main = jQuery("#content");
+            var $height;
 
-            if ($("#content").height() < getViewPort().height) {
-                height = getViewPort().height - $("#footer").outerHeight(true) - $("#header").outerHeight(true) - 23;
+            if (jQuery("#content").height() < getViewPort().height) {
+                $height = getViewPort().height - jQuery("#footer").outerHeight(true) - jQuery("#header").outerHeight(true) - 23;
 
-                main.css("min-height", height);
+                $main.css("min-height", $height);
             }
 
             if (parseInt(getViewPort().width) >= 768) {
-                $("#main-menu.small-screen > ul > li")
+                jQuery("#main-menu.small-screen > ul > li")
                     .not(".hidden-lg")
                     .last()
                     .css("border-bottom", "1px solid rgba(120, 120, 120, 0.15)");
@@ -74,14 +74,52 @@
 
         var initSlider = function()
         {
-            if ($().flexslider) {
-                $(window).load(function() {
-                    $(".flexslider").flexslider({
+            if (jQuery().flexslider) {
+                jQuery(window).load(function() {
+                    jQuery(".flexslider").flexslider({
                         pauseOnHover: true,
                         controlsContainer: ".flex-container",
                         slideshowSpeed: 7000,
                         animationSpeed: 600
                     });
+                });
+            }
+        };
+
+        var initFancybox = function()
+        {
+            if (jQuery().fancybox && jQuery(".fancybox").length > 0) {
+
+                function swipeFancyBox(e, dir)
+                {
+                    var $buttonBox = jQuery("#fancybox-buttons");
+                    var $nextButton = $buttonBox.find(".btnNext");
+                    var $prevButton = $buttonBox.find(".btnPrev");
+                    if (dir.toLowerCase() == "left" && $nextButton) {
+                        $nextButton.trigger("click");
+                    }
+                    if (dir.toLowerCase() == "right" && $prevButton) {
+                        $prevButton.trigger("click");
+                    }
+                }
+
+                jQuery(".fancybox").fancybox({
+                    openEffect: "fade",
+                    closeEffect: "fade",
+                    nextEffect: "fade",
+                    prevEffect: "fade",
+                    arrows: !isTouchDevice(),
+                    helpers: {
+                        title: {
+                            type: "inside"
+                        },
+                        buttons: {},
+                        media: {}
+                    },
+                    beforeLoad: function ()
+                    {
+                        this.title = "Image " + (this.index + 1) + " of " + this.group.length + (this.title ? " - " + this.title : "");
+                    }
                 });
             }
         };
@@ -93,6 +131,7 @@
                 initLiActive();
                 initLayout();
                 initSlider();
+                initFancybox();
             }
         };
     }();
