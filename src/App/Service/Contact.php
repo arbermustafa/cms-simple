@@ -21,6 +21,7 @@ class Contact extends Base
             try {
                 $subject = 'Your Message to europa-re.com';
                 $key = Setting::getByKey('cfe');
+                $to = '';
 
                 if (null !== $key) {
                     $to = $key->key_value;

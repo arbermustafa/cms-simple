@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `password`, `role`, `status`, `last_login`) VALUES
 (1, 'Arber', 'Mustafa', 'arber9@gmail.com', '2a02ee3296b3e458f664681556112ba7', 'ADMIN', 'ACTIVE', '2016-09-12 15:10:40'),
-(12, 'Donald', 'Papalilo', 'd.papalilo@gmail.com', '68ff389293f5a7435596471291b5dd6d', 'ADMIN', 'ACTIVE', '2016-09-12 14:36:16');
+(12, 'Donald', 'Papalilo', 'donald.papalilo@europa-re.com', '68ff389293f5a7435596471291b5dd6d', 'ADMIN', 'ACTIVE', '2016-09-12 14:36:16');
 
 --
 -- Indexes for dumped tables
