@@ -112,8 +112,8 @@ p {margin-bottom: 20px;}
 .promobox .mobile {display: none;}
 .promobox p {margin-bottom: 0; margin-top: 20px;}
 .promobox h2 + p, .promobox p:first-child {margin: 0;}
-#page-header {margin-bottom: 30px;}
-h1#page-title {padding: 25px 0; border-bottom: 1px solid #e5e5e5;}
+#page-header {margin-bottom: 25px;}
+h1#page-title {padding: 0 0 15px 0; border-bottom: 1px solid #e5e5e5;}
 
 
 ul#search-results li {border-top: 1px dotted #ccc; padding: 20px 0;}
@@ -141,9 +141,8 @@ h2.post-title {margin-bottom: 15px;}
 .post-title a {color: #383838;}
 .post-title a:hover {color: #CA5728;}
 .post-list > .post > .post-single-image {display: block;}
-.post-list .post {border-top: 1px solid #e5e5e5; padding-top: 40px;}
+.post-list .post {border-top: 1px solid #e5e5e5; padding-top: 20px;}
 .post-list .post:first-child {border: none; padding: 0;}
-.post-list .post {margin-bottom: 20px;}
 
 .content-form p {margin-bottom: 10px;}
 .content-form input, .content-form textarea, .content-form select {background-color: #f7f7f7; border: 1px solid #e5e5e5; padding: 6px 10px; border-radius: 0; box-sizing: border-box;}

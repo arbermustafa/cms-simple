@@ -29,9 +29,8 @@
                 </div>
     		</div>
         {% else %}
-            &nbsp;
+            <p>No information was found!</p>
         {% endfor %}
-
         {% include "Utils/_pagination.html" with {"path": "archive", "slug": slug} %}
     </div>
     <div id="sidebar" class="one-fourth column-last">

@@ -5,9 +5,9 @@
             <ul>
                 {% if currentPage > 1 %}
                     <li><a href="{{ [urlFor(path, {page: 1, slug: slug}), queryStringParams()] | join("?") }}">&laquo;</a></li>
-                    <li><a href="{{ [urlFor(path, {page: currentPage - 1}), queryStringParams()] | join("?") }}">&lsaquo;</a></li>
+                    <li><a href="{{ [urlFor(path, {page: currentPage - 1, slug: slug}), queryStringParams()] | join("?") }}">&lsaquo;</a></li>
                     {% for i in range(currentPage - nearbyPagesLimit, currentPage - 1) if (i > 0) %}
-                        <li><a href="{{ [urlFor(path, {page: i}), queryStringParams()] | join("?") }}">{{ i }}</a></li>
+                        <li><a href="{{ [urlFor(path, {page: i, slug: slug}), queryStringParams()] | join("?") }}">{{ i }}</a></li>
                     {% endfor %}
                 {% else %}
                     <li><a href="#">&laquo;</a></li>
@@ -16,10 +16,10 @@
                 <li class="current">{{ currentPage }}</li>
                 {% if currentPage < lastPage %}
                     {% for i in range(currentPage + 1, currentPage + nearbyPagesLimit) if (i <= lastPage) %}
-                        <li><a href="{{ [urlFor(path, {page: i}), queryStringParams()] | join("?") }}">{{ i }}</a></li>
+                        <li><a href="{{ [urlFor(path, {page: i, slug: slug}), queryStringParams()] | join("?") }}">{{ i }}</a></li>
                     {% endfor %}
-                    <li><a href="{{ [urlFor(path, {page: currentPage + 1}), queryStringParams()] | join("?") }}">&rsaquo;</a></li>
-                    <li><a href="{{ [urlFor(path, {page: lastPage}), queryStringParams()] | join("?") }}">&raquo;</a></li>
+                    <li><a href="{{ [urlFor(path, {page: currentPage + 1, slug: slug}), queryStringParams()] | join("?") }}">&rsaquo;</a></li>
+                    <li><a href="{{ [urlFor(path, {page: lastPage, slug: slug}), queryStringParams()] | join("?") }}">&raquo;</a></li>
                 {% else %}
                     <li><a href="#">&rsaquo;</a></li>
                     <li><a href="#">&raquo;</a></li>

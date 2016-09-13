@@ -14,7 +14,7 @@ class Content extends Base
 {
     public static function archive($slug, $page)
     {
-        $results = ContentService::getPaginatedPosts($slug, (int) $page, 2);
+        $results = ContentService::getPaginatedPosts($slug, (int) $page);
 
         self::response('Content/archive.html', array(
             'title'       => $results['title'],
