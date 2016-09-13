@@ -1,0 +1,26 @@
+{% spaceless %}
+    <div class="one-third">
+        <h3>Pages</h3>
+        {% set pages = getSitemapFor("page") %}
+        {% if pages is iterable and pages|length > 0 %}
+            {% import "Utils/_recursive_sitemap.html" as print %}
+            {{ print.printSitemap(pages, "arrow") }}
+        {% endif %}
+    </div>
+    <div class="one-third">
+        <h3>Post categories</h3>
+        {% set categories = getSitemapFor("category") %}
+        {% if categories is iterable and categories|length > 0 %}
+            {% import "Utils/_recursive_sitemap.html" as print %}
+            {{ print.printSitemap(categories, "arrow") }}
+        {% endif %}
+    </div>
+    <div class="one-third column-last">
+    	<h3>Latest 20 Posts</h3>
+        {% set posts = getSitemapFor("post") %}
+        {% if posts is iterable and posts|length > 0 %}
+            {% import "Utils/_recursive_sitemap.html" as print %}
+            {{ print.printSitemap(posts, "arrow") }}
+        {% endif %}
+    </div>
+{% endspaceless %}

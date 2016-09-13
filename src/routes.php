@@ -11,6 +11,7 @@
 $app->get('/', 'App\Controller\Index:index')->name('index');
 
 // Static routes
+$app->post('/contact-submit', 'App\Controller\Index:contactSubmit')->name('contact.submit');
 $app->get('/sitemap.xml', 'App\Controller\Index:sitemapGoogle')->name('sitemap.xml');
 $app->get('/rss', 'App\Controller\Index:rss')->name('rss');
 $app->get('/search/:page', 'App\Controller\Search:index')->name('search');

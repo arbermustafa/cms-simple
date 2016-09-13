@@ -12,16 +12,14 @@ use \App\Model\Content;
 use \Illuminate\Database\Capsule\Manager as DB;
 
 
-use \Zend\Filter\StaticFilter;
-
 class Test extends Base
 {
     public static function index()
     {
-        $result = StaticFilter::execute('somee-title', 'alnum', array('allowWhiteSpace' =));
+        $result = \App\Service\Content::getContentAsArray('category');
 
         echo '<pre>';
-        echo var_dump($result->toArray());
+        print_r($result);
         echo '</pre>';
 
         echo uniqid('img-'.date('YmdHis').'-');

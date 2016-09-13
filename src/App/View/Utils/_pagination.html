@@ -4,7 +4,7 @@
             <span>Page {{ currentPage }} of {{ lastPage }}</span>
             <ul>
                 {% if currentPage > 1 %}
-                    <li><a href="{{ [urlFor(path, {page: 1}), queryStringParams()] | join("?") }}">&laquo;</a></li>
+                    <li><a href="{{ [urlFor(path, {page: 1, slug: slug}), queryStringParams()] | join("?") }}">&laquo;</a></li>
                     <li><a href="{{ [urlFor(path, {page: currentPage - 1}), queryStringParams()] | join("?") }}">&lsaquo;</a></li>
                     {% for i in range(currentPage - nearbyPagesLimit, currentPage - 1) if (i > 0) %}
                         <li><a href="{{ [urlFor(path, {page: i}), queryStringParams()] | join("?") }}">{{ i }}</a></li>

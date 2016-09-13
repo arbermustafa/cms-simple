@@ -76,6 +76,48 @@ class Content extends Base
         return $result;
     }
 
+    public static function getPaginatedPosts($slug = '', $page = 1, $itemPerPage = 10)
+    {
+        $log = self::_getLog();
+        $cache = self::_getCache();
+        $key = __CLASS__.'_'.__FUNCTION__.'_'.$slug.'_'.$page.'_'.$itemPerPage;
+        $result = array(
+            'title'       => '',
+            'slug'        => '',
+            'data'        => null,
+            'total'       => 0,
+            'lastPage'    => 0,
+            'currentPage' => 0
+        );
+
+        if ($slug !== '' && $slug !== null) {
+            $category = self::getContentBySlug($slug);
+
+            if ($category) {
+                if (false == ($result = $cache->getItem($key))) {
+                    $contents = ContentModel::select('id', 'title', 'content', 'slug', 'featured_photo', 'date')
+                        ->join('post_category', 'content.id', '=', 'post_category.content_id')
+                        ->where('post_category.category_id', (int) $category['id'])
+                        ->where('type', 'post')
+                        ->where('status', 'PUBLISHED')
+                        ->orderBy('date', 'desc')
+                        ->paginateToArray($page, $itemPerPage);
+
+                    if ($contents) {
+                        $result = $contents;
+                        $result['title'] = $category['title'];
+                        $result['slug'] = $category['slug'];
+
+                        $cache->setItem($key, $result);
+                        $cache->setTags($key, array(__CLASS__));
+                    }
+                }
+            }
+        }
+
+        return $result;
+    }
+
     public static function getContent($id, $cacheKey = null, $cacheTag = null)
     {
         $cache = self::_getCache();
@@ -120,6 +162,39 @@ class Content extends Base
         return $result;
     }
 
+    public static function getContentAsArray($type = 'page', $status = 'PUBLISHED')
+    {
+        $cache = self::_getCache();
+        $key = __CLASS__.'_'.__FUNCTION__.'_'.$type.'_'.$status;
+        $result = array();
+
+        if (false == ($result = $cache->getItem($key))) {
+            $contents = ContentModel::with('childrenRecursive')->select('id', 'title', 'type', 'slug')
+                ->where('type', $type)
+                ->where('status', $status);
+
+            if ($type === 'category') {
+                $contents = $contents->whereNull('parent');
+            }
+
+            if ($type === 'post') {
+                $contents = $contents->orderBy('date', 'desc')
+                    ->take(20);
+            }
+
+            $contents = $contents->get();
+
+            if ($contents) {
+                $result = $contents->toArray();
+
+                $cache->setItem($key, $result);
+                $cache->setTags($key, array(__CLASS__));
+            }
+        }
+
+        return $result;
+    }
+
     public static function getList($type, $cacheTag, $page, $itemPerPage)
     {
         $log = self::_getLog();
@@ -143,6 +218,13 @@ class Content extends Base
         }
 
         return $result;
+    }
+
+    public static function clearCache()
+    {
+        $cache = self::_getCache();
+
+        $cache->clearByTags(array(__CLASS__));
     }
 
     public static function handleUpload()

@@ -82,6 +82,7 @@ class Menu extends Content
             return array('error' => self::_printErrors($validator->errors()));
         }
     }
+    
     public static function clearCache()
     {
         $cache = self::_getCache();

@@ -12,9 +12,18 @@ use \App\Service\Content as ContentService;
 
 class Content extends Base
 {
-    public static function archive($slug)
+    public static function archive($slug, $page)
     {
-        self::response('Content/archive.html', array());
+        $results = ContentService::getPaginatedPosts($slug, (int) $page, 2);
+
+        self::response('Content/archive.html', array(
+            'title'       => $results['title'],
+            'slug'        => $results['slug'],
+            'results'     => $results['data'],
+            'total'       => (int) $results['total'],
+            'lastPage'    => (int) $results['lastPage'],
+            'currentPage' => (int) $results['currentPage']
+        ));
     }
 
     public static function post($slug)

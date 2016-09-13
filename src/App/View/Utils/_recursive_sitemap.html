@@ -1,0 +1,14 @@
+{% macro printSitemap(contents, css) %}
+    {% if contents %}
+        <ul class="{{ css }}">
+        {% for item in contents %}
+            <li><a href="{% if item.type == 'category' %}/archive/{{ item.slug }}/1{% else %}/{{ item.slug }}{% endif %}">{{ item.title }}</a>
+            {% if item.children_recursive and item.children_recursive|length > 0 %}
+                {% import _self as recursive %}
+                {{ recursive.printSitemap(item.children_recursive, css) }}
+            {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}

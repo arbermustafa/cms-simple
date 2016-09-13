@@ -72,6 +72,8 @@ class Post extends Content
 
                 $cache->clearByTags(array(__CLASS__));
 
+                self::clearCache();
+
                 return array('message' => array('success' => 'Post created'), 'id' => $post->id);
             } catch (\Exception $e) {
                 $log->error($e);
@@ -140,6 +142,8 @@ class Post extends Content
 
                 $cache->clearByTags(array(__CLASS__));
 
+                self::clearCache();
+
                 return array('message' => array('success' => 'Post modified'));
             } catch (\Exception $e) {
                 $log->error($e);
@@ -174,6 +178,8 @@ class Post extends Content
             $post->delete();
 
             $cache->clearByTags(array(__CLASS__));
+
+            self::clearCache();
 
             return array('success' => 'Post deleted');
         } catch (\Exception $e) {

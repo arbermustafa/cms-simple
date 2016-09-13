@@ -12,6 +12,7 @@ use \Slim\Slim;
 use \Illuminate\Support\Str;
 use \App\Service\Setting;
 use \App\Service\Menu;
+use \App\Service\Content;
 use \App\Utility\Helper;
 
 class CustomExtension extends \Twig_Extension
@@ -31,6 +32,7 @@ class CustomExtension extends \Twig_Extension
             new \Twig_SimpleFunction('getMenu', array($this, 'getMenu')),
             new \Twig_SimpleFunction('renderNestableMenu', array($this, 'renderNestableMenu')),
             new \Twig_SimpleFunction('getFlashMessage', array($this, 'getFlashMessage')),
+            new \Twig_SimpleFunction('getSitemapFor', array($this, 'getSitemapFor')),
             new \Twig_SimpleFunction('words', array($this, 'words')),
             new \Twig_SimpleFunction('isAllowed', array($this, 'isAllowed')),
             new \Twig_SimpleFunction('str_repeat', array($this, 'str_repeat'))
@@ -98,6 +100,18 @@ class CustomExtension extends \Twig_Extension
 
         $result = $session->offsetGet($key);
         $session->offsetUnset($key);
+
+        return $result;
+    }
+
+    public function getSitemapFor($type = 'page')
+    {
+        $result = array();
+        $sitemap = Content::getContentAsArray($type);
+
+        if ($sitemap) {
+            $result = $sitemap;
+        }
 
         return $result;
     }

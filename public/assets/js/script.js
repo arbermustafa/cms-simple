@@ -59,7 +59,7 @@
             var $height;
 
             if (jQuery("#content").height() < getViewPort().height) {
-                $height = getViewPort().height - jQuery("#footer").outerHeight(true) - jQuery("#header").outerHeight(true) - 23;
+                $height = getViewPort().height - jQuery("#footer").outerHeight(true) - jQuery("#header").outerHeight(true) - 38;
 
                 $main.css("min-height", $height);
             }
@@ -89,20 +89,6 @@
         var initFancybox = function()
         {
             if (jQuery().fancybox && jQuery(".fancybox").length > 0) {
-
-                function swipeFancyBox(e, dir)
-                {
-                    var $buttonBox = jQuery("#fancybox-buttons");
-                    var $nextButton = $buttonBox.find(".btnNext");
-                    var $prevButton = $buttonBox.find(".btnPrev");
-                    if (dir.toLowerCase() == "left" && $nextButton) {
-                        $nextButton.trigger("click");
-                    }
-                    if (dir.toLowerCase() == "right" && $prevButton) {
-                        $prevButton.trigger("click");
-                    }
-                }
-
                 jQuery(".fancybox").fancybox({
                     openEffect: "fade",
                     closeEffect: "fade",
@@ -124,6 +110,88 @@
             }
         };
 
+        var initFormContactSubmit = function()
+        {
+            var $contactForm = jQuery("#contact-form");
+            jQuery(".notification-close-success, .notification-close-error").click(function()
+            {
+                jQuery(this).parent().fadeOut("fast");
+
+                return false;
+            });
+
+            if ($contactForm && $contactForm.length > 0) {
+                var $contactNotificationTimeout = 8000;
+                var $contactFormSubmit = $contactForm.find("#submit");
+
+                $contactFormSubmit.bind("click", function(e)
+                {
+                    $contactFormSubmit.attr("disabled", "disabled");
+                    jQuery.ajax({
+                        type: "POST",
+                        url: "/contact-submit",
+                        dataType: "json",
+                        data: getFormData()
+                    }).done(function(rsp)
+                    {
+                        var $resultBoxElement = null;
+
+                        if (rsp.result === true) {
+                            $resultBoxElement = jQuery("#contact-notification-box-success");
+                        } else if (rsp.result === false) {
+                            $resultBoxElement = jQuery("#contact-notification-box-error");
+                        }
+
+                        $resultBoxElement.css("display", "");
+                        $contactFormSubmit.removeAttr("disabled", "");
+
+                        resetFormData();
+
+                        if ($contactNotificationTimeout > 0) {
+                            var $timer = window.setTimeout(function()
+                            {
+                                window.clearTimeout($timer);
+                                $resultBoxElement.fadeOut("slow");
+                            }, $contactNotificationTimeout);
+                        }
+
+                    });
+                });
+
+                function getFormData()
+                {
+                    var $data = "";
+                    $contactForm.find(":input").each(function()
+                    {
+                        var $field = jQuery(this);
+                        var $fieldName = $field.attr("name");
+                        var $fieldValue = jQuery.trim($field.val());
+                        if ($fieldValue !== "") {
+                            $data += "&" + $fieldName + "=" + $fieldValue;
+                        }
+                    });
+
+                    return $data;
+                };
+
+                function resetFormData()
+                {
+                    $contactForm.find(":input").each(function()
+                    {
+                        var $field = jQuery(this);
+                        var $defaultValue = $field.prop("defaultValue");
+                        if ($defaultValue) {
+                            $field.val($defaultValue);
+                        } else {
+                            $field.val("");
+                        }
+                    });
+                };
+
+                return false;
+            }
+        };
+
         return {
             init: function() {
                 initToTop();
@@ -132,6 +200,7 @@
                 initLayout();
                 initSlider();
                 initFancybox();
+                initFormContactSubmit();
             }
         };
     }();

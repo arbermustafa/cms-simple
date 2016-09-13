@@ -1,5 +1,46 @@
 {% extends "front.html" %}
+{% block header %}
+    {{ parent() }}
+    <!-- Begin CSS -->
+    <link type="text/css" rel="stylesheet" href="/assets/vendor/jquery-fancybox/jquery-fancybox.min.css">
+    <!-- End CSS -->
+{% endblock %}
+{% block title %}| Archive | {{ title }}{% endblock %}
 {% block content %}
-inside archive {{ content }}
-{% include "Utils/_pagination.html" with {'path': 'archive'} %}
+    <div id="page-header">
+        <h1 id="page-title">{{ title }}</h1>
+    </div>
+    <div id="main" class="post-list three-fourths">
+        {% for result in results %}
+            <div class="post clearfix">
+                {% if result.featured_photo %}
+                    <div class="post-single-image">
+                        <a class="fancybox" href="/uploads/{{ result.featured_photo }}" title="{{ result.title }}"><span class="overlay zoom"></span><img src="/uploads/{{ result.featured_photo }}" alt="{{ result.title }}"></a>
+                    </div>
+                {% endif %}
+                <div class="post-body">
+                    <h2 class="post-title"><a href="{{ urlFor("post", {slug: result.slug}) }}">{{ result.title }}</a></h2>
+                    {% if result.date %}
+                        <div class="post-date">
+                            <span>{{ result.date | date("M jS, Y") }}</span>
+                        </div>
+                    {% endif %}
+                    <div class="post-content"><p>{{ words(result.content, 50) }}</p></div>
+                </div>
+    		</div>
+        {% else %}
+            &nbsp;
+        {% endfor %}
+
+        {% include "Utils/_pagination.html" with {"path": "archive", "slug": slug} %}
+    </div>
+    <div id="sidebar" class="one-fourth column-last">
+         {% include "Utils/_sidebar.html" %}
+    </div>
+{% endblock %}
+{% block js_footer %}
+    {{ parent() }}
+    <!-- Begin JS -->
+    <script type="text/javascript" src="/assets/vendor/jquery-fancybox/jquery-fancybox.min.js"></script>
+    <!-- End JS -->
 {% endblock %}

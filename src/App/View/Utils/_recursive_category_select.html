@@ -9,6 +9,7 @@
             {% else %}
                 {{ recursive.recursiveCategory(category.children_recursive, loopDashes, selected, disableId) }}
             {% endif %}
-        {% endif %}
+        {% endif %}        
+        {% set loopDashes = 0 %}
     {% endfor %}
 {% endmacro %}

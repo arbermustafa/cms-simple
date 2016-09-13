@@ -89,6 +89,8 @@ class Page extends Content
 
                 $cache->clearByTags(array(__CLASS__));
 
+                self::clearCache();
+
                 return array('message' => array('success' => 'Page created'), 'id' => $page->id);
             } catch (\Exception $e) {
                 $log->error($e);
@@ -154,6 +156,8 @@ class Page extends Content
 
                 $cache->clearByTags(array(__CLASS__));
 
+                self::clearCache();
+
                 return array('message' => array('success' => 'Page modified'));
             } catch (\Exception $e) {
                 $log->error($e);
@@ -186,6 +190,8 @@ class Page extends Content
             $page->delete();
 
             $cache->clearByTags(array(__CLASS__));
+
+            self::clearCache();
 
             return array('success' => 'Page deleted');
         } catch (\Exception $e) {

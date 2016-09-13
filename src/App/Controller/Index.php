@@ -8,11 +8,24 @@
  */
 namespace App\Controller;
 
+use \App\Service\Contact;
+
 class Index extends Base
 {
     public static function index()
     {
         self::response('Index/index.html', array());
+    }
+
+    public static function contactSubmit()
+    {
+        $app = self::_getApp();
+        $request = $app->request();
+
+        if ($request->isPost()) {
+            $app->response->headers->set('Content-Type', 'application/json');
+            echo json_encode(array('result' => Contact::send($request->post())));
+        }
     }
 
     public static function sitemapGoogle()

@@ -82,6 +82,8 @@ class Category extends Content
 
                 $cache->clearByTags(array(__CLASS__));
 
+                self::clearCache();
+
                 return array('success' => 'Category created');
             } catch (\Exception $e) {
                 $log->error($e);
@@ -109,6 +111,8 @@ class Category extends Content
 
                 $cache->clearByTags(array(__CLASS__));
 
+                self::clearCache();
+
                 Menu::clearCache();
 
                 return array('success' => 'Category modified');
@@ -135,6 +139,8 @@ class Category extends Content
             }
 
             $cache->clearByTags(array(__CLASS__));
+
+            self::clearCache();
 
             Menu::clearCache();
 

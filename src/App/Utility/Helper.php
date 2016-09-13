@@ -28,7 +28,7 @@ class Helper
                     }
 
                     $class = ($itemFromDB['slug'] === $currentUrl) ? 'active' : '';
-                    $item['url'] = ($itemFromDB['type'] == 'category') ? '/archive/'. $itemFromDB['slug'] .'/1' : $itemFromDB['slug'];
+                    $item['url'] = ($itemFromDB['type'] == 'category') ? '/archive/'. $itemFromDB['slug'] .'/1' : '/'. $itemFromDB['slug'];
                     $item['title'] = $itemFromDB['title'];
                 } else {
                     $class = ($item['url'] === $currentUrl) ? 'active' : '';

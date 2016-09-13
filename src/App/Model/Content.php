@@ -84,7 +84,8 @@ class Content extends Base
 
     public function getDateAttribute($value)
     {
-        return date('d.m.Y', strtotime($value));
+        if (null !== $value && '' !== $value)
+            return date('d.m.Y', strtotime($value));
     }
 
     public function getSlugAttribute($value)
@@ -94,12 +95,14 @@ class Content extends Base
 
     public function getCreatedAtAttribute($value)
     {
-        return date('d.m.Y H:i:s', strtotime($value));
+        if (null !== $value && '' !== $value)
+            return date('d.m.Y H:i:s', strtotime($value));
     }
 
     public function getUpdatedAtAttribute($value)
     {
-        return date('d.m.Y H:i:s', strtotime($value));
+        if (null !== $value && '' !== $value)
+            return date('d.m.Y H:i:s', strtotime($value));
     }
 
     public function parent()
