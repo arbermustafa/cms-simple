@@ -28,6 +28,7 @@
                                         <div class="form-group">
                                             <label for="title">Title <span class="required">*</span></label>
                                             <input type="text" name="title" class="form-control" id="title" value="{{ post.title }}">
+                                            <p class="help-block">Url: {{ serverUrl() ~ urlFor("post", {slug: post.slug}) }}</p>
                                         </div>
                                     </div>
                                 </div>

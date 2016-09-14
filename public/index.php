@@ -12,6 +12,9 @@ defined('APP_ENV') || define('APP_ENV', (getenv('APP_ENV') ? getenv('APP_ENV') :
 defined('APP_UPLOAD_PATH') || define('APP_UPLOAD_PATH', realpath(dirname(__FILE__) . '/uploads'));
 defined('APP_UPLOAD_URL') || define('APP_UPLOAD_URL', '/uploads');
 
+// App timezone
+date_default_timezone_set('Europe/Tirane');
+
 // Error handling
 if (APP_ENV === 'development') {
     error_reporting(E_ALL);

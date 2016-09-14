@@ -32,7 +32,7 @@ class Post extends Content
         return $post;
     }
 
-    public static function getList($page = 1, $itemPerPage = 10)
+    public static function getPostList($page = 1, $itemPerPage = 10)
     {
         return parent::getList('post', __CLASS__, $page, $itemPerPage);
     }

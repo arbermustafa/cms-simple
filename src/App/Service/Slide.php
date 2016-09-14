@@ -52,33 +52,9 @@ class Slide extends Content
         return $slide;
     }
 
-    public static function getList($page = 1, $itemPerPage = 10)
+    public static function getSlideList($page = 1, $itemPerPage = 10)
     {
-        $log = self::_getLog();
-        $cache = self::_getCache();
-        $key = __CLASS__.'_'.__FUNCTION__.'_'.$page.'_'.$itemPerPage;
-        $result = array(
-            'data'        => null,
-            'total'       => 0,
-            'lastPage'    => 0,
-            'currentPage' => 0
-        );
-
-        if (false == ($result = $cache->getItem($key))) {
-            $slides = ContentModel::select('id', 'title', 'featured_photo', 'status')
-                ->where('type', 'slide')
-                ->orderBy('id', 'asc')
-                ->paginateToArray($page, $itemPerPage);
-
-            if ($slides) {
-                $result = $slides;
-
-                $cache->setItem($key, $result);
-                $cache->setTags($key, array(__CLASS__));
-            }
-        }
-
-        return $result;
+        return parent::getList('slide', __CLASS__, $page, $itemPerPage);
     }
 
     public static function add(array $params)
@@ -112,6 +88,8 @@ class Slide extends Content
                 $slide = ContentModel::create($params);
 
                 $cache->clearByTags(array(__CLASS__));
+
+                self::clearCache();
 
                 return array('message' => array('success' => 'Slide created'), 'id' => $slide->id);
             } catch (\Exception $e) {
@@ -173,6 +151,8 @@ class Slide extends Content
 
                 $cache->clearByTags(array(__CLASS__));
 
+                self::clearCache();
+
                 return array('message' => array('success' => 'Slide modified'));
             } catch (\Exception $e) {
                 $log->error($e);
@@ -203,6 +183,8 @@ class Slide extends Content
             $slide->delete();
 
             $cache->clearByTags(array(__CLASS__));
+
+            self::clearCache();
 
             return array('success' => 'Slide deleted');
         } catch (\Exception $e) {

@@ -20,7 +20,7 @@ class Base extends Model
 		return new Builder($query);
 	}
 
-	public function updateOrCreate(array $attributes, array $values = array())
+	public static function updateOrCreate(array $attributes, array $values = array())
 	{
     	$instance = static::firstOrNew($attributes);
 

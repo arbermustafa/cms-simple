@@ -42,6 +42,18 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="cp_key" class="col-sm-2 control-label">Cookie Policy Message</label>
+                            <div class="col-sm-10">
+                                <textarea name="cp" class="form-control" id="cp_key" rows="5">{{ getSetting("cp") }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cpl_key" class="col-sm-2 control-label">Cookie Policy Link</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="cpl" class="form-control" id="cpl_key" value="{{ getSetting("cpl") }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="analytics_key" class="col-sm-2 control-label">Google Analytics JS Code</label>
                             <div class="col-sm-10">
                                 <textarea name="analytics" class="form-control" id="analytics_key" rows="5">{{ getSetting("analytics") }}</textarea>

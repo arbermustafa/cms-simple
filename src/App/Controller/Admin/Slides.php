@@ -15,7 +15,7 @@ class Slides extends Base
 {
     public static function index($page)
     {
-        $results = Slide::getList((int) $page);
+        $results = Slide::getSlideList((int) $page);
 
         self::response('Admin/Slides/list.html', array(
             'results'     => $results['data'],

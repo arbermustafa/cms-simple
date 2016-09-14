@@ -169,7 +169,7 @@ class Content extends Base
         $result = array();
 
         if (false == ($result = $cache->getItem($key))) {
-            $contents = ContentModel::with('childrenRecursive')->select('id', 'title', 'type', 'slug')
+            $contents = ContentModel::with('childrenRecursive')->select('id', 'title', 'content', 'type', 'slug', 'updated_at')
                 ->where('type', $type)
                 ->where('status', $status);
 
@@ -201,10 +201,15 @@ class Content extends Base
         $cache = self::_getCache();
         $key = __CLASS__.'_'.__FUNCTION__.'_'.$type.'_'.$page.'_'.$itemPerPage;
         $tag = ($cacheTag) ?: __CLASS__;
-        $result = array();
+        $result = array(
+            'data'        => null,
+            'total'       => 0,
+            'lastPage'    => 0,
+            'currentPage' => 0
+        );
 
         if (false == ($result = $cache->getItem($key))) {
-            $contents = ContentModel::select('id', 'title', 'status', 'created_at')
+            $contents = ContentModel::select('id', 'title', 'status', 'featured_photo', 'created_at')
                 ->where('type', $type)
                 ->orderBy('created_at', 'desc')
                 ->paginateToArray($page, $itemPerPage);

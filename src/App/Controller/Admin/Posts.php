@@ -16,7 +16,7 @@ class Posts extends Base
 {
     public static function index($page)
     {
-        $results = Post::getList((int) $page);
+        $results = Post::getPostList((int) $page);
 
         self::response('Admin/Posts/list.html', array(
             'results'     => $results['data'],

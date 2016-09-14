@@ -23,6 +23,7 @@
                                     <th class="uppercase">Title</th>
                                     <th class="uppercase">Thumbnail</th>
                                     <th class="uppercase">Status</th>
+                                    <th class="uppercase">Created at</th>
                                     <th>&nbsp;</th>
                                 </tr>
                             </thead>
@@ -33,6 +34,7 @@
                                         <td>{{ slide.title }}</td>
                                         <td><img src="/uploads/{{ slide.featured_photo }}" width="200" title="{{ slide.title }}" alt="{{ slide.title }}"></td>
                                         <td>{{ slide.status }}</td>
+                                        <td>{{ slide.created_at }}</td>
                                         <td>
                                             <a class="btn btn-sm btn-primary" href="{{ urlFor("intranet.slides.edit", {id: slide.id}) }}"><i class="icon fa fa-pencil"></i> Edit</a>
                                             <a class="btn btn-sm btn-danger delete" href="{{ urlFor("intranet.slides.delete", {id: slide.id}) }}"><i class="icon fa fa-close"></i> Delete</a>

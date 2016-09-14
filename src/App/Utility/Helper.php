@@ -61,7 +61,7 @@ class Helper
                     if (!$itemFromDB) {
                         continue;
                     }
-                    $item['url'] = ($itemFromDB['type'] == 'category') ? '/archive/'. $itemFromDB['slug'] .'/1' : $itemFromDB['slug'];
+                    $item['url'] = ($itemFromDB['type'] == 'category') ? '/archive/'. $itemFromDB['slug'] .'/1' : '/'. $itemFromDB['slug'];
                     $item['title'] = $itemFromDB['title'];
                 }
 

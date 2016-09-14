@@ -25,6 +25,7 @@ class CustomExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
+            new \Twig_SimpleFunction('serverUrl', array($this, 'serverUrl')),
             new \Twig_SimpleFunction('routeParams', array($this, 'routeParams')),
             new \Twig_SimpleFunction('queryStringParams', array($this, 'queryStringParams')),
             new \Twig_SimpleFunction('reqParams', array($this, 'reqParams')),
@@ -37,6 +38,14 @@ class CustomExtension extends \Twig_Extension
             new \Twig_SimpleFunction('isAllowed', array($this, 'isAllowed')),
             new \Twig_SimpleFunction('str_repeat', array($this, 'str_repeat'))
         );
+    }
+
+    public function serverUrl()
+    {
+        $app = Slim::getInstance();
+        $request = $app->request;
+
+        return $request->getUrl();
     }
 
     public function routeParams()

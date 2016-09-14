@@ -1,15 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title></title>
-        <link></link>
-        <description></description>
-            <item>
-                <title></title>
-                <guid></guid>
-                <link></link>
-                <description>
-                </description>
-                <comments></comments>
-            </item>
+        <title>Europa Reinsurance Facility Ltd</title>
+        <link>{{ serverUrl() }}</link>
+        <description>Europa Re is the Catastrophe and Weather Risk Reinsurance Company</description>
+        <language>en-US</language>
+        {% set posts = getSitemapFor("post") %}
+        {% if posts is iterable and posts|length > 0 %}
+            {% for post in posts %}
+                <item>
+                    <title>{{ post.title }}</title>
+                    <guid>{{ post.id }}</guid>
+                    <link>{{ serverUrl() ~ urlFor("post", {slug: post.slug}) }}</link>
+                    <description><![CDATA[{{ words(post.content, 30) }}]]></description>
+                </item>
+            {% endfor %}
+        {% endif %}
     </channel>
 </rss>

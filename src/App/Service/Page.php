@@ -50,7 +50,7 @@ class Page extends Content
         return $result;
     }
 
-    public static function getList($page = 1, $itemPerPage = 10)
+    public static function getPageList($page = 1, $itemPerPage = 10)
     {
         return parent::getList('page', __CLASS__, $page, $itemPerPage);
     }

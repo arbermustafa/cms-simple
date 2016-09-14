@@ -15,7 +15,7 @@ class Pages extends Base
 {
     public static function index($page)
     {
-        $results = Page::getList((int) $page);
+        $results = Page::getPageList((int) $page);
 
         self::response('Admin/Pages/list.html', array(
             'results'     => $results['data'],
