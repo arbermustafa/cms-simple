@@ -74,6 +74,32 @@ class Post extends Content
 
                 self::clearCache();
 
+                if (isset($params['fb']) && (int) $params['fb'] === 1) {
+                    $app = self::_getApp();
+                    $request = $app->request;
+                    Social::publishToFb(array(
+                        'message' => $post->title,
+                        'link'    => $request->getUrl() . '/' . $post->slug
+                    ));
+                }
+
+                if (isset($params['in']) && (int) $params['in'] === 1) {
+                    $app = self::_getApp();
+                    $request = $app->request;
+
+                    $post = array(
+                        'title' => $post->title,
+                        'description' => substr($post->content, 0, 256),
+                        'submitted-url' => $request->getUrl() . '/' . $post->slug
+                    );
+
+                    if (isset($post->featured_photo)) {
+                        $post['submitted-image-url'] = $request->getUrl() . '/uploads/' . $post->featured_photo;
+                    }
+
+                    Social::publishToIn($post);
+                }
+
                 return array('message' => array('success' => 'Post created'), 'id' => $post->id);
             } catch (\Exception $e) {
                 $log->error($e);
@@ -143,6 +169,32 @@ class Post extends Content
                 $cache->clearByTags(array(__CLASS__));
 
                 self::clearCache();
+
+                if (isset($params['fb']) && (int) $params['fb'] === 1) {
+                    $app = self::_getApp();
+                    $request = $app->request;
+                    Social::publishToFb(array(
+                        'message' => $post->title,
+                        'link' => $request->getUrl() . '/' . $post->slug
+                    ));
+                }
+
+                if (isset($params['in']) && (int) $params['in'] === 1) {
+                    $app = self::_getApp();
+                    $request = $app->request;
+
+                    $post = array(
+                        'title' => $post->title,
+                        'description' => substr($post->content, 0, 256),
+                        'submitted-url' => $request->getUrl() . '/' . $post->slug
+                    );
+
+                    if (isset($post->featured_photo)) {
+                        $post['submitted-image-url'] = $request->getUrl() . '/uploads/' . $post->featured_photo;
+                    }
+
+                    Social::publishToIn($post);
+                }
 
                 return array('message' => array('success' => 'Post modified'));
             } catch (\Exception $e) {

@@ -16,6 +16,10 @@ $app->get('/sitemap.xml', 'App\Controller\Index:sitemapGoogle')->name('sitemap.x
 $app->get('/rss', 'App\Controller\Index:rss')->name('rss');
 $app->get('/search/:page', 'App\Controller\Search:index')->name('search');
 
+// Social Callback URL
+$app->get('/social/fb', 'App\Controller\Social:authorizeFb')->name('social.fb');
+$app->get('/social/in', 'App\Controller\Social:authorizeIn')->name('social.in');
+
 // For test purposes
 $app->get('/test', 'App\Controller\Test:index')->name('test');
 

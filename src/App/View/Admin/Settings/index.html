@@ -18,9 +18,61 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="in_key" class="col-sm-2 control-label">Linkedin page</label>
+                            <label for="fb_page_id_key" class="col-sm-2 control-label">Facebook Page ID</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="fb_page_id" class="form-control" id="fb_page_id_key" value="{{ getSetting("fb_page_id") }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fb_app_id_key" class="col-sm-2 control-label">Facebook App ID</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="fb_app_id" class="form-control" id="fb_app_id_key" value="{{ getSetting("fb_app_id") }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fb_app_secret_key" class="col-sm-2 control-label">Facebook App Secret</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="fb_app_secret" class="form-control" id="fb_app_secret_key" value="{{ getSetting("fb_app_secret") }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fb_app_token_key" class="col-sm-2 control-label">Facebook App Token</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="fb_app_token" class="form-control" id="fb_app_token_key" value="{{ getSetting("fb_app_token") }}" disabled>
+                                <p class="help-block">Token expires on: {{ getSetting("fb_app_token_expires") | date("F jS Y \\a\\t g:ia") }}</p>
+                                <a class="btn btn-default {% if isExpiredAuthToken(getSetting("fb_app_token_expires")) %}disabled{% endif %}" href="{{ auth_fb_url }}">Authorize App</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="in_key" class="col-sm-2 control-label">Linkedin Page</label>
                             <div class="col-sm-10">
                                 <input type="text" name="in" class="form-control" id="in_key" value="{{ getSetting("in") }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="in_page_id_key" class="col-sm-2 control-label">Linkedin Page ID</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="in_page_id" class="form-control" id="in_page_id_key" value="{{ getSetting("in_page_id") }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="in_client_id_key" class="col-sm-2 control-label">Linkedin Client ID</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="in_client_id" class="form-control" id="in_client_id_key" value="{{ getSetting("in_client_id") }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="in_client_secret_key" class="col-sm-2 control-label">Linkedin Client Secret</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="in_client_secret" class="form-control" id="in_client_secret_key" value="{{ getSetting("in_client_secret") }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="in_app_token_key" class="col-sm-2 control-label">Linkedin App Token</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="in_app_token" class="form-control" id="in_app_token_key" value="{{ getSetting("in_app_token") }}" disabled>
+                                <p class="help-block">Token expires on: {{ getSetting("in_app_token_expires") | date("F jS Y \\a\\t g:ia") }}</p>
+                                <a class="btn btn-default {% if isExpiredAuthToken(getSetting("in_app_token_expires")) %}disabled{% endif %}" href="{{ auth_in_url }}">Authorize App</a>
                             </div>
                         </div>
                         <div class="form-group">

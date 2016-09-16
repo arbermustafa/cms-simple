@@ -30,7 +30,7 @@ class Auth extends Middleware
 
         if (null !== ($this->options["path"])) {
             $this->addRule(new RequestPathRule(array(
-                "path" => $this->options["path"],
+                "path"        => $this->options["path"],
                 "passthrough" => $this->options["passthrough"]
             )));
         }

@@ -6,6 +6,16 @@
     <!-- End CSS -->
 {% endblock %}
 {% block title %}| {{ title }}{% endblock %}
+{% block fb %}
+    <meta property="og:url" content="{{ serverUrl() ~ urlFor("post", {slug: slug}) }}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:description" content="{{ words(content, 10) }}">
+    {% if featured_photo %}
+        <meta property="og:image" content="{{ serverUrl() }}/uploads/{{ featured_photo }}">
+    {% endif %}
+    <meta property="fb:app_id" content="{{ getSetting("fb_app_id") }}">
+{% endblock %}
 {% block content %}
     <div id="main" class="post-single three-fourths">
         <div class="post clearfix">

@@ -9,49 +9,28 @@
 // Autoload
 require_once(dirname(__FILE__) . '/../vendor/autoload.php');
 
-// USE STATEMENTS
-use \Dotenv\Dotenv;
-use \Slim\Slim;
-use \Slim\Logger\DateTimeFileWriter;
-use \Slim\Views\Twig;
-use \Slim\Views\TwigExtension;
-use \Illuminate\Database\Capsule\Manager;
-use \Illuminate\Events\Dispatcher;
-use \Illuminate\Container\Container;
-use \Zend\Session\Config\SessionConfig;
-use \Zend\Session\SessionManager;
-use \Zend\Session\Container as SessionContainer;
-use \Zend\Cache\StorageFactory;
-use \Zend\Authentication\AuthenticationService;
-use \Zend\Authentication\Storage\Session as SessionStorage;
-use \App\Extension\CustomExtension;
-use \App\Middleware\Auth\Auth;
-use \App\Middleware\Auth\Rules\RequestPathRule;
-use \App\Authentication\Adapter;
-use \App\Authentication\Acl;
-
 // DOTENV INIT
-$env = new Dotenv(dirname(__FILE__) . '/config/', '.env.' . APP_ENV);
+$env = new \Dotenv\Dotenv(dirname(__FILE__) . '/config/', '.env.' . APP_ENV);
 $env->load();
 
 // SLIM INIT
-Slim::registerAutoloader();
-$app = new Slim(array(
+\Slim\Slim::registerAutoloader();
+$app = new \Slim\Slim(array(
     'mode'            => APP_ENV,
     'debug'           => (APP_ENV === 'development'),
     'log.enabled'     => true,
-    'log.writer'      => new DateTimeFileWriter(array(
+    'log.writer'      => new \Slim\Logger\DateTimeFileWriter(array(
         'path'           => dirname(__FILE__) . '/../data/log',
         'message_format' => PHP_EOL . PHP_EOL . '%label% - %date% - %message%'
     )),
     'cookies.encrypt' => (APP_ENV === 'development'),
     'templates.path'  => dirname(__FILE__) . '/App/View',
-    'view'            => new Twig()
+    'view'            => new \Slim\Views\Twig()
 ));
 $app->setName(getenv('APP_NAME'));
 
 // Slim Middleware Init
-$app->add(new Auth(array(
+$app->add(new \App\Middleware\Auth\Auth(array(
     'path'        => '/intranet',
     'passthrough' => array('/intranet/login')
 )));
@@ -63,9 +42,9 @@ $view->parserOptions = array(
     'cache' => dirname(__FILE__) . '/../data/cache'
 );
 $view->parserExtensions = array(
-    new TwigExtension(),
+    new \Slim\Views\TwigExtension(),
     new Twig_Extension_Debug(),
-    new CustomExtension(),
+    new \App\Extension\CustomExtension(),
 );
 
 // Twig Global Constant
@@ -87,38 +66,17 @@ $settings = array(
     'prefix'    => ''
 );
 
-$db = new Manager();
+$db = new \Illuminate\Database\Capsule\Manager();
 $db->addConnection($settings);
-$db->setEventDispatcher(new Dispatcher(new Container()));
+$db->setEventDispatcher(new \Illuminate\Events\Dispatcher(new \Illuminate\Container\Container()));
 $db->setAsGlobal();
 $db->bootEloquent();
-/*$events = new Dispatcher();
-$events->listen('illuminate.query', function($query, $bindings, $time, $name)
-{
-    // Format binding data for sql insertion
-    foreach ($bindings as $i => $binding) {
-        if ($binding instanceof \DateTime) {
-            $bindings[$i] = $binding->format('\'Y-m-d H:i:s\'');
-        } else if (is_string($binding)) {
-            $bindings[$i] = "'$binding'";
-        }
-    }
-
-    // Insert bindings into query
-    $query = str_replace(array('%', '?'), array('%%', '%s'), $query);
-    $query = vsprintf($query, $bindings);
-
-    // Debug SQL queries
-    echo 'SQL: [' . $query . ']';
-});
-
-$db->setEventDispatcher($events);*/
 
 // ZEND FRAMEWORK COMPONENTS INIT
 // Cache
 $app->container->singleton('cache', function()
 {
-    $cache = StorageFactory::factory(array(
+    $cache = \Zend\Cache\StorageFactory::factory(array(
         'adapter' => array(
             'name'    => 'filesystem',
             'options' => array(
@@ -144,7 +102,7 @@ $app->container->singleton('cache', function()
 // Session Manager
 $app->container->singleton('sessionManager', function()
 {
-    $sessionConfig = new SessionConfig();
+    $sessionConfig = new \Zend\Session\Config\SessionConfig();
     $sessionConfig->setOptions(array(
         'name'                => getenv('APP_NAME'),
         'remember_me_seconds' => getenv('SESSION_TTL'),
@@ -153,16 +111,16 @@ $app->container->singleton('sessionManager', function()
         'gc_maxlifetime'      => getenv('SESSION_TTL')
     ));
 
-    $sessionManager = new SessionManager($sessionConfig);
-    SessionContainer::setDefaultManager($sessionManager);
+    $sessionManager = new \Zend\Session\SessionManager($sessionConfig);
+    \Zend\Session\Container::setDefaultManager($sessionManager);
 
     return $sessionManager;
 });
 
 // Session Container
-$app->container->singleton('session', function() use ($app)
+$app->container->singleton('session', function()
 {
-    $container = new SessionContainer(getenv('APP_NAME'));
+    $container = new \Zend\Session\Container(getenv('APP_NAME'));
 
     return $container;
 });
@@ -170,8 +128,8 @@ $app->container->singleton('session', function() use ($app)
 // Auth
 $app->container->singleton('auth', function() use ($app)
 {
-    $authService = new AuthenticationService();
-    $storage = new SessionStorage(null, null, $app->sessionManager);
+    $authService = new \Zend\Authentication\AuthenticationService();
+    $storage = new \Zend\Authentication\Storage\Session(null, null, $app->sessionManager);
     $authService->setStorage($storage);
 
     return $authService;
@@ -180,7 +138,36 @@ $app->container->singleton('auth', function() use ($app)
 // Acl
 $app->container->singleton('acl', function()
 {
-    $acl = new Acl();
+    $acl = new \App\Authentication\Acl();
 
     return $acl;
+});
+
+// Facebook
+$app->container->singleton('facebook', function() use ($app)
+{
+    $session = $app->session;
+
+    $facebook = new \Facebook\Facebook(array(
+        'app_id'                  => \App\Service\Setting::getByKey('fb_app_id')->key_value,
+        'app_secret'              => \App\Service\Setting::getByKey('fb_app_secret')->key_value,
+        'default_graph_version'   => 'v2.2',
+        'persistent_data_handler' => new \App\Social\Facebook\CustomPersistentDataHandler($app)
+    ));
+
+    return $facebook;
+});
+
+// LinkedIn
+$app->container->singleton('linkedin', function() use ($app)
+{
+    $request = $app->request;
+
+    $linkedin = new \App\Social\LinkedIn\LinkedIn(array(
+        'api_key'      => \App\Service\Setting::getByKey('in_client_id')->key_value,
+        'api_secret'   => \App\Service\Setting::getByKey('in_client_secret')->key_value,
+        'callback_url' => $request->getUrl() . $app->urlFor('social.in')
+    ));
+
+    return $linkedin;
 });

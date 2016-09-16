@@ -36,7 +36,8 @@ class CustomExtension extends \Twig_Extension
             new \Twig_SimpleFunction('getSitemapFor', array($this, 'getSitemapFor')),
             new \Twig_SimpleFunction('words', array($this, 'words')),
             new \Twig_SimpleFunction('isAllowed', array($this, 'isAllowed')),
-            new \Twig_SimpleFunction('str_repeat', array($this, 'str_repeat'))
+            new \Twig_SimpleFunction('str_repeat', array($this, 'str_repeat')),
+            new \Twig_SimpleFunction('isExpiredAuthToken', array($this, 'isExpiredAuthToken'))
         );
     }
 
@@ -144,5 +145,10 @@ class CustomExtension extends \Twig_Extension
     public function str_repeat($str = '', $multiplier = 0)
     {
         return str_repeat($str, $multiplier);
+    }
+
+    public function isExpiredAuthToken($time)
+    {
+        return time() < $time;
     }
 }

@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js" xmlns:og="http://opengraphprotocol.org/schema/"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js" xmlns:og="http://opengraphprotocol.org/schema/"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" xmlns:og="http://opengraphprotocol.org/schema/">
+<!--<![endif]-->
     <head>
         {% block header %}
             <title>Europa Re {% block title %}{% endblock %}</title>
@@ -14,6 +18,10 @@
             <meta name="googlebot" content="index, archive, follow, noodp">
             <meta name="robots" content="all, index, follow">
             <meta name="msnbot" content="all, index, follow">
+
+            <!-- FB Meta -->
+            {% block fb %}{% endblock %}
+            <!-- End FB Meta -->
 
             <!-- Begin FAVICON -->
             <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">

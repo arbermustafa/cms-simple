@@ -16,13 +16,13 @@ class Test extends Base
 {
     public static function index()
     {
-        $result = \App\Service\Content::getContentAsArray('category');
+        $result = date('d.m.Y H:i:s', '1479190821');
 
         echo '<pre>';
         print_r($result);
         echo '</pre>';
 
-        echo uniqid('img-'.date('YmdHis').'-');
+        //echo uniqid('img-'.date('YmdHis').'-');
 
         //\App\Utility\Helper::cropImage('/img-20160905140417-57cd5f41de981.jpg', array('width' => 940, 'height' => 350));
     }
