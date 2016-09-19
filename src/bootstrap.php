@@ -147,10 +147,12 @@ $app->container->singleton('acl', function()
 $app->container->singleton('facebook', function() use ($app)
 {
     $session = $app->session;
+    $app_id = (\App\Service\Setting::getByKey('fb_app_id')) ? \App\Service\Setting::getByKey('fb_app_id')->key_value : 'default';
+    $app_secret = (\App\Service\Setting::getByKey('fb_app_secret')) ? \App\Service\Setting::getByKey('fb_app_secret')->key_value : 'default';
 
     $facebook = new \Facebook\Facebook(array(
-        'app_id'                  => \App\Service\Setting::getByKey('fb_app_id')->key_value,
-        'app_secret'              => \App\Service\Setting::getByKey('fb_app_secret')->key_value,
+        'app_id'                  => $app_id,
+        'app_secret'              => $app_secret,
         'default_graph_version'   => 'v2.2',
         'persistent_data_handler' => new \App\Social\Facebook\CustomPersistentDataHandler($app)
     ));
@@ -162,11 +164,14 @@ $app->container->singleton('facebook', function() use ($app)
 $app->container->singleton('linkedin', function() use ($app)
 {
     $request = $app->request;
+    $api_key = (\App\Service\Setting::getByKey('in_client_id')) ? \App\Service\Setting::getByKey('in_client_id')->key_value : 'default';
+    $api_secret = (\App\Service\Setting::getByKey('in_client_secret')) ? \App\Service\Setting::getByKey('in_client_secret')->key_value : 'default';
+    $callback_url = $request->getUrl() . $app->urlFor('social.in');
 
     $linkedin = new \App\Social\LinkedIn\LinkedIn(array(
-        'api_key'      => \App\Service\Setting::getByKey('in_client_id')->key_value,
-        'api_secret'   => \App\Service\Setting::getByKey('in_client_secret')->key_value,
-        'callback_url' => $request->getUrl() . $app->urlFor('social.in')
+        'api_key'      => $api_key,
+        'api_secret'   => $api_secret,
+        'callback_url' => $callback_url
     ));
 
     return $linkedin;

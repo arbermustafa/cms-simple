@@ -40,7 +40,7 @@
                 </div>
                 <form name="form-menus-edit" id="form-menus-edit" method="post" action="{{ [urlFor("intranet.menus"), name] | join("?name=") }}">
                     <input type="hidden" name="title" id="title" value="{{ name }}">
-                    <textarea name="content" id="content" class="hidden-content">{{ menu }}</textarea>
+                    <textarea name="content" id="content" class="hidden-content"></textarea>
                     <div class="box-body">
                         {% include "Utils/_error_success.html" with {result: message} %}
                         <div class="row">
