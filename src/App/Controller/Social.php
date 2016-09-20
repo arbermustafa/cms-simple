@@ -58,8 +58,10 @@ class Social extends Base
         }
 
         try {
-            Setting::edit(array('fb_app_token' => (string) $accessToken));
-            Setting::edit(array('fb_app_token_expires' => $expiresAt->getTimestamp()));
+            Setting::edit(array(
+                'fb_app_token'         => (string) $accessToken),
+                'fb_app_token_expires' => $expiresAt->getTimestamp()
+            );
         } catch(\Exception $e) {
             $log->error($e);
         }
@@ -76,9 +78,10 @@ class Social extends Base
         if (isset($_REQUEST['code'])) {
             try {
                 $accessToken = $linkedin->getAccessToken($_REQUEST['code']);
-                Setting::edit(array('in_app_token' => $accessToken));
-                Setting::edit(array('in_app_token_expires' => time() + $linkedin->getAccessTokenExpiration()));
-
+                Setting::edit(array(
+                    'in_app_token'         => $accessToken,
+                    'in_app_token_expires' => time() + $linkedin->getAccessTokenExpiration()
+                ));
             } catch(\Exception $e) {
                 $log->error($e);
             }
