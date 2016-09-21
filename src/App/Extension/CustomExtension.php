@@ -37,7 +37,8 @@ class CustomExtension extends \Twig_Extension
             new \Twig_SimpleFunction('words', array($this, 'words')),
             new \Twig_SimpleFunction('isAllowed', array($this, 'isAllowed')),
             new \Twig_SimpleFunction('str_repeat', array($this, 'str_repeat')),
-            new \Twig_SimpleFunction('isExpiredAuthToken', array($this, 'isExpiredAuthToken'))
+            new \Twig_SimpleFunction('isExpiredAuthToken', array($this, 'isExpiredAuthToken')),
+            new \Twig_SimpleFunction('doShortcode', array($this, 'doShortcode'))
         );
     }
 
@@ -74,14 +75,7 @@ class CustomExtension extends \Twig_Extension
 
     public function getSetting($key = 'fb')
     {
-        $result = '';
-        $model = Setting::getByKey($key);
-
-        if (null !== $model) {
-            $result = $model->key_value;
-        }
-
-        return $result;
+        return Setting::getByKey($key);
     }
 
     public function getMenu($menu = 'main-menu')
@@ -150,5 +144,13 @@ class CustomExtension extends \Twig_Extension
     public function isExpiredAuthToken($time)
     {
         return time() < $time;
+    }
+
+    public function doShortcode($content)
+    {
+        $app = Slim::getInstance();
+        $shortcode = $app->shortcode;
+
+        return $shortcode->doShortcode(html_entity_decode($content));
     }
 }

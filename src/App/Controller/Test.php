@@ -19,7 +19,7 @@ class Test extends Base
         $result = date('d.m.Y H:i:s', '1479190821');
 
         echo '<pre>';
-        print_r($result);
+        print_r(\App\Service\Setting::getByKey('fp'));
         echo '</pre>';
 
         //echo uniqid('img-'.date('YmdHis').'-');

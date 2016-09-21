@@ -31,7 +31,7 @@
                         <span>{{ date | date("M jS, Y") }}</span>
                     </div>
                 {% endif %}
-                <div class="post-content"><p>{{ content | raw }}</p></div>
+                <div class="post-content">{{ doShortcode(content) | raw }}</div>
                 {% if template and template != "default"  %}
                     {% include "Utils/_template_" ~ template ~ ".html" %}
                 {% endif %}

@@ -10,11 +10,13 @@ namespace App\Utility;
 
 use \Intervention\Image\ImageManagerStatic as Image;
 use \App\Service\Menu;
+use \App\Service\Setting;
 
 class Helper
 {
     public static function renderMenu($menu = array(), $currentUrl)
     {
+        $frontpage = Setting::getByKey('fp');
         $html = '<ul>';
 
         if ($menu) {
@@ -27,9 +29,15 @@ class Helper
                         continue;
                     }
 
-                    $class = ($itemFromDB['slug'] === $currentUrl) ? 'active' : '';
-                    $item['url'] = ($itemFromDB['type'] == 'category') ? '/archive/'. $itemFromDB['slug'] .'/1' : '/'. $itemFromDB['slug'];
-                    $item['title'] = $itemFromDB['title'];
+                    if ((int) $item['id'] === (int) $frontpage) {
+                        $item['url'] = '/';
+                        $item['title'] = $itemFromDB['title'];
+                        $class = ($item['url'] === $currentUrl) ? 'active' : '';
+                    } else {
+                        $class = ($itemFromDB['slug'] === $currentUrl) ? 'active' : '';
+                        $item['url'] = ($itemFromDB['type'] == 'category') ? '/archive/'. $itemFromDB['slug'] .'/1' : '/'. $itemFromDB['slug'];
+                        $item['title'] = $itemFromDB['title'];
+                    }
                 } else {
                     $class = ($item['url'] === $currentUrl) ? 'active' : '';
                 }
@@ -51,6 +59,7 @@ class Helper
 
     public static function menuAsArray(array $menu)
     {
+        $frontpage = Setting::getByKey('fp');
         $menuArray = array();
 
         if ($menu) {
@@ -61,8 +70,14 @@ class Helper
                     if (!$itemFromDB) {
                         continue;
                     }
-                    $item['url'] = ($itemFromDB['type'] == 'category') ? '/archive/'. $itemFromDB['slug'] .'/1' : '/'. $itemFromDB['slug'];
-                    $item['title'] = $itemFromDB['title'];
+
+                    if ((int) $item['id'] === (int) $frontpage) {
+                        $item['url'] = '/';
+                        $item['title'] = $itemFromDB['title'];
+                    } else {
+                        $item['url'] = ($itemFromDB['type'] == 'category') ? '/archive/'. $itemFromDB['slug'] .'/1' : '/'. $itemFromDB['slug'];
+                        $item['title'] = $itemFromDB['title'];
+                    }
                 }
 
                 $menuArray[] = array('title' => $item['title'], 'url' => $item['url']);

@@ -14,3 +14,4 @@
 .required {color: #FF0000;}
 #slide-area-select img {max-width: 100%;}
 .hidden-content {display: none;}
+.settings-separator {height: 1px; background: #f4f4f4; margin: 15px 0;}

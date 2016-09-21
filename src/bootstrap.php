@@ -143,12 +143,18 @@ $app->container->singleton('acl', function()
     return $acl;
 });
 
+// Shortcodes Handler
+$app->container->singleton('shortcode', function()
+{
+    return new \App\Utility\Shortcodes();
+});
+
 // Facebook
 $app->container->singleton('facebook', function() use ($app)
 {
     $session = $app->session;
-    $app_id = (\App\Service\Setting::getByKey('fb_app_id')) ? \App\Service\Setting::getByKey('fb_app_id')->key_value : 'default';
-    $app_secret = (\App\Service\Setting::getByKey('fb_app_secret')) ? \App\Service\Setting::getByKey('fb_app_secret')->key_value : 'default';
+    $app_id = (\App\Service\Setting::getByKey('fb_app_id')) ? \App\Service\Setting::getByKey('fb_app_id') : 'default';
+    $app_secret = (\App\Service\Setting::getByKey('fb_app_secret')) ? \App\Service\Setting::getByKey('fb_app_secret') : 'default';
 
     $facebook = new \Facebook\Facebook(array(
         'app_id'                  => $app_id,
@@ -164,8 +170,8 @@ $app->container->singleton('facebook', function() use ($app)
 $app->container->singleton('linkedin', function() use ($app)
 {
     $request = $app->request;
-    $api_key = (\App\Service\Setting::getByKey('in_client_id')) ? \App\Service\Setting::getByKey('in_client_id')->key_value : 'default';
-    $api_secret = (\App\Service\Setting::getByKey('in_client_secret')) ? \App\Service\Setting::getByKey('in_client_secret')->key_value : 'default';
+    $api_key = (\App\Service\Setting::getByKey('in_client_id')) ? \App\Service\Setting::getByKey('in_client_id') : 'default';
+    $api_secret = (\App\Service\Setting::getByKey('in_client_secret')) ? \App\Service\Setting::getByKey('in_client_secret') : 'default';
     $callback_url = $request->getUrl() . $app->urlFor('social.in');
 
     $linkedin = new \App\Social\LinkedIn\LinkedIn(array(

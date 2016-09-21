@@ -9,12 +9,22 @@
 namespace App\Controller;
 
 use \App\Service\Contact;
+use \App\Service\Setting;
+use \App\Service\Content;
 
 class Index extends Base
 {
     public static function index()
     {
-        self::response('Index/index.html', array());
+        $app = self::_getApp();
+        $frontpage = (int) Setting::getByKey('fp');
+        $content = Content::getContent($frontpage);
+
+        if (!$content) {
+            return $app->notFound();
+        }
+
+        self::response('Index/index.html', $content);
     }
 
     public static function contactSubmit()

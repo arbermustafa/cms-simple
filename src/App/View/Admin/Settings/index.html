@@ -12,6 +12,55 @@
                     <div class="box-body">
                         {% include "Utils/_error_success.html" with {result: result} %}
                         <div class="form-group">
+                            <label for="fp_key" class="col-sm-2 control-label">Website frontpage</label>
+                            <div class="col-sm-10">
+                                <select name="fp" id="fp_key" class="form-control">
+                                    {% for page in pages %}
+                                        <option value="{{ page.id }}" {% if getSetting("fp") == page.id %}selected{% endif %}>{{ page.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="settings-separator"></div>
+                        <div class="form-group">
+                            <label for="keywords_key" class="col-sm-2 control-label">Meta Keywords</label>
+                            <div class="col-sm-10">
+                                <textarea name="keywords" class="form-control" id="keywords_key" rows="4">{{ getSetting("keywords") }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description_key" class="col-sm-2 control-label">Meta Description</label>
+                            <div class="col-sm-10">
+                                <textarea name="description" class="form-control" id="description_key" rows="4">{{ getSetting("description") }}</textarea>
+                            </div>
+                        </div>
+                        <div class="settings-separator"></div>
+                        <div class="form-group">
+                            <label for="cfe_key" class="col-sm-2 control-label">Contact form Email</label>
+                            <div class="col-sm-10">
+                                <input type="email" name="cfe" class="form-control" id="cfe_key" value="{{ getSetting("cfe") }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cp_key" class="col-sm-2 control-label">Cookie Policy Message</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="cp" class="form-control" id="cp_key" value="{{ getSetting("cp") }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cpl_key" class="col-sm-2 control-label">Cookie Policy Link</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="cpl" class="form-control" id="cpl_key" value="{{ getSetting("cpl") }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="analytics_key" class="col-sm-2 control-label">Google Analytics JS Code</label>
+                            <div class="col-sm-10">
+                                <textarea name="analytics" class="form-control" id="analytics_key" rows="5">{{ getSetting("analytics") }}</textarea>
+                            </div>
+                        </div>
+                        <div class="settings-separator"></div>
+                        <div class="form-group">
                             <label for="fb_key" class="col-sm-2 control-label">Facebook page</label>
                             <div class="col-sm-10">
                                 <input type="text" name="fb" class="form-control" id="fb_key" value="{{ getSetting("fb") }}">
@@ -43,6 +92,7 @@
                                 <a class="btn btn-default" href="{{ auth_fb_url }}">Authorize App</a>
                             </div>
                         </div>
+                        <div class="settings-separator"></div>
                         <div class="form-group">
                             <label for="in_key" class="col-sm-2 control-label">Linkedin Page</label>
                             <div class="col-sm-10">
@@ -73,42 +123,6 @@
                                 <input type="text" name="in_app_token" class="form-control" id="in_app_token_key" value="{{ getSetting("in_app_token") }}" disabled>
                                 <p class="help-block">Current Token expires on: {{ getSetting("in_app_token_expires") | date("F jS Y \\a\\t g:ia") }}</p>
                                 <a class="btn btn-default" href="{{ auth_in_url }}">Authorize App</a>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="cfe_key" class="col-sm-2 control-label">Contact form Email</label>
-                            <div class="col-sm-10">
-                                <input type="email" name="cfe" class="form-control" id="cfe_key" value="{{ getSetting("cfe") }}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="keywords_key" class="col-sm-2 control-label">Meta Keywords</label>
-                            <div class="col-sm-10">
-                                <textarea name="keywords" class="form-control" id="keywords_key" rows="4">{{ getSetting("keywords") }}</textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="description_key" class="col-sm-2 control-label">Meta Description</label>
-                            <div class="col-sm-10">
-                                <textarea name="description" class="form-control" id="description_key" rows="4">{{ getSetting("description") }}</textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="cp_key" class="col-sm-2 control-label">Cookie Policy Message</label>
-                            <div class="col-sm-10">
-                                <textarea name="cp" class="form-control" id="cp_key" rows="5">{{ getSetting("cp") }}</textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="cpl_key" class="col-sm-2 control-label">Cookie Policy Link</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="cpl" class="form-control" id="cpl_key" value="{{ getSetting("cpl") }}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="analytics_key" class="col-sm-2 control-label">Google Analytics JS Code</label>
-                            <div class="col-sm-10">
-                                <textarea name="analytics" class="form-control" id="analytics_key" rows="5">{{ getSetting("analytics") }}</textarea>
                             </div>
                         </div>
                     </div>

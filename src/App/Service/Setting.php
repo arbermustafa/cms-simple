@@ -19,12 +19,12 @@ class Setting extends Base
         $result = '';
 
         if (false == ($result = $cache->getItem($key))) {
-            $key_data = SettingModel::select('key_value')
+            $setting = SettingModel::select('key_value')
                 ->where('key_name', $key_name)
                 ->first();
 
-            if ($key_data) {
-                $result = $key_data;
+            if ($setting) {
+                $result = $setting->key_value;
 
                 $cache->setItem($key, $result);
                 $cache->setTags($key, array(__CLASS__));

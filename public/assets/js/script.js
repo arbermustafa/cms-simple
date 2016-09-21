@@ -59,7 +59,7 @@
             var $height;
 
             if (jQuery("#content").height() < getViewPort().height) {
-                $height = getViewPort().height - jQuery("#footer").outerHeight(true) - jQuery("#header").outerHeight(true) - 38;
+                $height = getViewPort().height - jQuery("#footer").outerHeight(true) - jQuery("#header").outerHeight(true) - 33;
 
                 $main.css("min-height", $height);
             }

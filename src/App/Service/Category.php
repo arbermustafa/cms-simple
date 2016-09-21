@@ -30,6 +30,35 @@ class Category extends Content
         return $category;
     }
 
+    public static function getCategoryPosts($category = null, $limit = 5, $status = 'PUBLISHED')
+    {
+        $cache = self::_getCache();
+        $key = __CLASS__.'_'.__FUNCTION__.'_'.$category.'_'.$limit.'_'.$status;
+        $result = array();
+
+        if ((int) $category !== 0 && $category !== null) {
+            if (false == ($result = $cache->getItem($key))) {
+                $posts = ContentModel::select('id', 'title', 'content', 'slug', 'featured_photo', 'date')
+                    ->join('post_category', 'content.id', '=', 'post_category.content_id')
+                    ->where('post_category.category_id', (int) $category['id'])
+                    ->where('type', 'post')
+                    ->where('status', $status)
+                    ->orderBy('date', 'desc')
+                    ->take($limit)
+                    ->get();
+
+                if ($posts) {
+                    $result = $posts->toArray();
+
+                    $cache->setItem($key, $result);
+                    $cache->setTags($key, array(__CLASS__));
+                }
+            }
+        }
+
+        return $result;
+    }
+
     public static function getCategoryCount()
     {
         $categoryCount = parent::getContentCountByType('category');

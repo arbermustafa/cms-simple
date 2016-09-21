@@ -10,6 +10,7 @@ namespace App\Controller\Admin;
 
 use \App\Controller\Base;
 use \App\Service\Setting;
+use \App\Service\Page;
 use \App\Social\LinkedIn\LinkedIn;
 
 class Settings extends Base
@@ -35,6 +36,7 @@ class Settings extends Base
         ));
 
         $result = array(
+            'pages'       => Page::getPages('PUBLISHED'),
             'result'      => null,
             'auth_fb_url' => $auth_fb_url,
             'auth_in_url' => $auth_in_url

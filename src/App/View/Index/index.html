@@ -1,5 +1,5 @@
 {% extends "front.html" %}
-{% block title %}| Homepage{% endblock %}
+{% block title %}| {{ title }}{% endblock %}
 {% block header %}
     {{ parent() }}
     <!-- Begin Dynamic CSS -->
@@ -7,61 +7,7 @@
     <!-- End Dynamic CSS -->
 {% endblock %}
 {% block content %}
-    <div id="main-slider">
-        <div class="flex-container">
-            <div class="flexslider">
-                <ul class="slides">
-                    <li>
-                        <img src="/uploads/img-20160914091501-57d8f8f52fb37.jpg" alt="White Living Room">
-                        <div class="flex-caption">
-                            <h2>Title</h2>
-                            <p>Description ...</p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="/uploads/img-20160914091501-57d8f8f52fb37.jpg" alt="Villa">
-                        <div class="flex-caption">
-                            <h2>Title</h2>
-                            <p>Description ...</p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="/uploads/img-20160914091501-57d8f8f52fb37.jpg" alt="Building">
-                        <div class="flex-caption">
-                            <h2>Title</h2>
-                            <p>Description ...</p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="/uploads/img-20160914091501-57d8f8f52fb37.jpg" alt="Brown Living Room">
-                        <div class="flex-caption">
-                            <h2>Title</h2>
-                            <p>Description ...</p>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="/uploads/img-20160914091501-57d8f8f52fb37.jpg" alt="Brown Dining Room">
-                        <div class="flex-caption">
-                            <h2>Title</h2>
-                            <p>Description ...</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div>
-        <div class="promobox">
-            <div class="promobox-inner">
-                <a class="button large" href="#">Learn More</a>
-                <div class="with-button">
-                    <h2>Your Partner in Building Catastrophe and Weather Risk Markets</h2>
-                    <p>Europa Re is the Catastrophe and Weather Risk Reinsurance Company</p>
-                </div>
-                <a class="button large mobile" href="#">Learn More</a>
-            </div>
-        </div>
-    </div>
+    {{ doShortcode(content) | raw }}
 {% endblock %}
 {% block js_footer %}
     {{ parent() }}
