@@ -25,44 +25,46 @@ class Shortcodes
 
     public function addShortcodes()
     {
-        $this->facade->addHandler('slider', function(ShortcodeInterface $s)
+        $class = $this;
+
+        $this->facade->addHandler('slider', function(ShortcodeInterface $s) use ($class)
         {
-            return Shortcodes::slider($s);
+            return $class->slider($s);
         });
 
-        $this->facade->addHandler('promobox', function(ShortcodeInterface $s)
+        $this->facade->addHandler('promobox', function(ShortcodeInterface $s) use ($class)
         {
-            return Shortcodes::promobox($s);
+            return $class->promobox($s);
         });
 
-        $this->facade->addHandler('newsbox', function(ShortcodeInterface $s)
+        $this->facade->addHandler('newsbox', function(ShortcodeInterface $s) use ($class)
         {
-            return Shortcodes::newsbox($s);
+            return $class->newsbox($s);
         });
 
-        $this->facade->addHandler('one-half', function(ShortcodeInterface $s)
+        $this->facade->addHandler('one-half', function(ShortcodeInterface $s) use ($class)
         {
-            return Shortcodes::grid($s, 'one-half');
+            return $class->grid($s);
         });
 
-        $this->facade->addHandler('one-third', function(ShortcodeInterface $s)
+        $this->facade->addHandler('one-third', function(ShortcodeInterface $s) use ($class)
         {
-            return Shortcodes::grid($s, 'one-third');
+            return $class->grid($s);
         });
 
-        $this->facade->addHandler('one-fourth', function(ShortcodeInterface $s)
+        $this->facade->addHandler('one-fourth', function(ShortcodeInterface $s) use ($class)
         {
-            return Shortcodes::grid($s, 'one-fourth');
+            return $class->grid($s);
         });
 
-        $this->facade->addHandler('two-thirds', function(ShortcodeInterface $s)
+        $this->facade->addHandler('two-thirds', function(ShortcodeInterface $s) use ($class)
         {
-            return Shortcodes::grid($s, 'two-thirds');
+            return $class->grid($s);
         });
 
-        $this->facade->addHandler('three-fourths', function(ShortcodeInterface $s)
+        $this->facade->addHandler('three-fourths', function(ShortcodeInterface $s) use ($class)
         {
-            return Shortcodes::grid($s, 'three-fourths');
+            return $class->grid($s);
         });
     }
 
@@ -71,7 +73,7 @@ class Shortcodes
         return $this->facade->process($content);
     }
 
-    public static function slider($s)
+    public function slider($s)
     {
         $slides = Slide::getSlides();
         $html = '';
@@ -104,7 +106,7 @@ class Shortcodes
         return $html;
     }
 
-    public static function promobox($s)
+    public function promobox($s)
     {
         return '
             <div>
@@ -121,7 +123,7 @@ class Shortcodes
             </div>';
     }
 
-    public static function newsbox($s)
+    public function newsbox($s)
     {
         $html = '';
         $title = ($s->getParameter('title')) ?: '';
@@ -143,10 +145,11 @@ class Shortcodes
         return $html;
     }
 
-    public static function grid($s, $gridClass)
+    public function grid($s)
     {
-        $last = ($s->getParameter('last')) ? 'column-last': '';
+        $class = $s->getName();
+        $class .= ($s->getParameter('last') == 'true') ? ' column-last': '';
 
-        return '<div class="'. $gridClass . ' '. $last .'">'. $s->getContent() .'</div>';
+        return '<div class="'. $class .'">'. $s->getContent() .'</div>';
     }
 }

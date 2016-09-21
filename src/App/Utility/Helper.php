@@ -30,14 +30,12 @@ class Helper
                     }
 
                     if ((int) $item['id'] === (int) $frontpage) {
-                        $item['url'] = '/';
-                        $item['title'] = $itemFromDB['title'];
-                        $class = ($item['url'] === $currentUrl) ? 'active' : '';
-                    } else {
-                        $class = ($itemFromDB['slug'] === $currentUrl) ? 'active' : '';
-                        $item['url'] = ($itemFromDB['type'] == 'category') ? '/archive/'. $itemFromDB['slug'] .'/1' : '/'. $itemFromDB['slug'];
-                        $item['title'] = $itemFromDB['title'];
+                        $itemFromDB['slug'] = '';
                     }
+
+                    $class = ($itemFromDB['slug'] === $currentUrl || ($itemFromDB['slug'] . '/') === $currentUrl) ? 'active' : '';
+                    $item['url'] = ($itemFromDB['type'] == 'category') ? '/archive/'. $itemFromDB['slug'] .'/1' : '/'. $itemFromDB['slug'];
+                    $item['title'] = $itemFromDB['title'];
                 } else {
                     $class = ($item['url'] === $currentUrl) ? 'active' : '';
                 }
@@ -72,12 +70,11 @@ class Helper
                     }
 
                     if ((int) $item['id'] === (int) $frontpage) {
-                        $item['url'] = '/';
-                        $item['title'] = $itemFromDB['title'];
-                    } else {
-                        $item['url'] = ($itemFromDB['type'] == 'category') ? '/archive/'. $itemFromDB['slug'] .'/1' : '/'. $itemFromDB['slug'];
-                        $item['title'] = $itemFromDB['title'];
+                        $itemFromDB['slug'] = '';
                     }
+
+                    $item['url'] = ($itemFromDB['type'] == 'category') ? '/archive/'. $itemFromDB['slug'] .'/1' : '/'. $itemFromDB['slug'];
+                    $item['title'] = $itemFromDB['title'];
                 }
 
                 $menuArray[] = array('title' => $item['title'], 'url' => $item['url']);
