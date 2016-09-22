@@ -40,7 +40,7 @@ class Category extends Content
             if (false == ($result = $cache->getItem($key))) {
                 $posts = ContentModel::select('id', 'title', 'content', 'slug', 'featured_photo', 'date')
                     ->join('post_category', 'content.id', '=', 'post_category.content_id')
-                    ->where('post_category.category_id', (int) $category['id'])
+                    ->where('post_category.category_id', (int) $category)
                     ->where('type', 'post')
                     ->where('status', $status)
                     ->orderBy('date', 'desc')

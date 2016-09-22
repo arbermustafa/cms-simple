@@ -126,19 +126,36 @@ class Shortcodes
     public function newsbox($s)
     {
         $html = '';
-        $title = ($s->getParameter('title')) ?: '';
         $id = (int) $s->getParameter('id');
+        $type = ($s->getParameter('type')) ?: 'news';
         $items = (int) $s->getParameter('items');
-
         $category = Category::getCategory($id);
+        $title = ($s->getParameter('title')) ? $s->getParameter('title') : $category['title'];
 
         if ($category) {
+            $html .= '<h2>'. $title .' <span class="more">– <a href="/archive/'. $category['slug'] .'/1">Archive »</a></span></h2>';
+
             $posts = Category::getCategoryPosts($id, $items);
 
-            if ($posts) {
-                foreach($posts as $post) {
+            //var_dump($posts);
 
+            if ($posts) {
+                $html .= '<div style="padding-top: 25px;border-top: 1px solid #e5e5e5;">';
+
+                foreach($posts as $post) {
+                    $html .= '<div style="padding-bottom: 5px;">';
+                    $html .= '<div class="post-date" style="margin-right: 20px; width: 50px; float: left;">';
+                    $html .= '<span>'. date('M jS, Y', strtotime($post['date'])) .'</span>';
+                    $html .= '</div>';
+                    $html .= '<div class="post-body">';
+                    $html .= '<h4 class="post-title">';
+                    $html .= '<a href="/'. $post['slug'] .'">'. $post['title'] .' Aliquam pellentesque diam in mollis tempus. Etiam tincidunt ligula ac nibh semper auctor at a nunc</a>';
+                    $html .= '</h4>';
+                    $html .= '</div>';
+                    $html .= '</div>';
                 }
+
+                $html .= '</div>';
             }
         }
 
