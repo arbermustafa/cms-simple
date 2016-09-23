@@ -8,6 +8,7 @@
  */
 namespace App\Utility;
 
+use \Illuminate\Support\Str;
 use \Thunder\Shortcode\ShortcodeFacade;
 use \Thunder\Shortcode\Shortcode\ShortcodeInterface;
 use \App\Service\Slide;
@@ -137,21 +138,41 @@ class Shortcodes
 
             $posts = Category::getCategoryPosts($id, $items);
 
-            //var_dump($posts);
-
             if ($posts) {
-                $html .= '<div style="padding-top: 25px;border-top: 1px solid #e5e5e5;">';
+                $html .= '<div class="post-list-home">';
 
                 foreach($posts as $post) {
-                    $html .= '<div style="padding-bottom: 5px;">';
-                    $html .= '<div class="post-date" style="margin-right: 20px; width: 50px; float: left;">';
-                    $html .= '<span>'. date('M jS, Y', strtotime($post['date'])) .'</span>';
-                    $html .= '</div>';
+                    //$html .= '<div class="post-single">';
+                    $html .= '<div class="post">';
+
+                    if ($type == 'news' && $post['featured_photo']) {
+                        $html .= '<div class="post-single-image post-single-image-home" style="margin-right: 20px; width: 100px; height: 75px; float: left;">';
+                        $html .= '<a class="fancybox" href="/uploads/'. $post['featured_photo'] .'" title="'. $post['title'] .'"><span class="overlay zoom"></span><img src="/uploads/'. $post['featured_photo'] .'" alt="'. $post['title'] .'"></a>';
+                        $html .= '</div>';
+                    }
+
+                    if ($type == 'event') {
+                        $html .= '<div class="post-date post-date-home">';
+                        $html .= '<span>'. date('M jS, Y', strtotime($post['date'])) .'</span>';
+                        $html .= '</div>';
+                    }
+
                     $html .= '<div class="post-body">';
+
+                    if ($type == 'news') {
+                        $html .= '<div class="post-date">';
+                        $html .= '<span>'. date('M jS, Y', strtotime($post['date'])) .'</span>';
+                        $html .= '</div>';
+                    }
+
                     $html .= '<h4 class="post-title">';
-                    $html .= '<a href="/'. $post['slug'] .'">'. $post['title'] .' Aliquam pellentesque diam in mollis tempus. Etiam tincidunt ligula ac nibh semper auctor at a nunc</a>';
+                    $html .= '<a href="/'. $post['slug'] .'">'. $post['title'] .'</a>';
                     $html .= '</h4>';
+
+                    $html .= ($type == 'news') ? '<div class="post-content"><p>'. Str::words($post['content'], 20) .'</p></div>' : '';
+
                     $html .= '</div>';
+                    //$html .= '</div>';
                     $html .= '</div>';
                 }
 

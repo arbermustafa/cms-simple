@@ -20,15 +20,15 @@ class Settings extends Base
         $app = self::_getApp();
         $request = $app->request();
         $linkedin = $app->linkedin;
-        $facebook = $app->facebook;
+        //$facebook = $app->facebook;
 
-        $auth_fb_url = $facebook->getRedirectLoginHelper()->getLoginUrl(
+        $auth_fb_url = ''; /*$facebook->getRedirectLoginHelper()->getLoginUrl(
             $request->getUrl() . $app->urlFor('social.fb'),
             array(
                 'publish_pages',
                 'manage_pages'
             )
-        );
+        );*/
 
         $auth_in_url = $linkedin->getLoginUrl(array(
             LinkedIn::SCOPE_BASIC_PROFILE,

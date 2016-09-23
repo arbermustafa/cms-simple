@@ -79,7 +79,7 @@ input[type="submit"] {width: auto;}
 ::-moz-focus-inner {padding: 0;	border: none;}
 .button, .content-form input.button {width: auto; display: inline-block; cursor: pointer; line-height: normal; margin: 0 10px 20px 0; border: none; color: #fff !important;	padding: 7px 15px;}
 .button.large {font-size: 1.5em; padding: 10px 20px;}
-.button {background-color: #CA5728;}
+.button, .jcarousel-prev:hover, .jcarousel-prev:focus, .jcarousel-next:hover, .jcarousel-next:focus {background-color: #CA5728;}
 .button:hover, .content-form input.button:hover {background-color: #383838;}
 
 /* ---------------------------------------------------------------------- */
@@ -121,7 +121,7 @@ ul#search-results h2 a, ul#search-results h2 a strong {color: #383838;}
 ul#search-results h2 a:hover, ul#search-results h2 a:hover strong {color: #CA5728;}
 ul#search-results p {margin: 0;}
 
-.post-single .post {margin-bottom: 20px;}
+.post-single .post {margin-bottom: 15px;}
 .post-single-image {overflow: hidden; position: relative; width: 100%; height: 240px; display: inline-block; background-color: #FFF; margin-bottom: 20px;}
 .post-single-image img {position: absolute; top: -20px; left: -55px;}
 .post-single-image > a .overlay {opacity: 0; filter: alpha(opacity=0); z-index: 0;}
@@ -134,6 +134,7 @@ ul#search-results p {margin: 0;}
 .post-date .title {color: #383838;}
 .post-date > span {display: block;}
 .post-date > span {margin-bottom: 5px; font-style: italic;}
+.post-date-home {margin-right: 20px; width: 50px; float: left;}
 .post-body {overflow: hidden;}
 h2.post-title {margin-bottom: 15px;}
 h2 span.more {font-weight: normal; font-size: 0.666em; line-height: 1.5em;}
@@ -143,6 +144,8 @@ h2 span.more a {font-style: italic;}
 .post-list > .post > .post-single-image {display: block;}
 .post-list .post {border-top: 1px solid #e5e5e5; padding-top: 20px;}
 .post-list .post:first-child {border: none; padding: 0;}
+.post-list-home {padding-top: 15px; border-top: 1px solid #e5e5e5;}
+.post-list-home .post {margin-bottom: 15px;}
 
 .content-form p {margin-bottom: 10px;}
 .content-form input, .content-form textarea, .content-form select {background-color: #f7f7f7; border: 1px solid #e5e5e5; padding: 6px 10px; border-radius: 0; box-sizing: border-box;}
@@ -163,7 +166,6 @@ a.notification-close {display: block; position: absolute; right: 10px; top: 10px
 .notification-box > p:first-child {margin: 0;}
 .notification-box-success {background-color: #deebc5; border-color: #b9d188;}
 .notification-box-error {background-color: #faebe6; border-color: #f5d0c4;}
-
 
 ul.arrow {margin-bottom: 20px;}
 ul.arrow ul {margin-left: 14px; margin-bottom: 0;}
