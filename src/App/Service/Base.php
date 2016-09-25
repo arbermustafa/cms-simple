@@ -14,7 +14,7 @@ class Base
 {
     protected static function _getApp()
     {
-        return Slim::getInstance();
+        return Slim::getInstance(getenv('APP_NAME'));
     }
 
     public static function _getLog()
@@ -42,6 +42,19 @@ class Base
         }
 
         return $identity;
+    }
+
+    public static function getFlashMessage($key = null)
+    {
+        $session = self::_getApp()->session;
+        $result = null;
+
+        if (null !== $key && '' !== $key && isset($session[$key])) {
+            $result = $session[$key];
+            unset($session[$key]);
+        }
+
+        return $result;
     }
 
     public static function _printErrors($errors = array())

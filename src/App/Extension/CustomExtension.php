@@ -44,7 +44,7 @@ class CustomExtension extends \Twig_Extension
 
     public function serverUrl()
     {
-        $app = Slim::getInstance();
+        $app = Slim::getInstance(getenv('APP_NAME'));
         $request = $app->request;
 
         return $request->getUrl();
@@ -52,14 +52,14 @@ class CustomExtension extends \Twig_Extension
 
     public function routeParams()
     {
-        $app = Slim::getInstance();
+        $app = Slim::getInstance(getenv('APP_NAME'));
 
         return $app->router->getCurrentRoute()->getParams();
     }
 
     public function queryStringParams()
     {
-        $app = Slim::getInstance();
+        $app = Slim::getInstance(getenv('APP_NAME'));
         $env = $app->environment();
         $uri = (!empty($env['QUERY_STRING'])) ? $env['QUERY_STRING'] : '';
 
@@ -68,7 +68,7 @@ class CustomExtension extends \Twig_Extension
 
     public function reqParams($key = null)
     {
-        $app = Slim::getInstance();
+        $app = Slim::getInstance(getenv('APP_NAME'));
 
         return $app->request->params($key);
     }
@@ -99,18 +99,14 @@ class CustomExtension extends \Twig_Extension
 
     public function getFlashMessage($key = null)
     {
-        $app = Slim::getInstance();
+        $app = Slim::getInstance(getenv('APP_NAME'));
         $session = $app->session;
         $result = null;
 
-        echo 'call 1: '. print_r($_SESSION);
-
-        if ($key !== null && $key !== '' && isset($session[$key])) {
+        if (null !== $key && '' !== $key && isset($session[$key])) {
             $result = $session[$key];
             unset($session[$key]);
         }
-
-        echo 'call 2: '. print_r($_SESSION);
 
         return $result;
     }
@@ -134,7 +130,7 @@ class CustomExtension extends \Twig_Extension
 
     public function isAllowed($resource, $permission = null)
     {
-        $app = Slim::getInstance();
+        $app = Slim::getInstance(getenv('APP_NAME'));
         $auth = $app->auth;
         $acl = $app->acl;
 
@@ -155,7 +151,7 @@ class CustomExtension extends \Twig_Extension
 
     public function doShortcode($content)
     {
-        $app = Slim::getInstance();
+        $app = Slim::getInstance(getenv('APP_NAME'));
         $shortcode = $app->shortcode;
 
         return $shortcode->doShortcode(html_entity_decode($content));

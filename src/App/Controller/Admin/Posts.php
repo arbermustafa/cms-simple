@@ -57,11 +57,10 @@ class Posts extends Base
     {
         $app = self::_getApp();
         $request = $app->request();
-        $session = $app->session;
         $result = array(
             'post'       => Post::getPost((int) $id),
             'categories' => Category::getCategories('PUBLISHED'),
-            'message'    => $session->offsetGet('message')
+            'message'    => Post::getFlashMessage('message')
         );
 
         if ($request->isPost()) {

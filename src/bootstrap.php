@@ -126,8 +126,9 @@ $app->container->singleton('session', function()
 });
 
 // Auth
-$app->container->singleton('auth', function() use ($app)
+$app->container->singleton('auth', function()
 {
+    $app = \Slim\Slim::getInstance(getenv('APP_NAME'));
     $authService = new \Zend\Authentication\AuthenticationService();
     $storage = new \Zend\Authentication\Storage\Session(null, null, $app->sessionManager);
     $authService->setStorage($storage);
@@ -150,8 +151,9 @@ $app->container->singleton('shortcode', function()
 });
 
 // Facebook
-$app->container->singleton('facebook', function() use ($app)
+$app->container->singleton('facebook', function()
 {
+    $app = \Slim\Slim::getInstance(getenv('APP_NAME'));
     $session = $app->session;
     $app_id = (\App\Service\Setting::getByKey('fb_app_id')) ? \App\Service\Setting::getByKey('fb_app_id') : 'default';
     $app_secret = (\App\Service\Setting::getByKey('fb_app_secret')) ? \App\Service\Setting::getByKey('fb_app_secret') : 'default';
@@ -167,8 +169,9 @@ $app->container->singleton('facebook', function() use ($app)
 });
 
 // LinkedIn
-$app->container->singleton('linkedin', function() use ($app)
+$app->container->singleton('linkedin', function()
 {
+    $app = \Slim\Slim::getInstance(getenv('APP_NAME'));
     $request = $app->request;
     $api_key = (\App\Service\Setting::getByKey('in_client_id')) ? \App\Service\Setting::getByKey('in_client_id') : 'default';
     $api_secret = (\App\Service\Setting::getByKey('in_client_secret')) ? \App\Service\Setting::getByKey('in_client_secret') : 'default';

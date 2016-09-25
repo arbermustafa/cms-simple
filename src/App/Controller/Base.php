@@ -17,7 +17,7 @@ class Base
      */
     protected static function _getApp()
     {
-        return Slim::getInstance();
+        return Slim::getInstance(getenv('APP_NAME'));
     }
 
     /**

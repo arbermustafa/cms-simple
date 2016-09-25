@@ -43,7 +43,7 @@ class Auth extends Middleware
             return $this->next->call();
         }
 
-        $app = $this->app;
+        $app = \Slim\Slim::getInstance(getenv('APP_NAME'));
 
         $app->hook('slim.before.dispatch', function() use ($app)
         {

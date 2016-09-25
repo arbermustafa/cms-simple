@@ -55,10 +55,9 @@ class Pages extends Base
     {
         $app = self::_getApp();
         $request = $app->request();
-        $session = $app->session;
         $result = array(
             'page'    => Page::getPage((int) $id),
-            'message' => $session->offsetGet('message')
+            'message' => Page::getFlashMessage('message')
         );
 
         if ($request->isPost()) {
