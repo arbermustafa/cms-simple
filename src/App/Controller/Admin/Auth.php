@@ -64,10 +64,13 @@ class Auth extends Base
     {
         $app = self::_getApp();
         $auth = $app->auth;
+        $session = $app->session;
 
         if ($auth->hasIdentity()) {
             $auth->clearIdentity();
         }
+
+        $session->getManager()->destroy();
 
         return $app->redirectTo('intranet.login');
     }

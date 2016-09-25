@@ -42,7 +42,7 @@
                     <input type="hidden" name="title" id="title" value="{{ name }}">
                     <textarea name="content" id="content" class="hidden-content"></textarea>
                     <div class="box-body">
-                        {% include "Utils/_error_success.html" with {result: message} %}
+                        {% include "Admin/Utils/_error_success.html" with {result: message} %}
                         <div class="row">
                             <div class="col-xs-5">
                                 <div class="box-group" id="accordion">
@@ -55,7 +55,7 @@
                                         <div id="collapsePages" class="panel-collapse collapse in">
                                             <div class="box-body">
                                                 {% if pages is iterable and pages|length > 0 %}
-                                                    {% import "Utils/_pages_nestable.html" as page %}
+                                                    {% import "Admin/Utils/_pages_nestable.html" as page %}
                                                     {{ page.printPages(pages) }}
                                                 {% endif %}
                                                 <div class="form-group">
@@ -73,7 +73,7 @@
                                         <div id="collapseCategories" class="panel-collapse collapse">
                                             <div class="box-body">
                                                 {% if categories is iterable and categories|length > 0 %}
-                                                    {% import "Utils/_categories_nestable.html" as recursive %}
+                                                    {% import "Admin/Utils/_categories_nestable.html" as recursive %}
                                                     {{ recursive.printCategory(categories, 0) }}
                                                 {% endif %}
                                                 <div class="form-group">

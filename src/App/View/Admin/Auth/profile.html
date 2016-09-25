@@ -10,7 +10,7 @@
                 <form name="form-user" id="form-user" method="post" action="{{ urlFor("intranet.profile") }}">
                     <input type="hidden" name="id" value="{{ user.id }}">
                     <div class="box-body">
-                        {% include "Utils/_error_success.html" with {result: message} %}
+                        {% include "Admin/Utils/_error_success.html" with {result: message} %}
                         <div class="row">
                             <div class="col-xs-6">
                                 <div class="form-group">

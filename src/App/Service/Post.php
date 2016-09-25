@@ -71,7 +71,7 @@ class Post extends Content
                 $post->categories()->sync($params['category']);
 
                 $cache->clearByTags(array(__CLASS__));
-
+                Category::clearCache();
                 self::clearCache();
 
                 if (isset($params['fb']) && (int) $params['fb'] === 1) {
@@ -167,7 +167,7 @@ class Post extends Content
                 }
 
                 $cache->clearByTags(array(__CLASS__));
-
+                Category::clearCache();
                 self::clearCache();
 
                 if (isset($params['fb']) && (int) $params['fb'] === 1) {

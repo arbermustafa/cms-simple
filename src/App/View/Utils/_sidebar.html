@@ -1,14 +1,14 @@
 {% spaceless %}
     <div class="widget">
-        <h3>Text Widget</h3>
-        <p>Phasellus ultricies sollicitudin eros, nec vehicula mauris volutpat in. Nulla non arcu nunc, id semper eros. Class aptent taciti sociosqu ad litora torquent per.</p>
-    </div>
-    <div class="widget">
         <h3>Post Categories</h3>
         {% set categories = getSitemapFor("category") %}
         {% if categories is iterable and categories|length > 0 %}
             {% import "Utils/_recursive_sitemap.html" as print %}
             {{ print.printSitemap(categories, "menu") }}
         {% endif %}
+    </div>
+    <div class="widget">
+        <h3>Text Widget</h3>
+        <p>Phasellus ultricies sollicitudin eros, nec vehicula mauris volutpat in. Nulla non arcu nunc, id semper eros. Class aptent taciti sociosqu ad litora torquent per.</p>
     </div>
 {% endspaceless %}

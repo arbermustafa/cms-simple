@@ -7,11 +7,16 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Edit user &ldquo;{{ user.firstname }} {{ user.lastname }}&rdquo;</h3>
+                    <div class="box-tools">
+                        <div class="input-group input-group-sm">
+                            <a class="btn btn-sm btn-success pull-right" href="{{ urlFor("intranet.users.add") }}"><i class="icon fa fa-plus"></i> Add New User</a>
+                        </div>
+                    </div>
                 </div>
                 <form name="form-user" id="form-user" method="post" action="{{ urlFor("intranet.users.edit", {id: user.id}) }}">
                     <input type="hidden" name="id" value="{{ user.id }}">
                     <div class="box-body">
-                        {% include "Utils/_error_success.html" with {result: message} %}
+                        {% include "Admin/Utils/_error_success.html" with {result: message} %}
                         <div class="row">
                             <div class="col-xs-6">
                                 <div class="form-group">

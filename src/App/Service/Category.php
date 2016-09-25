@@ -110,8 +110,8 @@ class Category extends Content
                 ContentModel::create($params);
 
                 $cache->clearByTags(array(__CLASS__));
-
                 self::clearCache();
+                Menu::clearCache();
 
                 return array('success' => 'Category created');
             } catch (\Exception $e) {
@@ -139,9 +139,7 @@ class Category extends Content
                 ContentModel::find((int) $params['id'])->fill($params)->save();
 
                 $cache->clearByTags(array(__CLASS__));
-
                 self::clearCache();
-
                 Menu::clearCache();
 
                 return array('success' => 'Category modified');
@@ -168,9 +166,7 @@ class Category extends Content
             }
 
             $cache->clearByTags(array(__CLASS__));
-
             self::clearCache();
-
             Menu::clearCache();
 
             return array('success' => 'Category deleted');
@@ -179,6 +175,13 @@ class Category extends Content
 
             return array('error' => 'Category not deleted!');
         }
+    }
+
+    public static function clearCache()
+    {
+        $cache = self::_getCache();
+
+        $cache->clearByTags(array(__CLASS__));
     }
 
     private static function validator($params)

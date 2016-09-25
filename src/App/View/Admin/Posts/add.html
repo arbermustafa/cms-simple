@@ -18,7 +18,7 @@
                 </div>
                 <form name="form-post" id="form-post" method="post" enctype="multipart/form-data" action="{{ urlFor("intranet.posts.add") }}">
                     <div class="box-body">
-                        {% include "Utils/_error_success.html" with {result: message} %}
+                        {% include "Admin/Utils/_error_success.html" with {result: message} %}
                         <div class="row">
                             <div class="col-xs-8">
                                 <div class="row">
@@ -78,7 +78,7 @@
                                         <div class="form-group">
                                             <label for="categories">Post Category <span class="required">*</span></label>
                                             {% if categories is iterable and categories|length > 0 %}
-                                                {% import "Utils/_categories_posts.html" as recursive %}
+                                                {% import "Admin/Utils/_categories_posts.html" as recursive %}
                                                 {{ recursive.printCategory(categories, 0, post.category) }}
                                             {% endif %}
                                         </div>

@@ -15,9 +15,9 @@
                     </div>
                 </div>
                 <div class="box-body table-responsive">
-                    {% include "Utils/_error_success.html" with {result: getFlashMessage("message")} %}
+                    {% include "Admin/Utils/_error_success.html" with {result: getFlashMessage("message")} %}
                     {% if categories is iterable and categories|length > 0 %}
-                        {% import "Utils/_recursive_category_table.html" as recursive %}
+                        {% import "Admin/Utils/_recursive_category_table.html" as recursive %}
                         <table class="table table-hover table-bordered">
                             <thead>
                                 <tr>

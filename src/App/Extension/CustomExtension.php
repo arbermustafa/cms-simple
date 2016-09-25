@@ -101,9 +101,16 @@ class CustomExtension extends \Twig_Extension
     {
         $app = Slim::getInstance();
         $session = $app->session;
+        $result = null;
 
-        $result = $session->offsetGet($key);
-        $session->offsetUnset($key);
+        echo 'call 1: '. print_r($_SESSION);
+
+        if ($key !== null && $key !== '' && isset($session[$key])) {
+            $result = $session[$key];
+            unset($session[$key]);
+        }
+
+        echo 'call 2: '. print_r($_SESSION);
 
         return $result;
     }

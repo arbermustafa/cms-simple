@@ -88,8 +88,8 @@ class Page extends Content
                 $page = ContentModel::create($params);
 
                 $cache->clearByTags(array(__CLASS__));
-
                 self::clearCache();
+                Menu::clearCache();
 
                 return array('message' => array('success' => 'Page created'), 'id' => $page->id);
             } catch (\Exception $e) {
@@ -155,8 +155,8 @@ class Page extends Content
                 }
 
                 $cache->clearByTags(array(__CLASS__));
-
                 self::clearCache();
+                Menu::clearCache();
 
                 return array('message' => array('success' => 'Page modified'));
             } catch (\Exception $e) {
@@ -190,8 +190,8 @@ class Page extends Content
             $page->delete();
 
             $cache->clearByTags(array(__CLASS__));
-
             self::clearCache();
+            Menu::clearCache();
 
             return array('success' => 'Page deleted');
         } catch (\Exception $e) {

@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="box-body table-responsive">
-                    {% include "Utils/_error_success.html" with {result: getFlashMessage("message")} %}
+                    {% include "Admin/Utils/_error_success.html" with {result: getFlashMessage("message")} %}
                     {% if results is iterable and results|length > 0 %}
                         <table class="table table-hover table-bordered">
                             <thead>
@@ -43,7 +43,7 @@
                                 {% endfor %}
                             </tbody>
                         </table>
-                        {% include "Utils/_pagination_admin.html" with {"path": "intranet.slides.list"} %}
+                        {% include "Admin/Utils/_pagination.html" with {"path": "intranet.slides.list"} %}
                     {% else %}
                         <div class="alert alert-info">
                             <h4><i class="icon fa fa-info"></i> Notification</h4>

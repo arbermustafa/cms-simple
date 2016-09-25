@@ -11,7 +11,7 @@
                 </div>
                 <form name="form-category" id="form-category" method="post" action="{{ urlFor("intranet.categories.add") }}">
                     <div class="box-body">
-                        {% include "Utils/_error_success.html" with {result: message} %}
+                        {% include "Admin/Utils/_error_success.html" with {result: message} %}
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -27,7 +27,7 @@
                                     <select name="parent" class="form-control" id="parent">
                                         <option value="" {% if category.parent is null %}selected{% endif %}>-- None --</option>
                                         {% if parent_list is iterable and parent_list|length > 0 %}
-                                            {% import "Utils/_recursive_category_select.html" as recursive %}
+                                            {% import "Admin/Utils/_recursive_category_select.html" as recursive %}
                                             {{ recursive.recursiveCategory(parent_list, 0, category.parent, null) }}
                                         {% endif %}
                                     </select>
