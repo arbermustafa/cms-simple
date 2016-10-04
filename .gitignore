@@ -3,6 +3,7 @@
 
 /src/config/.env.development
 /src/config/.env.production
+/sql/db.sql
 /vendor/**
 /data/cache/**
 /data/log/**
