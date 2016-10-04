@@ -9,6 +9,6 @@
 /data/log/**
 /data/session/**
 /public/uploads/**
+/bin/composer.phar
 composer.lock
-composer.phar
 !/.gitignore
