@@ -1,10 +1,13 @@
 # Specifies intentionally untracked files to ignore when using Git
 # http://git-scm.com/docs/gitignore
 
+/src/config/.env.development
+/src/config/.env.production
 /vendor/**
 /data/cache/**
 /data/log/**
 /data/session/**
 /public/uploads/**
 composer.lock
+composer.phar
 !/.gitignore

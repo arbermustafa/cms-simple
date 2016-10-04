@@ -7,10 +7,10 @@
  */
 
 // Autoload
-require_once(dirname(__FILE__) . '/../vendor/autoload.php');
+require_once(APPLICATION_PATH . '/vendor/autoload.php');
 
 // DOTENV INIT
-$env = new \Dotenv\Dotenv(dirname(__FILE__) . '/config/', '.env.' . APP_ENV);
+$env = new \Dotenv\Dotenv(APPLICATION_PATH . '/src/config/', '.env.' . APP_ENV);
 $env->load();
 
 // SLIM INIT
@@ -20,11 +20,11 @@ $app = new \Slim\Slim(array(
     'debug'           => (APP_ENV === 'development'),
     'log.enabled'     => true,
     'log.writer'      => new \Slim\Logger\DateTimeFileWriter(array(
-        'path'           => dirname(__FILE__) . '/../data/log',
+        'path'           => APPLICATION_PATH . '/data/log',
         'message_format' => PHP_EOL . PHP_EOL . '%label% - %date% - %message%'
     )),
     'cookies.encrypt' => (APP_ENV === 'development'),
-    'templates.path'  => dirname(__FILE__) . '/App/View',
+    'templates.path'  => APPLICATION_PATH . '/src/App/View',
     'view'            => new \Slim\Views\Twig()
 ));
 $app->setName(getenv('APP_NAME'));
@@ -39,7 +39,7 @@ $app->add(new \App\Middleware\Auth\Auth(array(
 $view = $app->view();
 $view->parserOptions = array(
     'debug' => (APP_ENV === 'development'),
-    'cache' => dirname(__FILE__) . '/../data/cache'
+    'cache' => APPLICATION_PATH . '/data/cache'
 );
 $view->parserExtensions = array(
     new \Slim\Views\TwigExtension(),
@@ -83,7 +83,7 @@ $app->container->singleton('cache', function()
                 'ttl'             => getenv('CACHE_TTL'),
                 'namespace'       => getenv('APP_NAME'),
                 'key_pattern'     => '/^[\a-zA-Z0-9_\+\-\[\]]*$/Di',
-                'cache_dir'       => dirname(__FILE__) . '/../data/cache',
+                'cache_dir'       => APPLICATION_PATH . '/data/cache',
                 'dir_permission'  => getenv('CACHE_DIRPERMISSION'),
                 'file_permission' => getenv('CACHE_FILEPERMISSION')
             )
@@ -106,7 +106,7 @@ $app->container->singleton('sessionManager', function()
     $sessionConfig->setOptions(array(
         'name'                => getenv('APP_NAME'),
         'remember_me_seconds' => getenv('SESSION_TTL'),
-        'save_path'           => dirname(__FILE__) . '/../data/session',
+        'save_path'           => APPLICATION_PATH . '/data/session',
         'cookie_httponly'     => true,
         'gc_maxlifetime'      => getenv('SESSION_TTL')
     ));
