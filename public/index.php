@@ -13,7 +13,7 @@ defined('APP_ENV') || define('APP_ENV', (getenv('APP_ENV') ? getenv('APP_ENV') :
 defined('APP_UPLOAD_PATH') || define('APP_UPLOAD_PATH', realpath(dirname(__FILE__) . '/uploads'));
 defined('APP_UPLOAD_URL') || define('APP_UPLOAD_URL', '/uploads');
 
-// App timezone
+// APP Timezone
 date_default_timezone_set('Europe/Tirane');
 
 // Error handling
@@ -22,7 +22,7 @@ if (APP_ENV === 'development') {
     ini_set('display_errors' , 1);
 }
 
-// Require connector for ckeditor
+// Require Php connector for Ckeditor
 if (isset($_REQUEST['_rte_file_manager']) && (int) $_REQUEST['_rte_file_manager'] === 1) {
     require_once(APPLICATION_PATH . '/public/assets/vendor/ckeditor/filemanager/connectors/php/connector.php');
     die();
