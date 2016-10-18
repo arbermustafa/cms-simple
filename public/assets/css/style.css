@@ -22,6 +22,7 @@ h1 {font-weight: 300; font-size: 2.333em; line-height: 1.214em;}
 h2 {font-weight: bold; font-size: 1.5em; line-height: 1.333em;}
 h3 {font-weight: 600; font-size: 1.333em; line-height: 1.375em;}
 h1, h2, h3, h4, h5, h6 {margin-bottom: 15px;}
+#main-menu > ul > li > a {text-transform: none;}
 
 /* ---------------------------------------------------------------------- */
 /* Containers
@@ -167,12 +168,13 @@ a.notification-close {display: block; position: absolute; right: 10px; top: 10px
 .notification-box-success {background-color: #deebc5; border-color: #b9d188;}
 .notification-box-error {background-color: #faebe6; border-color: #f5d0c4;}
 
-ul.arrow {margin-bottom: 20px;}
-ul.arrow ul {margin-left: 14px; margin-bottom: 0;}
-ul.arrow ol {margin-left: 18px;}
-ul.arrow li {margin-bottom: 5px;}
-ul.arrow ul li:first-child, ul.arrow ol li:first-child {margin-top: 5px;}
+ul.arrow, ul.circle {margin-bottom: 20px;}
+ul.arrow ul, ul.circle ul {margin-left: 14px; margin-bottom: 0;}
+ul.arrow ol, ul.circle ol {margin-left: 18px;}
+ul.arrow li, ul.circle li {margin-bottom: 5px;}
+ul.arrow ul li:first-child, ul.circle ul li:first-child, ul.arrow ol li:first-child, ul.circle ol li:first-child {margin-top: 5px;}
 ul.arrow li {background: url("/assets/img/arrow-right.png") no-repeat left 0.416em; padding-left: 11px;}
+ul.circle li {background: url("/assets/img/circle.png") no-repeat left 0.416em; padding-left: 11px;}
 
 #sidebar .widget {margin-bottom: 20px;}
 

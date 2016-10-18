@@ -154,6 +154,6 @@ class CustomExtension extends \Twig_Extension
         $app = Slim::getInstance(getenv('APP_NAME'));
         $shortcode = $app->shortcode;
 
-        return $shortcode->doShortcode(html_entity_decode($content));
+        return $shortcode->doShortcode($content);
     }
 }

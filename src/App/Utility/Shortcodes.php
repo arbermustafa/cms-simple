@@ -67,6 +67,11 @@ class Shortcodes
         {
             return $class->grid($s);
         });
+
+        $this->facade->addHandler('contact-form', function(ShortcodeInterface $s) use ($class)
+        {
+            return $class->contactForm($s);
+        });
     }
 
     public function doShortcode($content)
@@ -189,5 +194,42 @@ class Shortcodes
         $class .= ($s->getParameter('last') == 'true') ? ' column-last': '';
 
         return '<div class="'. $class .'">'. $s->getContent() .'</div>';
+    }
+
+    public function contactForm($s)
+    {
+        $html = '<div id="contact-notification-box-success" class="notification-box notification-box-success" style="display: none;">
+                    <p>Your message has been successfully sent. We will get back to you as soon as possible.</p>
+                    <a href="#" class="notification-close notification-close-success">x</a>
+                </div>
+                <div id="contact-notification-box-error" class="notification-box notification-box-error " style="display: none;">
+                    <p>Your message couldn&rsquo;t be sent.</p>
+                    <p>Please fill all the required fields! Email must be a valid email address!</p>
+                    <p>Please try again.</p>
+                    <a href="#" class="notification-close notification-close-error">x</a>
+                </div>
+                <form id="contact-form" class="content-form" method="post" action="#">
+                    <p>
+                        <label for="company">Company:</label>
+                        <input type="text" id="company" name="company">
+                    </p>
+                    <p>
+                        <label for="name">Name:<span class="note">*</span></label>
+                        <input type="text" id="name" name="name" class="required">
+                    </p>
+                    <p>
+                        <label for="email">Email:<span class="note">*</span></label>
+                        <input type="email" id="email" name="email" class="required">
+                    </p>
+                    <p>
+                        <label for="message">Questions/Comments/Message:<span class="note">*</span></label>
+                        <textarea id="message" name="message" cols="68" rows="8" class="required"></textarea>
+                    </p>
+                    <p style="margin-bottom: 0;">
+                        <input id="submit" class="button" type="submit" name="submit" value="Send Message" style="margin-bottom: 0;">
+                    </p>
+                </form>';
+
+        return $html;
     }
 }
