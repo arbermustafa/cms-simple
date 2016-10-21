@@ -21,7 +21,7 @@ class Content extends Base
     public static function getContentBySlug($slug)
     {
         $cache = self::_getCache();
-        $key = __CLASS__.'_'.__FUNCTION__.'_'.$slug;
+        $key = __CLASS__.'_'.__FUNCTION__.'_'.md5($slug);
         $result = array();
 
         if (false == ($result = $cache->getItem($key))) {
@@ -56,6 +56,8 @@ class Content extends Base
                 $contents = ContentModel::select('id', 'title', 'content', 'slug', 'status', 'date')
                     ->whereIn('type', array('page', 'post'))
                     ->where('status', 'PUBLISHED')
+                    ->where('slug', '!=', 'home')
+                    ->where('slug', '!=', 'contact-us')
                     ->where(function($query) use ($s)
                     {
                         $query->where('title', 'LIKE', '%'. $s .'%')

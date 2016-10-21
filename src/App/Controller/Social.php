@@ -59,9 +59,9 @@ class Social extends Base
 
         try {
             Setting::edit(array(
-                'fb_app_token'         => (string) $accessToken),
+                'fb_app_token'         => (string) $accessToken,
                 'fb_app_token_expires' => $expiresAt->getTimestamp()
-            );
+            ));
         } catch(\Exception $e) {
             $log->error($e);
         }

@@ -25,7 +25,7 @@
                             <span>{{ result.date | date("M jS, Y") }}</span>
                         </div>
                     {% endif %}
-                    <div class="post-content"><p>{{ words(result.content, 50) }}</p></div>
+                    <div class="post-content"><p>{{ words(result.content, 50) | raw }}</p></div>
                 </div>
     		</div>
         {% else %}

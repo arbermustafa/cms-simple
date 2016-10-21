@@ -94,12 +94,14 @@ class Shortcodes
             foreach ($slides as $slide) {
                 $html .= '
                                 <li>
-                                    <img src="/uploads/'. $slide['featured_photo'] .'" alt="'. $slide['title'] .'">
-                                    <div class="flex-caption">
+                                    <img src="/uploads/'. $slide['featured_photo'] .'" alt="'. $slide['title'] .'">';
+                if ($slide['title'] != '*') {
+                    $html .= '      <div class="flex-caption">
                                         <h2>'. $slide['title'] .'</h2>
                                         <p>'. $slide['content'] .'</p>
                                     </div>
                                 </li>';
+                }
             }
 
             $html .= '
@@ -170,11 +172,11 @@ class Shortcodes
                         $html .= '</div>';
                     }
 
-                    $html .= '<h4 class="post-title">';
+                    $html .= '<h4 class="post-title" style="margin-bottom: 5px;">';
                     $html .= '<a href="/'. $post['slug'] .'">'. $post['title'] .'</a>';
                     $html .= '</h4>';
 
-                    $html .= ($type == 'news') ? '<div class="post-content"><p>'. Str::words($post['content'], 20) .'</p></div>' : '';
+                    $html .= ($type == 'news') ? '<div class="post-content"><p style="margin-bottom: 12px;">'. Str::words($post['content'], 20) .'</p></div>' : '';
 
                     $html .= '</div>';
                     //$html .= '</div>';

@@ -13,6 +13,7 @@ use \Illuminate\Support\Str;
 use \App\Service\Setting;
 use \App\Service\Menu;
 use \App\Service\Content;
+use \App\Service\Category;
 use \App\Utility\Helper;
 
 class CustomExtension extends \Twig_Extension
@@ -38,7 +39,9 @@ class CustomExtension extends \Twig_Extension
             new \Twig_SimpleFunction('isAllowed', array($this, 'isAllowed')),
             new \Twig_SimpleFunction('str_repeat', array($this, 'str_repeat')),
             new \Twig_SimpleFunction('isExpiredAuthToken', array($this, 'isExpiredAuthToken')),
-            new \Twig_SimpleFunction('doShortcode', array($this, 'doShortcode'))
+            new \Twig_SimpleFunction('doShortcode', array($this, 'doShortcode')),
+            new \Twig_SimpleFunction('htmlDecode', array($this, 'htmlDecode')),
+            new \Twig_SimpleFunction('latestNews', array($this, 'latestNews'))
         );
     }
 
@@ -155,5 +158,22 @@ class CustomExtension extends \Twig_Extension
         $shortcode = $app->shortcode;
 
         return $shortcode->doShortcode($content);
+    }
+
+    public function htmlDecode($content)
+    {
+        return html_entity_decode($content);
+    }
+
+    public function latestNews($id, $items)
+    {
+        $result = null;
+        $posts = Category::getCategoryPosts($id, $items);
+
+        if ($posts) {
+            $result = $posts;
+        }
+
+        return $result;
     }
 }

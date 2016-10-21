@@ -8,7 +8,7 @@
     <!-- End Dynamic CSS -->
 {% endblock %}
 {% block content %}
-    {{ doShortcode(content) | raw }}
+    {{ doShortcode(htmlDecode(content)) | raw }}
 {% endblock %}
 {% block js_footer %}
     {{ parent() }}

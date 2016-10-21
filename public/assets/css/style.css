@@ -111,8 +111,7 @@ p {margin-bottom: 20px;}
 .promobox .mobile {display: none;}
 .promobox p {margin-bottom: 0; margin-top: 20px;}
 .promobox h2 + p, .promobox p:first-child {margin: 0;}
-#page-header {margin-bottom: 25px;}
-h1#page-title {padding: 0 0 15px 0; border-bottom: 1px solid #e5e5e5;}
+h1#page-title {padding: 0 0 10px 0; border-bottom: 1px solid #e5e5e5;}
 
 
 ul#search-results li {border-top: 1px dotted #ccc; padding: 20px 0;}
@@ -146,7 +145,7 @@ h2 span.more a {font-style: italic;}
 .post-list .post {border-top: 1px solid #e5e5e5; padding-top: 20px;}
 .post-list .post:first-child {border: none; padding: 0;}
 .post-list-home {padding-top: 15px; border-top: 1px solid #e5e5e5;}
-.post-list-home .post {margin-bottom: 15px;}
+.post-list-home .post {margin-bottom: 0px;}
 
 .content-form p {margin-bottom: 10px;}
 .content-form input, .content-form textarea, .content-form select {background-color: #f7f7f7; border: 1px solid #e5e5e5; padding: 6px 10px; border-radius: 0; box-sizing: border-box;}
@@ -181,6 +180,7 @@ ul.circle li {background: url("/assets/img/circle.png") no-repeat left 0.416em; 
 .widget ul.menu li {border-bottom: 1px dotted #ccc;}
 .widget ul.menu li > a {display: block; color: #383838; padding: 5px 0 5px 11px; background: url("/assets/img/arrow-right.png") no-repeat left 0.833em;}
 .widget ul.menu li > a:hover, .widget ul.menu li.current-menu-item > a {color: #CA5728;}
+h3.widget-title {margin-bottom: 10px;}
 
 /* ---------------------------------------------------------------------- */
 /* Pagination

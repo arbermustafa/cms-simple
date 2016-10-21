@@ -9,7 +9,7 @@
         {% for result in results %}
             <li>
                 <h2><a href="{{ urlFor("post", {slug: result.slug}) }}">{{ result.title }}</a></h2>
-                <p>{{ words(result.content, 50) }}</p>
+                <p>{{ words(result.content, 20) | raw }}</p>
             </li>
         {% endfor %}
     </ul>
