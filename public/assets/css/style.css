@@ -95,7 +95,7 @@ input[type="submit"] {width: auto;}
 /* ---------------------------------------------------------------------- */
 /* Content
 /* ---------------------------------------------------------------------- */
-#content {padding-top: 10px;}
+#content {/*padding-top: 10px;*/}
 p {margin-bottom: 20px;}
 .float-left {float: left;}
 .float-right {float: right;}
