@@ -9,74 +9,84 @@
 namespace App\Utility;
 
 use \Illuminate\Support\Str;
-use \Thunder\Shortcode\ShortcodeFacade;
 use \Thunder\Shortcode\Shortcode\ShortcodeInterface;
+use \Thunder\Shortcode\HandlerContainer\HandlerContainer;
+use \Thunder\Shortcode\Parser\RegexParser;
+use \Thunder\Shortcode\Processor\Processor;
+use \Thunder\Shortcode\Syntax\Syntax;
 use \App\Service\Slide;
 use \App\Service\Category;
 
 class Shortcodes
 {
-    public $facade = null;
+    public $handlers = null;
+    public $processor = null;
 
     public function __construct()
     {
-        $this->facade = new ShortcodeFacade();
+        $this->handlers = new HandlerContainer();
         $this->addShortcodes();
+        $this->processor = new Processor(new RegexParser(new Syntax('[', ']', '/', '=', '#')), $this->handlers);
     }
 
     public function addShortcodes()
     {
         $class = $this;
 
-        $this->facade->addHandler('slider', function(ShortcodeInterface $s) use ($class)
+        $this->handlers->add('slider', function(ShortcodeInterface $s) use ($class)
         {
             return $class->slider($s);
         });
 
-        $this->facade->addHandler('promobox', function(ShortcodeInterface $s) use ($class)
+        $this->handlers->add('promobox', function(ShortcodeInterface $s) use ($class)
         {
             return $class->promobox($s);
         });
 
-        $this->facade->addHandler('newsbox', function(ShortcodeInterface $s) use ($class)
+        $this->handlers->add('newsbox', function(ShortcodeInterface $s) use ($class)
         {
             return $class->newsbox($s);
         });
 
-        $this->facade->addHandler('one-half', function(ShortcodeInterface $s) use ($class)
+        $this->handlers->add('one-half', function(ShortcodeInterface $s) use ($class)
         {
             return $class->grid($s);
         });
 
-        $this->facade->addHandler('one-third', function(ShortcodeInterface $s) use ($class)
+        $this->handlers->add('one-third', function(ShortcodeInterface $s) use ($class)
         {
             return $class->grid($s);
         });
 
-        $this->facade->addHandler('one-fourth', function(ShortcodeInterface $s) use ($class)
+        $this->handlers->add('one-fourth', function(ShortcodeInterface $s) use ($class)
         {
             return $class->grid($s);
         });
 
-        $this->facade->addHandler('two-thirds', function(ShortcodeInterface $s) use ($class)
+        $this->handlers->add('two-thirds', function(ShortcodeInterface $s) use ($class)
         {
             return $class->grid($s);
         });
 
-        $this->facade->addHandler('three-fourths', function(ShortcodeInterface $s) use ($class)
+        $this->handlers->add('three-fourths', function(ShortcodeInterface $s) use ($class)
         {
             return $class->grid($s);
         });
 
-        $this->facade->addHandler('contact-form', function(ShortcodeInterface $s) use ($class)
+        $this->handlers->add('contact-form', function(ShortcodeInterface $s) use ($class)
         {
             return $class->contactForm($s);
+        });
+
+        $this->handlers->add('gmap', function(ShortcodeInterface $s) use ($class)
+        {
+            return $class->gmap($s);
         });
     }
 
     public function doShortcode($content)
     {
-        return $this->facade->process($content);
+        return $this->processor->process($content);
     }
 
     public function slider($s)
@@ -231,6 +241,55 @@ class Shortcodes
                         <input id="submit" class="button" type="submit" name="submit" value="Send Message" style="margin-bottom: 0;">
                     </p>
                 </form>';
+
+        return $html;
+    }
+
+    public function gmap($s)
+    {
+        $API_KEY = ($s->getParameter('API_KEY')) ?: 'AIzaSyADi2XnRIVQb_6CwgRkWqIZEc8w-pvTKAM';
+        $markers = explode('|', $s->getParameter('markers'));
+
+
+
+        $html = '<div id="map" style="width: 100%; height: 380px;"></div>
+                <script>
+                    var infowindow = null;
+                    var markers = [];
+
+                    function initGMap()
+                    {
+                        var map = new google.maps.Map(document.getElementById("map"), {
+                            zoom: 3,
+                            center: {lat: 45.916766, lng: 49.833984}
+                        });
+
+                        infowindow = new google.maps.InfoWindow({
+                            content: "Loading..."
+                        });';
+
+        foreach($markers as $marker) {
+            $data = explode(';', $marker);
+
+            $html .= '  var marker = new google.maps.Marker({
+                            position: {lat: '. $data[0] .', lng: '. $data[1] .'},
+                            html: "<div><h3>'. $data[3] .'</h3>'. $data[4] .'<br>'. $data[5] .'<br>'. $data[6] .'<br>'. $data[7] .'</div>",
+                            icon: "/assets/img/marker-'. $data[2] .'.png",
+                            map: map
+                        });
+
+                        markers.push(marker);
+
+                        google.maps.event.addListener(marker, "click", function()
+                        {
+                            infowindow.setContent(this.html);
+                            infowindow.open(map, this);
+                        });';
+        }
+
+        $html .= '  }
+                </script>
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key='. $API_KEY . '&callback=initGMap"></script>';
 
         return $html;
     }
