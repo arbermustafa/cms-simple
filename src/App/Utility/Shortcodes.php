@@ -120,9 +120,10 @@ class Shortcodes
                     $html .= '      <div class="flex-caption">
                                         <h2>'. $slide['title'] .'</h2>
                                         <p>'. $slide['content'] .'</p>
-                                    </div>
-                                </li>';
+                                    </div>';
                 }
+
+                $html .= '      </li>';
             }
 
             $html .= '
