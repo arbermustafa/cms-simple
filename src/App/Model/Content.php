@@ -17,7 +17,7 @@ use \App\Service\Base as BaseService;
 class Content extends Base
 {
     protected $table = 'content';
-    protected $fillable = array('user_id', 'type', 'status', 'template', 'parent', 'date', 'title', 'content', 'featured_photo', 'slug');
+    protected $fillable = array('user_id', 'type', 'status', 'template', 'parent', 'date', 'title', 'content', 'url', 'featured_photo', 'slug');
     protected $guarded = array('id');
 
     public function user()

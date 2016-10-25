@@ -102,9 +102,20 @@ class Shortcodes
                             <ul class="slides">';
 
             foreach ($slides as $slide) {
-                $html .= '
-                                <li>
-                                    <img src="/uploads/'. $slide['featured_photo'] .'" alt="'. $slide['title'] .'">';
+                $html .= '      <li>';
+
+                if ($slide['url'] !== '' && $slide['url'] !== null) {
+                    $target = '_self';
+
+                    if (substr($slide['url'], 0, 4) === 'http') {
+                        $target = '_blank';
+                    }
+
+                    $html .= '      <a href="'. $slide['url'] .'" target="'. $target .'"><img src="/uploads/'. $slide['featured_photo'] .'" alt="'. $slide['title'] .'"></a>';
+                } else {
+                    $html .= '      <img src="/uploads/'. $slide['featured_photo'] .'" alt="'. $slide['title'] .'">';
+                }
+
                 if ($slide['title'] != '*') {
                     $html .= '      <div class="flex-caption">
                                         <h2>'. $slide['title'] .'</h2>

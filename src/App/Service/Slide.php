@@ -26,7 +26,7 @@ class Slide extends Content
         $result = array();
 
         if (false == ($result = $cache->getItem($key))) {
-            $slides = ContentModel::select('title', 'content', 'featured_photo')
+            $slides = ContentModel::select('title', 'content', 'url', 'featured_photo')
                 ->where('type', 'slide')
                 ->where('status', 'PUBLISHED')
                 ->get();
@@ -226,10 +226,11 @@ class Slide extends Content
         $validator = new Validator($params);
         $validator->rule('required', array('title', 'featured_photo', 'status'))->message('{field} is required');
         $validator->rule('in', 'status', array('PUBLISHED', 'DRAFT'), true);
-        $validator->rule('optional', 'content');
+        $validator->rule('optional', array('content', 'url'));
         $validator->labels(array(
             'title'          => 'Title',
             'content'        => 'Content',
+            'url'            => 'Link',
             'featured_photo' => 'Slide',
             'status'         => 'Status'
         ));
