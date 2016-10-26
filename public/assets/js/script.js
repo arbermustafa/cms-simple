@@ -156,6 +156,8 @@
                         }
 
                     });
+
+                    return false;
                 });
 
                 function getFormData()
@@ -208,10 +210,5 @@
     jQuery(document).ready(function()
     {
         ERe.init();
-    });
-
-    jQuery(window).on("resize orientationchange webkitfullscreenchange mozfullscreenchange fullscreenchange", function()
-    {
-        window.location.reload();
     });
 })();
