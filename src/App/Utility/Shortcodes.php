@@ -249,6 +249,12 @@ class Shortcodes
                         <label for="message">Questions/Comments/Message:<span class="note">*</span></label>
                         <textarea id="message" name="message" cols="68" rows="8" class="required"></textarea>
                     </p>
+                    <p>
+                        <!-- Google Recaptcha code START -->
+                        <div class="g-recaptcha" data-sitekey="6Le0bgoUAAAAAJ06L7xuPlUmksLYjhvAN8PmBOy4"></div>
+                        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                        <!-- Google Recaptcha code END -->
+                    </p>
                     <p style="margin-bottom: 0;">
                         <input id="submit" class="button" type="submit" name="submit" value="Send Message" style="margin-bottom: 0;">
                     </p>
@@ -281,7 +287,7 @@ class Shortcodes
                         });';
 
         foreach($markers as $marker) {
-            $data = explode(';', $marker);
+            $data = $this->_processFields(explode(';', $marker));
 
             $html .= '  var marker = new google.maps.Marker({
                             position: {lat: '. $data[0] .', lng: '. $data[1] .'},
@@ -304,5 +310,20 @@ class Shortcodes
                 <script async defer src="https://maps.googleapis.com/maps/api/js?key='. $API_KEY . '&callback=initGMap"></script>';
 
         return $html;
+    }
+
+    private function _processFields(array $data)
+    {
+        $result = array();
+
+        foreach ($data as $field) {
+            if (strpos($field, '@') !== false ) {
+                $data = explode(' ', $field);
+                $result[] = $data[0] .' <a href=\"mailto:'. $data[1] .'\">'. $data[1] .'</a>';
+            } else {
+                $result[] = $field;
+            }
+        }
+        return $result;
     }
 }

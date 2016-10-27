@@ -140,12 +140,14 @@
                             $resultBoxElement = jQuery("#contact-notification-box-success");
                         } else if (rsp.result === false) {
                             $resultBoxElement = jQuery("#contact-notification-box-error");
+
+                            grecaptcha.reset();
                         }
 
                         $resultBoxElement.css("display", "");
                         $contactFormSubmit.removeAttr("disabled", "");
 
-                        resetFormData();
+                        //resetFormData();
 
                         if ($contactNotificationTimeout > 0) {
                             var $timer = window.setTimeout(function()
