@@ -99,6 +99,7 @@ input[type="submit"] {width: auto;}
 p {margin-bottom: 20px;}
 .float-left {float: left;}
 .float-right {float: right;}
+.post-content {text-align: justify;}
 #main-slider {margin-bottom: 10px;}
 .flex-direction-nav a:link, .flex-direction-nav a:visited {background-color: rgba(202, 87, 40, 0.8);}
 .flex-control-paging a.flex-active {background-color: #CA5728;}

@@ -29,6 +29,7 @@ class Slide extends Content
             $slides = ContentModel::select('title', 'content', 'url', 'featured_photo')
                 ->where('type', 'slide')
                 ->where('status', 'PUBLISHED')
+                ->orderBy('id', 'desc')
                 ->get();
 
             if ($slides) {
