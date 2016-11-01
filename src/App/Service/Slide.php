@@ -89,8 +89,7 @@ class Slide extends Content
                 $slide = ContentModel::create($params);
 
                 $cache->clearByTags(array(__CLASS__));
-
-                self::clearCache();
+                Content::clearCache();
 
                 return array('message' => array('success' => 'Slide created'), 'id' => $slide->id);
             } catch (\Exception $e) {
@@ -151,8 +150,7 @@ class Slide extends Content
                 }
 
                 $cache->clearByTags(array(__CLASS__));
-
-                self::clearCache();
+                Content::clearCache();
 
                 return array('message' => array('success' => 'Slide modified'));
             } catch (\Exception $e) {
@@ -184,8 +182,7 @@ class Slide extends Content
             $slide->delete();
 
             $cache->clearByTags(array(__CLASS__));
-
-            self::clearCache();
+            Content::clearCache();
 
             return array('success' => 'Slide deleted');
         } catch (\Exception $e) {

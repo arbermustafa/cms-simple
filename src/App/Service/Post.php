@@ -72,7 +72,7 @@ class Post extends Content
 
                 $cache->clearByTags(array(__CLASS__));
                 Category::clearCache();
-                self::clearCache();
+                Content::clearCache();
 
                 if (isset($params['fb']) && (int) $params['fb'] === 1) {
                     $app = self::_getApp();
@@ -168,7 +168,7 @@ class Post extends Content
 
                 $cache->clearByTags(array(__CLASS__));
                 Category::clearCache();
-                self::clearCache();
+                Content::clearCache();
 
                 if (isset($params['fb']) && (int) $params['fb'] === 1) {
                     $app = self::_getApp();
@@ -230,8 +230,7 @@ class Post extends Content
             $post->delete();
 
             $cache->clearByTags(array(__CLASS__));
-
-            self::clearCache();
+            Content::clearCache();
 
             return array('success' => 'Post deleted');
         } catch (\Exception $e) {
