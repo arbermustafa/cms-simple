@@ -1,4 +1,10 @@
 {% extends "back.html" %}
+{% block header %}
+    {{ parent() }}
+    <!-- Begin CSS -->
+    <link type="text/css" rel="stylesheet" href="/assets/vendor/fileinput/fileinput.min.css">
+    <!-- End CSS -->
+{% endblock %}
 {% block title %}Category Add{% endblock %}
 {% block posts_active %}active{% endblock %}
 {% block post_categories_active %}active{% endblock %}
@@ -43,6 +49,29 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="featured_photo">Category photo</label>
+                                    <br>
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail" style="max-width:700px; max-height:525px;">
+                                            <img alt="" src="http://www.placehold.it/700x525/EFEFEF/AAAAAA&text=no+image">
+                                        </div>
+                                        <div id="slide-area-select" class="fileinput-preview fileinput-exists thumbnail" style="max-width:700px; max-height:525px;"></div>
+                                        <div>
+                                            <span class="btn btn-default btn-file">
+                                                <span class="fileinput-new">Select image</span>
+                                                <span class="fileinput-exists">Change</span>
+                                                <input type="file" name="featured_photo" id="featured_photo">
+                                            </span>
+                                            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                        </div>
+                                    </div>
+                                    <p class="help-block">The new photo/image must be in the JPG or PNG format and it will be resized in 940px in width</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save category</button>
@@ -52,4 +81,10 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block js_footer %}
+    {{ parent() }}
+    <!-- Begin JS -->
+    <script type="text/javascript" src="/assets/vendor/fileinput/fileinput.min.js"></script>
+    <!-- End JS -->
 {% endblock %}

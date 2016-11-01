@@ -10,6 +10,7 @@ namespace App\Service;
 
 use \App\Model\Content as ContentModel;
 use \Valitron\Validator;
+use \App\Utility\Helper;
 
 class Category extends Content
 {
@@ -98,59 +99,124 @@ class Category extends Content
     {
         $log = self::_getLog();
         $cache = self::_getCache();
-        $validator = self::validator($params);
+        $hasUploads = Helper::hasUploads();
+        $result['message']['error'] = '';
+
+        if ($hasUploads) {
+            $fpUploaded = self::handleUpload();
+
+            if (isset($fpUploaded['featured_photo'])) {
+                $params['featured_photo'] = $fpUploaded['featured_photo'];
+            } else {
+                $result['message']['error'] .= self::_printErrors($fpUploaded['error']);
+            }
+        }
 
         $params['parent'] = ($params['parent'] === '') ? null : (int) $params['parent'];
+
+        $validator = self::validator($params);
 
         if ($validator->validate()) {
             $params['type'] = 'category';
             $params['slug'] = '';
 
             try {
-                ContentModel::create($params);
+                if ($hasUploads) {
+                    Helper::resizeImage($params['featured_photo'], array(
+                        'w' => 940
+                    ));
+                }
+
+                $category = ContentModel::create($params);
 
                 $cache->clearByTags(array(__CLASS__));
                 self::clearCache();
                 Menu::clearCache();
 
-                return array('success' => 'Category created');
+                return array('message' => array('success' => 'Category created'), 'id' => $category->id);
             } catch (\Exception $e) {
                 $log->error($e);
+                if ($hasUploads) {
+                    Helper::deleteFile($params['featured_photo']);
+                }
 
-                return array('error' => 'Category not created!');
+                return array('message' => array('error' => 'Category not created!'));
             }
         } else {
-            return array('error' => self::_printErrors($validator->errors()));
+            if (isset($params['featured_photo'])) {
+                Helper::deleteFile($params['featured_photo']);
+            }
+
+            $result['message']['error'] .= self::_printErrors($validator->errors());
         }
+
+        return $result;
     }
 
     public static function edit(array $params)
     {
         $log = self::_getLog();
         $cache = self::_getCache();
-        $validator = self::validator($params);
+        $params = self::setNullParams($params);
+        $hasUploads = Helper::hasUploads();
+        $result['message']['error'] = '';
 
-        $params['parent'] = ($params['parent'] === '') ? null : (int) $params['parent'];
+        $params['old-file'] = (isset($params['old-file'])) ? $params['old-file'] : null;
+        $params['existing-image'] = (isset($params['existing-image'])) ? (int) $params['existing-image'] : 0;
+
+        if ($params['existing-image'] === 0) {
+            if ($hasUploads) {
+                $fpUploaded = self::handleUpload();
+
+                if (isset($fpUploaded['featured_photo'])) {
+                    $params['featured_photo'] = $fpUploaded['featured_photo'];
+                } else {
+                    $result['message']['error'] .= self::_printErrors($fpUploaded['error']);
+                }
+            }
+        } else {
+            $params['featured_photo'] = $params['old-file'];
+        }
+
+        $params['parent'] = ($params['parent'] === '' || $params['parent'] === null) ? null : (int) $params['parent'];
+
+        $validator = self::validator($params);
 
         if ($validator->validate()) {
             $params['slug'] = '';
 
             try {
-                ContentModel::find((int) $params['id'])->fill($params)->save();
+                if (isset($params['featured_photo']) && $params['existing-image'] === 0) {
+                    Helper::resizeImage($params['featured_photo'], array(
+                        'w' => 940
+                    ));
+                }
+
+                $category = ContentModel::find((int) $params['id'])->fill($params)->save();
+
+                if($params['existing-image'] === 0 && isset($params['old-file'])) {
+                    Helper::deleteFile($params['old-file']);
+                }
 
                 $cache->clearByTags(array(__CLASS__));
                 self::clearCache();
                 Menu::clearCache();
 
-                return array('success' => 'Category modified');
+                return array('message' => array('success' => 'Category modified'));
             } catch (\Exception $e) {
                 $log->error($e);
 
-                return array('error' => 'Category not modified!');
+                return array('message' => array('error' => 'Category not modified!'));
             }
         } else {
-            return array('error' => self::_printErrors($validator->errors()));
+            if (isset($params['featured_photo']) && $params['existing-image'] === 0) {
+                Helper::deleteFile($params['featured_photo']);
+            }
+
+            $result['message']['error'] .= self::_printErrors($validator->errors());
         }
+
+        return $result;
     }
 
     public static function delete($id)
@@ -159,7 +225,13 @@ class Category extends Content
         $cache = self::_getCache();
 
         try {
-            $deleted = ContentModel::findOrFail((int) $id)->delete();
+            $category = ContentModel::findOrFail((int) $id);
+
+            if ($category->featured_photo) {
+                Helper::deleteFile($category->featured_photo);
+            }
+
+            $deleted = $category->delete();
 
             if ($deleted) {
                 ContentModel::where('parent', (int) $id)->update(array('parent' => NULL));

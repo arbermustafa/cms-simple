@@ -11,6 +11,9 @@
         <h1 id="page-title">{{ title }}</h1>
     </div>
     <div id="main" class="post-list three-fourths">
+        {% if featured_photo %}
+            <div><img src="/uploads/{{ featured_photo }}" width="100%"></div>
+        {% endif %}
         {% for result in results %}
             <div class="post clearfix">
                 {% if result.featured_photo %}

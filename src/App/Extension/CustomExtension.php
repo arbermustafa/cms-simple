@@ -114,10 +114,10 @@ class CustomExtension extends \Twig_Extension
         return $result;
     }
 
-    public function getSitemapFor($type = 'page')
+    public function getSitemapFor($type = 'page', $status = 'PUBLISHED')
     {
         $result = array();
-        $sitemap = Content::getContentAsArray($type);
+        $sitemap = Content::getContentAsArray($type, $status);
 
         if ($sitemap) {
             $result = $sitemap;

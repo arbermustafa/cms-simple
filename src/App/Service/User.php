@@ -150,6 +150,13 @@ class User extends Base
         }
     }
 
+    public static function clearCache()
+    {
+        $cache = self::_getCache();
+
+        $cache->clearByTags(array(__CLASS__));
+    }
+
     private static function validator($params, $add = false)
     {
         $required = array('firstname', 'lastname', 'email', 'role', 'status');

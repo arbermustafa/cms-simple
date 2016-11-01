@@ -8,7 +8,7 @@
  */
 namespace App\Service;
 
-use \App\Model\User;
+use \App\Model\User as UserModel;
 use \Valitron\Validator;
 
 class Authentication extends Base
@@ -20,7 +20,7 @@ class Authentication extends Base
 
         if ($validator->validate()) {
             try {
-                $user = User::select('id', 'firstname', 'lastname', 'email', 'role', 'last_login', 'password')
+                $user = UserModel::select('id', 'firstname', 'lastname', 'email', 'role', 'last_login', 'password')
                     ->where('email', $params['email'])
                     ->where('status', 'ACTIVE')
                     ->first();
@@ -33,6 +33,8 @@ class Authentication extends Base
 
                         $result = $user->toArray();
                         unset($result['password']);
+
+                        User::clearCache();
 
                         return $result;
                     }

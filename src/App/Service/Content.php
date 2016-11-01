@@ -84,12 +84,13 @@ class Content extends Base
         $cache = self::_getCache();
         $key = __CLASS__.'_'.__FUNCTION__.'_'.$slug.'_'.$page.'_'.$itemPerPage;
         $result = array(
-            'title'       => '',
-            'slug'        => '',
-            'data'        => null,
-            'total'       => 0,
-            'lastPage'    => 0,
-            'currentPage' => 0
+            'title'          => '',
+            'slug'           => '',
+            'featured_photo' => '',
+            'data'           => null,
+            'total'          => 0,
+            'lastPage'       => 0,
+            'currentPage'    => 0
         );
 
         if ($slug !== '' && $slug !== null) {
@@ -109,6 +110,7 @@ class Content extends Base
                         $result = $contents;
                         $result['title'] = $category['title'];
                         $result['slug'] = $category['slug'];
+                        $result['featured_photo'] = $category['featured_photo'];
 
                         $cache->setItem($key, $result);
                         $cache->setTags($key, array(__CLASS__));

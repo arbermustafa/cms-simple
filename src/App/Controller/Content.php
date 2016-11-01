@@ -17,12 +17,13 @@ class Content extends Base
         $results = ContentService::getPaginatedPosts($slug, (int) $page);
 
         self::response('Content/archive.html', array(
-            'title'       => $results['title'],
-            'slug'        => $results['slug'],
-            'results'     => $results['data'],
-            'total'       => (int) $results['total'],
-            'lastPage'    => (int) $results['lastPage'],
-            'currentPage' => (int) $results['currentPage']
+            'title'          => $results['title'],
+            'slug'           => $results['slug'],
+            'featured_photo' => $results['featured_photo'],
+            'results'        => $results['data'],
+            'total'          => (int) $results['total'],
+            'lastPage'       => (int) $results['lastPage'],
+            'currentPage'    => (int) $results['currentPage']
         ));
     }
 

@@ -14,7 +14,7 @@
 /* ---------------------------------------------------------------------- */
 * {margin: 0; padding: 0; outline: none;}
 html, body {height: 100%; position: relative; box-sizing: border-box;}
-body {font-family: "Open Sans", sans-serif; font-size: 12px; line-height: 1.5em; color: #383838; background-color: #fff; background-image: none; background-repeat: repeat; background-position: left top; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%;}
+body {font-family: "Helvetica Neue", "Open Sans", sans-serif; font-size: 12px; line-height: 1.5em; color: #383838; background-color: #fff; background-image: none; background-repeat: repeat; background-position: left top; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%;}
 a, a > * {text-decoration: none;}
 a, a:hover, a > * {color: #CA5728;}
 a, a > *, .button, .jcarousel-prev, .jcarousel-next {-webkit-transition: color 0.2s ease, background-color 0.2s ease, border 0.2s ease, opacity 0.2s ease-in-out; -moz-transition: color 0.2s ease, background-color 0.2s ease, border 0.2s ease, opacity 0.2s ease-in-out; -ms-transition: color 0.2s ease, background-color 0.2s ease, border 0.2s ease, opacity 0.2s ease-in-out; -o-transition: color 0.2s ease, background-color 0.2s ease, border 0.2s ease, opacity 0.2s ease-in-out; transition: color 0.2s ease, background-color 0.2s ease, border 0.2s ease, opacity 0.2s ease-in-out;}
@@ -137,7 +137,7 @@ ul#search-results p {margin: 0;}
 .post-date > span {margin-bottom: 5px; font-style: italic;}
 .post-date-home {margin-right: 20px; width: 50px; float: left;}
 .post-body {overflow: hidden;}
-h2.post-title {margin-bottom: 15px;}
+h2.post-title {margin-bottom: 15px; padding: 0 0 10px 0; border-bottom: 1px solid #e5e5e5; display: flex;}
 h2 span.more {font-weight: normal; font-size: 0.666em; line-height: 1.5em;}
 h2 span.more a {font-style: italic;}
 .post-title a {color: #383838;}

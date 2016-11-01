@@ -18,6 +18,8 @@ class Categories extends Base
         $app = self::_getApp();
         $results['categories'] = Category::getCategories();
 
+        print_r($results['categories']);
+
         self::response('Admin/Categories/list.html', $results);
     }
 
@@ -25,6 +27,7 @@ class Categories extends Base
     {
         $app = self::_getApp();
         $request = $app->request();
+        $session = $app->session;
         $result = array(
             'category'    => '',
             'parent_list' => Category::getCategories(),
@@ -34,7 +37,13 @@ class Categories extends Base
         if ($request->isPost()) {
             $category = Category::add($request->post());
 
-            $result['message'] = $category;
+            if (isset($category['id']) && (int) $category['id'] !== 0) {
+                $session->offsetSet('message', $category['message']);
+
+                return $app->redirectTo('intranet.categories.edit', array('id' => $category['id']));
+            }
+
+            $result['message'] = $category['message'];
             $result['category'] = $request->post();
             $result['parent_list'] = Category::getCategories();
         }
@@ -49,14 +58,14 @@ class Categories extends Base
         $result = array(
             'category'    => Category::getCategory((int) $id),
             'parent_list' => Category::getCategories(),
-            'message'     => null
+            'message'     => Category::getFlashMessage('message')
         );
 
         if ($request->isPost()) {
             $category = Category::edit($request->post());
 
-            $result['message'] = $category;
-            $result['category'] = $request->post();
+            $result['message'] = $category['message'];
+            $result['category'] = Category::getCategory((int) $id);
             $result['parent_list'] = Category::getCategories();
         }
 
