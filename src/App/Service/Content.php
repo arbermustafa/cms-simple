@@ -41,7 +41,6 @@ class Content extends Base
 
     public static function searchFront($s = '', $page = 1, $itemPerPage = 10)
     {
-        $log = self::_getLog();
         $cache = self::_getCache();
         $key = __CLASS__.'_'.__FUNCTION__.'_'.md5($s).'_'.$page.'_'.$itemPerPage;
         $result = array(
@@ -80,7 +79,6 @@ class Content extends Base
 
     public static function getPaginatedPosts($slug = '', $page = 1, $itemPerPage = 10)
     {
-        $log = self::_getLog();
         $cache = self::_getCache();
         $key = __CLASS__.'_'.__FUNCTION__.'_'.$slug.'_'.$page.'_'.$itemPerPage;
         $result = array(
@@ -201,7 +199,6 @@ class Content extends Base
 
     public static function getList($type, $cacheTag, $page, $itemPerPage)
     {
-        $log = self::_getLog();
         $cache = self::_getCache();
         $key = __CLASS__.'_'.__FUNCTION__.'_'.$type.'_'.$page.'_'.$itemPerPage;
         $tag = ($cacheTag) ?: __CLASS__;

@@ -130,7 +130,7 @@ class Category extends Content
                 $category = ContentModel::create($params);
 
                 $cache->clearByTags(array(__CLASS__));
-                self::clearCache();
+                Content::clearCache();
                 Menu::clearCache();
 
                 return array('message' => array('success' => 'Category created'), 'id' => $category->id);
@@ -199,7 +199,7 @@ class Category extends Content
                 }
 
                 $cache->clearByTags(array(__CLASS__));
-                self::clearCache();
+                Content::clearCache();
                 Menu::clearCache();
 
                 return array('message' => array('success' => 'Category modified'));
@@ -238,7 +238,7 @@ class Category extends Content
             }
 
             $cache->clearByTags(array(__CLASS__));
-            self::clearCache();
+            Content::clearCache();
             Menu::clearCache();
 
             return array('success' => 'Category deleted');

@@ -18,8 +18,6 @@ class Categories extends Base
         $app = self::_getApp();
         $results['categories'] = Category::getCategories();
 
-        print_r($results['categories']);
-
         self::response('Admin/Categories/list.html', $results);
     }
 
