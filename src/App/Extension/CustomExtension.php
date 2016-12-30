@@ -41,7 +41,8 @@ class CustomExtension extends \Twig_Extension
             new \Twig_SimpleFunction('isExpiredAuthToken', array($this, 'isExpiredAuthToken')),
             new \Twig_SimpleFunction('doShortcode', array($this, 'doShortcode')),
             new \Twig_SimpleFunction('htmlDecode', array($this, 'htmlDecode')),
-            new \Twig_SimpleFunction('latestNews', array($this, 'latestNews'))
+            new \Twig_SimpleFunction('latestNews', array($this, 'latestNews')),
+            new \Twig_SimpleFunction('getContent', array($this, 'getContent'))
         );
     }
 
@@ -172,6 +173,18 @@ class CustomExtension extends \Twig_Extension
 
         if ($posts) {
             $result = $posts;
+        }
+
+        return $result;
+    }
+
+    public function getContent($id)
+    {
+        $result = null;
+        $content = Content::getContent($id);
+
+        if ($content) {
+            $result = $content;
         }
 
         return $result;

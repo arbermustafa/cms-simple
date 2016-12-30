@@ -87,6 +87,11 @@ class Shortcodes
         {
             return $class->video($s);
         });
+
+        $this->handlers->add('readmore', function(ShortcodeInterface $s) use ($class)
+        {
+            return $class->readmore($s);
+        });
     }
 
     public function doShortcode($content)
@@ -327,6 +332,11 @@ class Shortcodes
                 </video>';
     }
 
+    public function readmore($s)
+    {
+        return '<div class="readmore">'. $s->getContent() .'</div>';
+    }
+
     private function _processFields(array $data)
     {
         $result = array();
@@ -339,6 +349,7 @@ class Shortcodes
                 $result[] = $field;
             }
         }
+
         return $result;
     }
 }

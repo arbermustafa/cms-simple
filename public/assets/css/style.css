@@ -182,6 +182,8 @@ ul.circle li {background: url("/assets/img/circle.png") no-repeat left 0.416em; 
 .widget ul.menu li > a {display: block; color: #383838; padding: 5px 0 5px 11px; background: url("/assets/img/arrow-right.png") no-repeat left 0.833em;}
 .widget ul.menu li > a:hover, .widget ul.menu li.current-menu-item > a {color: #CA5728;}
 h3.widget-title {margin-bottom: 10px;}
+h3.widget-title > a {text-decoration: none; color: #383838;}
+h3.widget-title > a:hover {color: #CA5728;}
 
 /* ---------------------------------------------------------------------- */
 /* Pagination

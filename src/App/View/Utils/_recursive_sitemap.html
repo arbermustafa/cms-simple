@@ -2,7 +2,7 @@
     {% if contents %}
         <ul class="{{ css }}">
         {% for item in contents %}
-            <li><a href="{% if item.type == 'category' %}/archive/{{ item.slug }}/1{% else %}/{{ item.slug }}{% endif %}">{{ item.title }}</a>
+            <li><a href="{% if item.type == 'category' %} {{ urlFor("archive", {page: 1, slug: item.slug}) }} {% else %} {{ urlFor("post", {slug: item.slug}) }} {% endif %}">{{ item.title }}</a>
             {% if item.children_recursive and item.children_recursive|length > 0 %}
                 {% import _self as recursive %}
                 {{ recursive.printSitemap(item.children_recursive, css) }}

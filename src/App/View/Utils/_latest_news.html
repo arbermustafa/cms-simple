@@ -1,5 +1,6 @@
 {% macro latestNews(title, category, items) %}
-    <h3 class="widget-title">{{ title }}</h3>
+    {% set content = getContent(category) %}
+    <h3 class="widget-title"><a href="{{ urlFor("archive", {page: 1, slug: content.slug}) }}">{{ title }}</a></h3>
     {% set posts = latestNews(category, items) %}
     {% if posts and posts|length > 0 %}
         <div class="post-list-home">
@@ -7,7 +8,7 @@
                 <div class="post">
                     <div class="post-body">
                         <div class="post-date"><span>{{ post.date | date('M jS, Y') }}</span></div>
-                        <h4 class="post-title" style="margin-bottom: 10px;"><a href="/{{ post.slug }}">{{ post.title }}</a></h4>
+                        <h4 class="post-title" style="margin-bottom: 10px; text-align: justify;"><a href="/{{ post.slug }}">{{ post.title }}</a></h4>
                     </div>
                 </div>
             {% endfor %}
