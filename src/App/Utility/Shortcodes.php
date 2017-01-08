@@ -334,7 +334,9 @@ class Shortcodes
 
     public function readmore($s)
     {
-        return '<div class="readmore">'. $s->getContent() .'</div>';
+        $class = $s->getParameter('type');
+
+        return '<div class="shorten-'. $class .'">'. $s->getContent() .'</div>';
     }
 
     private function _processFields(array $data)

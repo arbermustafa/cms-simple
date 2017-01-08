@@ -147,6 +147,8 @@ h2 span.more a {font-style: italic;}
 .post-list .post:first-child {border: none; padding: 0;}
 .post-list-home {padding-top: 15px; border-top: 1px solid #e5e5e5;}
 .post-list-home .post {margin-bottom: 0px;}
+a.morelink {color: #383838; font-weight: bold;}
+a.morelink:hover {color: #CA5728;}
 
 .content-form p {margin-bottom: 10px;}
 .content-form input, .content-form textarea, .content-form select {background-color: #f7f7f7; border: 1px solid #e5e5e5; padding: 6px 10px; border-radius: 0; box-sizing: border-box;}

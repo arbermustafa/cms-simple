@@ -110,6 +110,17 @@
             }
         };
 
+        var initShorten = function()
+        {
+            if (jQuery().shorten && (jQuery(".shorten-image").length > 0 || jQuery(".shorten-aligned").length > 0 || jQuery(".shorten-text").length > 0)) {
+                jQuery(".shorten-image").shorten({showChars: 550});
+
+                jQuery(".shorten-aligned").shorten({showChars: 1100});
+
+                jQuery(".shorten-text").shorten({showChars: 300});
+            }
+        };
+
         var initFormContactSubmit = function()
         {
             var $contactForm = jQuery("#contact-form");
@@ -204,6 +215,7 @@
                 initLayout();
                 initSlider();
                 initFancybox();
+                initShorten();
                 initFormContactSubmit();
             }
         };
