@@ -26,6 +26,36 @@
             }
         };
 
+        var getFormData = function(contactForm)
+        {
+            var $data = "";
+            contactForm.find(":input").each(function()
+            {
+                var $field = jQuery(this);
+                var $fieldName = $field.attr("name");
+                var $fieldValue = jQuery.trim($field.val());
+                if ($fieldValue !== "") {
+                    $data += "&" + $fieldName + "=" + $fieldValue;
+                }
+            });
+
+            return $data;
+        };
+
+        var resetFormData = function(contactForm)
+        {
+            contactForm.find(":input").each(function()
+            {
+                var $field = jQuery(this);
+                var $defaultValue = $field.prop("defaultValue");
+                if ($defaultValue) {
+                    $field.val($defaultValue);
+                } else {
+                    $field.val("");
+                }
+            });
+        };
+
         var initToTop = function()
         {
             if (jQuery().UItoTop) {
@@ -142,7 +172,7 @@
                         type: "POST",
                         url: "/contact-submit",
                         dataType: "json",
-                        data: getFormData()
+                        data: getFormData($contactForm)
                     }).done(function(rsp)
                     {
                         var $resultBoxElement = null;
@@ -172,36 +202,6 @@
 
                     return false;
                 });
-
-                function getFormData()
-                {
-                    var $data = "";
-                    $contactForm.find(":input").each(function()
-                    {
-                        var $field = jQuery(this);
-                        var $fieldName = $field.attr("name");
-                        var $fieldValue = jQuery.trim($field.val());
-                        if ($fieldValue !== "") {
-                            $data += "&" + $fieldName + "=" + $fieldValue;
-                        }
-                    });
-
-                    return $data;
-                };
-
-                function resetFormData()
-                {
-                    $contactForm.find(":input").each(function()
-                    {
-                        var $field = jQuery(this);
-                        var $defaultValue = $field.prop("defaultValue");
-                        if ($defaultValue) {
-                            $field.val($defaultValue);
-                        } else {
-                            $field.val("");
-                        }
-                    });
-                };
 
                 return false;
             }

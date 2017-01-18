@@ -3,10 +3,10 @@
 /* ---------------------------------------------------------------------- */
 /* Main Menu
 /* ---------------------------------------------------------------------- */
-#main-menu, #main-menu ul, #main-menu ul li, #main-menu ul li a, #main-menu #menu-button {margin: 0; padding: 0; border: 0; list-style: none; line-height: 12px; display: block; position: relative; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
+#main-menu, #main-menu ul, #main-menu ul li, #main-menu ul li a, #main-menu #menu-button {margin: 0; padding: 0; border: 0; list-style: none; line-height: 13px; display: block; position: relative; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
 #main-menu:after, #main-menu > ul:after {content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;}
 #main-menu #menu-button {display: none;}
-#main-menu {line-height: 1; background: #ffffff; width: auto;}
+#main-menu {line-height: 1; background: #194888; width: auto;}
 #menu-line {position: absolute; top: 0; left: 0; height: 3px; background: #194888; -webkit-transition: all 0.25s ease-out; -moz-transition: all 0.25s ease-out; -ms-transition: all 0.25s ease-out; -o-transition: all 0.25s ease-out; transition: all 0.25s ease-out;}
 #main-menu > ul > li {float: left;}
 #main-menu > ul > li > a {padding: 14px 15px; font-size: 12px; font-weight: 600; border-right: 1px solid #e5e5e5; text-decoration: none; text-transform: uppercase; color: #000000; -webkit-transition: color .2s ease; -moz-transition: color .2s ease; -ms-transition: color .2s ease; -o-transition: color .2s ease; transition: color .2s ease;}

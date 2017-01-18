@@ -1,10 +1,4 @@
 {% extends "front.html" %}
-{% block header %}
-    {{ parent() }}
-    <!-- Begin CSS -->
-    <link type="text/css" rel="stylesheet" href="/assets/vendor/jquery-fancybox/jquery-fancybox.min.css">
-    <!-- End CSS -->
-{% endblock %}
 {% block title %}| Archive | {{ title }}{% endblock %}
 {% block content %}
     <div id="page-header">
@@ -39,10 +33,4 @@
     <div id="sidebar" class="one-fourth column-last">
          {% include "Utils/_sidebar.html" %}
     </div>
-{% endblock %}
-{% block js_footer %}
-    {{ parent() }}
-    <!-- Begin JS -->
-    <script type="text/javascript" src="/assets/vendor/jquery-fancybox/jquery-fancybox.min.js"></script>
-    <!-- End JS -->
 {% endblock %}

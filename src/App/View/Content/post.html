@@ -1,10 +1,4 @@
 {% extends "front.html" %}
-{% block header %}
-    {{ parent() }}
-    <!-- Begin CSS -->
-    <link type="text/css" rel="stylesheet" href="/assets/vendor/jquery-fancybox/jquery-fancybox.min.css">
-    <!-- End CSS -->
-{% endblock %}
 {% block title %}| {{ title }}{% endblock %}
 {% block fb %}
     <meta property="og:url" content="{{ serverUrl() ~ urlFor("post", {slug: slug}) }}">
@@ -49,7 +43,6 @@
 {% block js_footer %}
     {{ parent() }}
     <!-- Begin JS -->
-    <script type="text/javascript" src="/assets/vendor/jquery-fancybox/jquery-fancybox.min.js"></script>
     <script type="text/javascript" src="/assets/vendor/jquery-shorten/jquery-shorten.js"></script>
     <!-- End JS -->
 {% endblock %}

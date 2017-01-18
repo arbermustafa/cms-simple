@@ -67,11 +67,27 @@
 
         return this.each(function() {
             var $this = $(this);
+            var cssFloat = 'none';
+
+            if ($this.data('chars') > 0) {
+                config.showChars = parseInt($this.data('chars'));
+            }
+
+            if ($this.data('float') == 'right') {
+                cssFloat = 'right';
+            }
+
 
             var content = $this.html();
             var contentlen = $this.text().length;
             if (contentlen > config.showChars + config.minHideChars) {
-                var c = content.substr(0, config.showChars);
+                var cutat = content.lastIndexOf(' ', config.showChars);
+                var c = '';
+                if (cutat != -1) {
+                    c = content.substring(0, cutat);
+                } else {
+                    c = content.substr(0, config.showChars);
+                }
                 if (c.indexOf('<') >= 0) // If there's HTML don't want to cut it
                 {
                     var inTag = false; // I'm in a tag?
@@ -138,7 +154,7 @@
 
                 var html = '<div class="shortcontent">' + c +
                     '</div><div class="allcontent">' + content +
-                    '</div><span><a href="javascript://nop/" class="morelink">' + config.moreText + '</a></span>';
+                    '</div><span style="float: '+cssFloat+'"><a href="javascript://nop/" class="morelink">' + config.moreText + '</a></span>';
 
                 $this.html(html);
                 $this.find(".allcontent").hide(); // Hide all text

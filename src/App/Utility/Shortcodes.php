@@ -92,6 +92,11 @@ class Shortcodes
         {
             return $class->readmore($s);
         });
+
+        $this->handlers->add('contentbox', function(ShortcodeInterface $s) use ($class)
+        {
+            return $class->contentbox($s);
+        });
     }
 
     public function doShortcode($content)
@@ -121,9 +126,9 @@ class Shortcodes
                         $target = '_blank';
                     }
 
-                    $html .= '      <a href="'. $slide['url'] .'" target="'. $target .'"><img src="/uploads/'. $slide['featured_photo'] .'" alt="'. $slide['title'] .'"></a>';
+                    $html .= '      <a href="'. $slide['url'] .'" target="'. $target .'"><img src="/uploads/'. $slide['featured_photo'] .'" alt="'. $slide['title'] .'" width="940" height="350"></a>';
                 } else {
-                    $html .= '      <img src="/uploads/'. $slide['featured_photo'] .'" alt="'. $slide['title'] .'">';
+                    $html .= '      <img src="/uploads/'. $slide['featured_photo'] .'" alt="'. $slide['title'] .'" width="940" height="350">';
                 }
 
                 if ($slide['title'] != '*') {
@@ -335,8 +340,22 @@ class Shortcodes
     public function readmore($s)
     {
         $class = $s->getParameter('type');
+        $chars = ($s->getParameter('chars')) ?: 0;
+        $float = ($s->getParameter('float')) ?: '';
 
-        return '<div class="shorten-'. $class .'">'. $s->getContent() .'</div>';
+        return '<div class="shorten-'. $class .'" data-chars="'. $chars .'" data-float="'. $float .'">'. $s->getContent() .'</div>';
+    }
+
+    public function contentbox($s)
+    {
+        $html = '';
+        $title = $s->getParameter('title');
+        $link = ($s->getParameter('link')) ? '<a href="'. $s->getParameter('link') .'">'. $title .'</a>' : $title;
+
+        $html .= '<h2>'. $link .'</h2>';
+        $html .= '<div class="post-list-home"><div class="post clearfix"><div class="post-body"><div class="post-content">'. $s->getContent() .'</div></div></div></div>';
+
+        return $html;
     }
 
     private function _processFields(array $data)
