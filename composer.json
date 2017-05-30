@@ -2,8 +2,8 @@
     "name": "cms-simple",
     "author": "Arber Mustafa",
     "version": "1.0.0",
-    "description": "New Webpage of ERe",
-    "keyword": ["Europa Re", "Slim", "Twig", "Illuminate", "Zend"],
+    "description": "CMS Simple",
+    "keyword": ["CMS Simple", "Slim", "Twig", "Illuminate", "Zend"],
     "license": "MIT",
     "require": {
         "php": ">=5.6",
